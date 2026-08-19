@@ -1,0 +1,11 @@
+node_modules/
+dist/
+
+.DS_Store
+*.log
+
+# Local design references and source material.
+/image.png
+/VibeSim Simulator Walkthrough.md
+/vibesim_intro (1).md
+/Roofline-Guided Agent for Optimzing LLM Inference.txt

@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import simSpeed from "./data/simSpeed.json";
-import tiers from "./data/tiers.json";
-import alignment from "./data/alignment.json";
-import optimality from "./data/optimality.json";
+import s from "./Advantages.module.css";
+import simSpeed from "../data/simSpeed.json";
+import tiers from "../data/tiers.json";
+import alignment from "../data/alignment.json";
+import optimality from "../data/optimality.json";
 
 /* The value section. Six claims, one per row, each paired with the evidence
    behind it. Every figure comes from a recorded result: the alignment table in
@@ -27,7 +28,7 @@ const coverage = [
 
 function CoverageDirectory() {
   return (
-    <dl className="why-directory">
+    <dl className={s.directory}>
       {coverage.map(([group, items]) => (
         <div key={group}>
           <dt>{group}</dt>
@@ -77,8 +78,8 @@ const formatSpeed = (value) =>
 
 function SpeedChart() {
   return (
-    <figure className="why-figure-block">
-      <figcaption className="why-figure-head">
+    <figure className={s.figureBlock}>
+      <figcaption className={s.figureHead}>
         <strong>
           {formatSpeed(slowest)}
           <span>&times;</span> to {formatSpeed(fastest)}
@@ -89,7 +90,7 @@ function SpeedChart() {
           runs of {simulatedMinutes} serving minutes each
         </span>
       </figcaption>
-      <div className="why-speed">
+      <div className={s.speed}>
         {speedShapes.map((shape) => {
           const start = logPos(shape.minSpeed);
           const end = logPos(shape.maxSpeed);
@@ -102,12 +103,12 @@ function SpeedChart() {
               ? `${formatSpeed(shape.maxSpeed)}×`
               : `${formatSpeed(shape.minSpeed)} to ${formatSpeed(shape.maxSpeed)}×`;
           return (
-            <div className="why-speed-row" key={shape.tier}>
-              <span className="why-speed-name">
+            <div className={s.speedRow} key={shape.tier}>
+              <span className={s.speedName}>
                 <strong>{shape.name}</strong>
                 <span>{gpuLabel}</span>
               </span>
-              <span className="why-speed-track">
+              <span className={s.speedTrack}>
                 {speedTicks.map((tick) => (
                   <b key={tick} style={{ "--at": `${logPos(tick)}%` }} />
                 ))}
@@ -118,11 +119,11 @@ function SpeedChart() {
                   />
                 ) : null}
               </span>
-              <span className="why-speed-value">{label}</span>
+              <span className={s.speedValue}>{label}</span>
             </div>
           );
         })}
-        <div className="why-speed-axis" aria-hidden="true">
+        <div className={s.speedAxis} aria-hidden="true">
           <span />
           <span>
             {speedTicks.map((tick) => (
@@ -144,8 +145,8 @@ const errorAxis = alignment.axis_pct;
 
 function AlignmentPlot() {
   return (
-    <figure className="why-figure-block">
-      <figcaption className="why-figure-head">
+    <figure className={s.figureBlock}>
+      <figcaption className={s.figureHead}>
         <strong>
           {alignment.cases} of {alignment.cases}
         </strong>
@@ -154,19 +155,19 @@ function AlignmentPlot() {
           failures
         </span>
       </figcaption>
-      <div className="why-plots">
+      <div className={s.plots}>
         {alignment.metrics.map((metric) => (
-          <div className="why-plot-row" key={metric.key}>
-            <span className="why-plot-label">
+          <div className={s.plotRow} key={metric.key}>
+            <span className={s.plotLabel}>
               <strong>{metric.label}</strong>
               <span>{metric.claim}</span>
             </span>
             <div
-              className="why-plot"
+              className={s.plot}
               role="img"
               aria-label={`${metric.label}: ${alignment.cases} cases, all ${metric.claim} of the framework run`}
             >
-              <span className="why-plot-zero" />
+              <span className={s.plotZero} />
               {metric.signed.map((value, index) => (
                 <i
                   key={index}
@@ -176,7 +177,7 @@ function AlignmentPlot() {
             </div>
           </div>
         ))}
-        <div className="why-plot-axis" aria-hidden="true">
+        <div className={s.plotAxis} aria-hidden="true">
           <span />
           <span>
             <i>&minus;{errorAxis}%</i>
@@ -226,23 +227,23 @@ const runPath = tiers.run.active
 
 function RunPanel() {
   return (
-    <div className="why-tier-panel">
+    <div className={s.tierPanel}>
       <div
-        className="why-area"
+        className={s.area}
         role="img"
         aria-label={`Requests in flight over ${runSpanS.toFixed(1)} seconds, peaking at ${runPeak}`}
       >
         <svg viewBox="0 0 100 100" preserveAspectRatio="none">
-          <path className="why-area-fill" d={`${runPath} L100 100 L0 100 Z`} />
-          <path className="why-area-line" d={runPath} />
+          <path className={s.areaFill} d={`${runPath} L100 100 L0 100 Z`} />
+          <path className={s.areaLine} d={runPath} />
         </svg>
       </div>
-      <div className="why-axis">
+      <div className={s.axis}>
         <span>0 s</span>
         <span>Requests in flight</span>
         <span>{runSpanS.toFixed(1)} s</span>
       </div>
-      <dl className="why-stats">
+      <dl className={s.stats}>
         {[
           [
             "Output",
@@ -285,8 +286,8 @@ const formatAxis = (value) =>
 
 function RequestPanel() {
   return (
-    <div className="why-tier-panel">
-      <div className="why-cdfs">
+    <div className={s.tierPanel}>
+      <div className={s.cdfs}>
         {tiers.requestCdf.map((metric) => {
           const [lo, hi] = cdfAxis[metric.key];
           const at = (value) => ((value - lo) / (hi - lo)) * 100;
@@ -297,8 +298,8 @@ function RequestPanel() {
             })
             .join(" ");
           return (
-            <div className="why-cdf" key={metric.key}>
-              <span className="why-cdf-head">
+            <div className={s.cdf} key={metric.key}>
+              <span className={s.cdfHead}>
                 <strong>{metric.label}</strong>
                 <span>
                   p50 {Math.round(metric.markers.p50).toLocaleString("en-US")}, p99{" "}
@@ -307,7 +308,7 @@ function RequestPanel() {
                 </span>
               </span>
               <div
-                className="why-cdf-plot"
+                className={s.cdfPlot}
                 role="img"
                 aria-label={`${metric.label} distribution over ${metric.n} requests, median ${Math.round(metric.markers.p50)} ${metric.unit}`}
               >
@@ -316,7 +317,7 @@ function RequestPanel() {
                 </svg>
                 <i style={{ "--at": `${at(metric.markers.p50)}%` }} />
               </div>
-              <span className="why-cdf-axis" aria-hidden="true">
+              <span className={s.cdfAxis} aria-hidden="true">
                 <i>{formatAxis(lo)}</i>
                 <i>
                   {formatAxis(hi)} {metric.unit}
@@ -326,7 +327,7 @@ function RequestPanel() {
           );
         })}
       </div>
-      <p className="why-tier-note">
+      <p className={s.tierNote}>
         Every curve is all {tiers.requestCdf[0].n} requests. The dot marks the
         median; the tail to its right is the one that breaks an SLO.
       </p>
@@ -344,19 +345,19 @@ const iterY = (ms) => 4 + (ms / iterAxis) * 92;
 
 function IterationPanel() {
   return (
-    <div className="why-tier-panel">
-      <div className="why-legend">
+    <div className={s.tierPanel}>
+      <div className={s.legend}>
         <span>
           <i />
           Decode only
         </span>
         <span>
-          <i className="is-prefill" />
+          <i data-prefill="true" />
           Carries prefill
         </span>
       </div>
       <div
-        className="why-scatter"
+        className={s.scatter}
         role="img"
         aria-label={`Duration of ${tiers.iterations.iterations} iterations. Decode iterations run near ${tiers.iterations.decode.medianMs.toFixed(0)} milliseconds and prefill iterations near ${tiers.iterations.prefill.medianMs.toFixed(0)}.`}
       >
@@ -368,17 +369,17 @@ function IterationPanel() {
         {tiers.iterations.points.map(([id, ms, prefill]) => (
           <i
             key={id}
-            className={prefill ? "is-prefill" : ""}
+            data-prefill={Boolean(prefill)}
             style={{ "--x": `${iterX(id)}%`, "--y": `${iterY(ms)}%` }}
           />
         ))}
       </div>
-      <div className="why-axis">
+      <div className={s.axis}>
         <span>Iteration 1</span>
         <span>Iteration duration, 0 to {iterAxis} ms</span>
         <span>{tiers.iterations.iterations.toLocaleString("en-US")}</span>
       </div>
-      <dl className="why-stats">
+      <dl className={s.stats}>
         {[
           ["Iterations", tiers.iterations.iterations.toLocaleString("en-US")],
           ["Decode, median", `${tiers.iterations.decode.medianMs.toFixed(1)} ms`],
@@ -394,7 +395,7 @@ function IterationPanel() {
           </div>
         ))}
       </dl>
-      <p className="why-tier-note">
+      <p className={s.tierNote}>
         The {tiers.iterations.prefill.count} prefill iterations cost about three
         times a decode iteration, which is what sets the latency every request
         feels. {tiers.iterations.plotted} of{" "}
@@ -415,25 +416,25 @@ const kernelRestCount = tiers.kernels.positions - kernelShown.length;
 
 function KernelPanel() {
   return (
-    <div className="why-tier-panel">
-      <div className="why-kernels">
+    <div className={s.tierPanel}>
+      <div className={s.kernels}>
         {kernelShown.map((segment) => (
-          <div className="why-kernel-row" key={segment.name}>
-            <span className="why-kernel-name">
+          <div className={s.kernelRow} key={segment.name}>
+            <span className={s.kernelName}>
               <strong>{segment.name}</strong>
               <span>
                 {segment.scope ? `${segment.scope}, ` : ""}
                 {segment.kind}
               </span>
             </span>
-            <span className="why-kernel-track">
+            <span className={s.kernelTrack}>
               <i style={{ "--width": `${(segment.share / kernelMax) * 100}%` }} />
             </span>
-            <span className="why-kernel-value">{segment.share.toFixed(1)}%</span>
+            <span className={s.kernelValue}>{segment.share.toFixed(1)}%</span>
           </div>
         ))}
       </div>
-      <p className="why-tier-note">
+      <p className={s.tierNote}>
         Every position in the model, ranked by its share of{" "}
         {(tiers.kernels.totalMs / 1000).toFixed(0)} GPU seconds. The other{" "}
         {kernelRestCount} account for {kernelRestShare.toFixed(1)}%.
@@ -473,9 +474,9 @@ function DrilldownFigure() {
   }
 
   return (
-    <figure className="why-figure-block why-tiers">
+    <figure className={s.figureBlock}>
       <div
-        className="why-tier-tabs"
+        className={s.tierTabs}
         role="tablist"
         aria-label="Level of detail"
         ref={tabs}
@@ -498,7 +499,7 @@ function DrilldownFigure() {
         ))}
       </div>
       <div
-        className="why-tier-body"
+        className={s.tierBody}
         id={`why-panel-${active}`}
         role="tabpanel"
         aria-labelledby={`why-tab-${active}`}
@@ -527,8 +528,8 @@ function OptimalityFigure() {
   };
 
   return (
-    <figure className="why-figure-block why-optimality">
-      <figcaption className="why-figure-head why-figure-head--pair">
+    <figure className={`${s.figureBlock} ${s.optimality}`}>
+      <figcaption className={`${s.figureHead} ${s.figureHeadPair}`}>
         <strong>
           {optimality.gpuUtilizationPct}% <b>utilized</b>
         </strong>
@@ -541,7 +542,8 @@ function OptimalityFigure() {
         </span>
       </figcaption>
       <div
-        className={`why-waterfall${highlightedBucket ? " has-selection" : ""}`}
+        className={s.waterfall}
+        data-has-selection={Boolean(highlightedBucket)}
         role="group"
         aria-label={`${optimality.totalGpuSeconds.toFixed(2)} GPU seconds split into ${optimality.buckets.length} named causes; ${necessaryPct.toFixed(0)} percent is work the model requires`}
       >
@@ -553,7 +555,7 @@ function OptimalityFigure() {
             <span
               role="img"
               key={bucket.name}
-              className={bucket.necessary ? "is-necessary" : ""}
+              data-necessary={bucket.necessary}
               style={{ "--share": `${bucket.frac * 100}%` }}
               aria-label={`${bucket.name}: ${formatGpuSeconds(bucket.gpuSeconds)} GPU seconds, ${(bucket.frac * 100).toFixed(2)}%`}
               data-highlighted={highlightedBucket === bucket.name}
@@ -563,11 +565,13 @@ function OptimalityFigure() {
             />
           ))}
       </div>
-      <dl className="why-buckets">
+      <dl className={s.buckets}>
         {optimality.buckets.map((bucket) => (
           <div
             key={bucket.name}
-            className={`why-bucket${bucket.necessary ? " is-necessary" : ""}${highlightedBucket === bucket.name ? " is-selected" : ""}`}
+            className={s.bucket}
+            data-necessary={bucket.necessary}
+            data-selected={highlightedBucket === bucket.name}
             tabIndex={0}
             title={bucket.description}
             onFocus={() => setPreviewBucket(bucket.name)}
@@ -581,7 +585,7 @@ function OptimalityFigure() {
             </dd>
           </div>
         ))}
-        <div className="why-buckets-total">
+        <div className={s.bucketsTotal}>
           <dt>Total held by the GPU</dt>
           <dd>
             <b>{optimality.totalGpuSeconds.toFixed(2)}</b> GPU&#8209;s
@@ -607,15 +611,15 @@ const agentStages = [
 
 function AgentFigure() {
   return (
-    <figure className="why-figure-block why-flow-block">
-      <div className="why-flow">
-        <blockquote className="why-flow-end why-flow-end--start">
+    <figure className={`${s.figureBlock} ${s.flowBlock}`}>
+      <div className={s.flow}>
+        <blockquote className={s.flowEnd}>
           <span>You</span>
           <p>
             Find the request rate where Llama 3 8B stops keeping up on one H200.
           </p>
         </blockquote>
-        <ol className="why-flow-stages">
+        <ol className={s.flowStages}>
           {agentStages.map(([stage, detail]) => (
             <li key={stage}>
               <strong>{stage}</strong>
@@ -623,11 +627,11 @@ function AgentFigure() {
             </li>
           ))}
         </ol>
-        <div className="why-flow-end why-flow-end--finish">
+        <div className={`${s.flowEnd} ${s.flowEndFinish}`}>
           <span>Back to you</span>
           <p>Charts, tables and the reasoning, in front of you.</p>
         </div>
-        <i className="why-flow-return" aria-hidden="true" />
+        <i className={s.flowReturn} aria-hidden="true" />
       </div>
     </figure>
   );
@@ -663,7 +667,7 @@ const rows = [
     claim: "Inspect every detail in the run.",
     body: "The run, each request, each scheduler step and each kernel are all logged for analysis, not sampled and not traded off against speed. Instrumenting a real deployment to that depth would cost you the performance you were trying to measure.",
     note: `${tiers.setup}. ${tiers.workload}. The same campaign the alignment figures above come from.`,
-    modifier: "why-row--wide",
+    modifier: s.rowWide,
     figure: <DrilldownFigure />,
   },
   {
@@ -678,14 +682,14 @@ const rows = [
     claim: "Describe the goal, get a solution.",
     body: "Tell the Agent what you want to find out. It sets up the experiment, reads the analysis and comes back with the tradeoff and the evidence.",
     note: "The same experiments are available from the command line and the API.",
-    modifier: "why-row--flow",
+    modifier: s.rowFlow,
     figure: <AgentFigure />,
   },
 ];
 
 export function Advantages() {
   return (
-    <section id="advantages" className="section why-section">
+    <section id="advantages" className="section">
       <div className="wrap">
         <div className="section-intro">
           <h2>Explore VibeSim’s key features.</h2>
@@ -695,23 +699,23 @@ export function Advantages() {
           </p>
         </div>
 
-        <div className="why-rows">
+        <div className={s.rows}>
           {rows.map((row, index) => (
             <article
-              className={`why-row${index % 2 === 1 ? " why-row--flip" : ""}${
+              className={`${s.row}${index % 2 === 1 ? ` ${s.rowFlip}` : ""}${
                 row.modifier ? ` ${row.modifier}` : ""
               }`}
               id={row.id}
               key={row.name}
             >
-              <div className="why-copy">
+              <div className={s.copy}>
                 <h3>
                   <span>{row.name}</span> {row.claim}
                 </h3>
                 <p>{row.body}</p>
-                <span className="why-note">{row.note}</span>
+                <span className={s.note}>{row.note}</span>
               </div>
-              <div className="why-figure">{row.figure}</div>
+              <div className={s.figure}>{row.figure}</div>
             </article>
           ))}
         </div>

@@ -1,0 +1,1372 @@
+/* The value section. One claim per row, copy and evidence side by side, sides
+   alternating down the page. Every figure is a recorded result, so no graphic
+   here invents a magnitude. */
+.rows {
+  display: grid;
+  gap: 28px;
+}
+
+/* A row can be a link target (#support), and the header is 76px, so it needs
+   the same landing offset a section gets. Without it the card sits flush
+   against the top of the viewport. */
+.row {
+  scroll-margin-top: 76px;
+
+  display: grid;
+  grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.12fr);
+  align-items: center;
+  gap: clamp(40px, 4.6vw, 80px);
+  padding: clamp(44px, 4.2vw, 70px);
+  border: 1px solid var(--c-line-100);
+  border-radius: var(--r-xl);
+  background: radial-gradient(
+    120% 130% at 4% 0%,
+    var(--c-surface-300) 0%,
+    var(--c-surface-200) 46%,
+    var(--bg) 100%
+  );
+}
+
+.rowFlip {
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+  background: radial-gradient(
+    120% 130% at 96% 0%,
+    var(--c-surface-300) 0%,
+    var(--c-surface-200) 46%,
+    var(--bg) 100%
+  );
+}
+
+.rowFlip .copy {
+  order: 2;
+  text-align: right;
+}
+
+.rowFlip .copy > p,
+.rowFlip .note {
+  margin-left: auto;
+}
+
+.rowFlip .figure {
+  order: 1;
+}
+
+.copy h3 {
+  font-size: var(--fs-3xl);
+  font-weight: 500;
+  line-height: 1.22;
+  letter-spacing: -0.032em;
+  color: var(--c-ink-1800);
+  text-wrap: balance;
+}
+
+.copy h3 > span {
+  color: var(--accent);
+}
+
+.copy > p {
+  margin-top: 22px;
+  max-width: 38ch;
+  font-size: var(--fs-lg);
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.note {
+  display: block;
+  margin-top: 28px;
+  max-width: 38ch;
+  font-size: var(--fs-sm);
+  line-height: 1.6;
+  color: var(--subtle);
+}
+
+.figure {
+  min-width: 0;
+}
+
+.figureBlock {
+  margin: 0;
+}
+
+/* No enclosures. Figures sit directly on the row and are grouped by space,
+   not by a box inside a box. The padding stays because the tab panel heights
+   are tuned against it. */
+.directory,
+.speed,
+.plots,
+.buckets,
+.tierPanel {
+  padding: 22px 0;
+}
+
+/* Hairlines fade at both ends instead of running edge to edge. */
+.figureHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px 16px;
+  margin-bottom: 30px;
+  padding-bottom: 26px;
+  border-bottom: 1px solid var(--c-line-100);
+}
+
+.figureHead strong {
+  font-size: var(--fs-num-xl);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.035em;
+  color: var(--c-ink-2000);
+  font-variant-numeric: tabular-nums;
+}
+
+.figureHead strong span {
+  color: var(--accent);
+}
+
+.figureHeadPair {
+  gap: 8px 28px;
+}
+
+.figureHeadPair strong b {
+  font-size: var(--fs-sm);
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--subtle);
+}
+
+.figureHeadPair strong:nth-of-type(2) {
+  color: var(--accent);
+}
+
+.figureHeadPair > span {
+  flex-basis: 100%;
+  max-width: 52ch;
+}
+
+.figureHead > span {
+  max-width: 44ch;
+  font-size: var(--fs-sm);
+  line-height: 1.45;
+  color: var(--subtle);
+}
+
+/* 1. Built configurations, listed. Deliberately not a set of axes to multiply. */
+.directory {
+  display: grid;
+  gap: 26px;
+  margin: 0;
+}
+
+.directory > div {
+  display: grid;
+  grid-template-columns: 112px minmax(0, 1fr);
+  align-items: baseline;
+  gap: 22px;
+  padding: 0;
+}
+
+.directory dt {
+  font-size: var(--fs-sm);
+  color: var(--c-ink-100);
+}
+
+.directory dd {
+  display: flex;
+  flex-wrap: wrap;
+  min-width: 0;
+  gap: 10px;
+  margin: 0;
+}
+
+.directory dd span {
+  padding: 10px 16px;
+  border-radius: var(--r-md);
+  background: var(--c-surface-300);
+  box-shadow: 0 0 0 1px var(--c-alpha-1500);
+  font-size: var(--fs-sm);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--c-ink-1600);
+  white-space: nowrap;
+}
+
+/* 2. Speedup against the serving time the run stands in for, on a log axis. */
+.speedRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(110px, 1.4fr) 152px;
+  align-items: center;
+  gap: 22px;
+  padding: 17px 0;
+}
+
+.speedRow + .speedRow {
+  background-image: linear-gradient(
+    90deg,
+    transparent,
+    var(--c-alpha-1500) 6%,
+    var(--c-alpha-1500) 94%,
+    transparent
+  );
+  background-repeat: no-repeat;
+  background-size: 100% 1px;
+  background-position: top;
+}
+
+.speedRow:first-child {
+  padding-top: 0;
+}
+
+.speedName {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+
+.speedName strong {
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--c-ink-1600);
+}
+
+.speedName > span {
+  font-size: var(--fs-fine);
+  color: var(--subtle);
+}
+
+.speedTrack {
+  position: relative;
+  height: 16px;
+  border-radius: var(--r-sm);
+  background: var(--bg);
+  box-shadow:
+    inset 0 0 0 1px var(--c-alpha-1400),
+    inset 0 1px 2px var(--c-alpha-200);
+}
+
+.speedTrack b {
+  position: absolute;
+  top: -5px;
+  bottom: -5px;
+  left: var(--at);
+  width: 1px;
+  background: linear-gradient(
+    var(--c-alpha-1200),
+    var(--c-alpha-1600),
+    var(--c-alpha-1200)
+  );
+}
+
+.speedTrack i {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: var(--width);
+  min-width: 8px;
+  border-radius: var(--r-sm);
+  background: linear-gradient(90deg, var(--c-surface-accent-100), var(--accent));
+}
+
+.speedTrack em {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--start);
+  width: var(--width);
+  min-width: 3px;
+  border-radius: 0 var(--r-sm) var(--r-sm) 0;
+  background: var(--accent);
+  opacity: 0.34;
+}
+
+.speedValue {
+  font-size: var(--fs-sm);
+  text-align: right;
+  color: var(--c-ink-1300);
+  font-variant-numeric: tabular-nums;
+}
+
+.speedAxis {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(110px, 1.4fr) 152px;
+  gap: 22px;
+  margin-top: 18px;
+  font-size: var(--fs-fine);
+  color: var(--subtle);
+}
+
+.speedAxis > span:nth-child(2) {
+  position: relative;
+  height: 1.4em;
+}
+
+.speedAxis > span:last-child {
+  text-align: right;
+}
+
+.speedAxis i {
+  position: absolute;
+  left: var(--at);
+  transform: translateX(-50%);
+  font-style: normal;
+  white-space: nowrap;
+}
+
+/* 3. Fifteen measured cases per metric, signed against the framework run. */
+.plotRow {
+  display: grid;
+  grid-template-columns: minmax(0, 166px) minmax(0, 1fr);
+  align-items: center;
+  gap: 24px;
+  padding: 18px 0;
+}
+
+.plotRow + .plotRow {
+  background-image: linear-gradient(
+    90deg,
+    transparent,
+    var(--c-alpha-1500) 6%,
+    var(--c-alpha-1500) 94%,
+    transparent
+  );
+  background-repeat: no-repeat;
+  background-size: 100% 1px;
+  background-position: top;
+}
+
+.plotRow:first-child {
+  padding-top: 0;
+}
+
+.plotLabel {
+  display: grid;
+  gap: 3px;
+}
+
+.plotLabel strong {
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--c-ink-1600);
+}
+
+.plotLabel > span {
+  font-size: var(--fs-fine);
+  color: var(--accent);
+}
+
+.plot {
+  position: relative;
+  height: 74px;
+  isolation: isolate;
+}
+
+.plot::before {
+  content: "";
+  position: absolute;
+  inset: 14px 0;
+  border-radius: var(--r-md);
+  background: linear-gradient(
+    90deg,
+    var(--c-alpha-1200),
+    var(--c-alpha-1300) 18%,
+    var(--c-alpha-1300) 82%,
+    var(--c-alpha-1200)
+  );
+  box-shadow: inset 0 1px 0 var(--c-alpha-1400);
+}
+
+.plotZero {
+  position: absolute;
+  top: 2px;
+  bottom: 2px;
+  left: 50%;
+  width: 1px;
+  background: linear-gradient(
+    var(--c-alpha-1200),
+    var(--c-surface-accent-400) 28%,
+    var(--c-surface-accent-400) 72%,
+    var(--c-alpha-1200)
+  );
+}
+
+.plot i {
+  position: absolute;
+  top: 50%;
+  left: var(--at);
+  width: 14px;
+  height: 14px;
+  margin: -7px 0 0 -7px;
+  border-radius: var(--r-round);
+  background: var(--accent);
+  opacity: 0.5;
+  mix-blend-mode: screen;
+}
+
+.plotAxis {
+  display: grid;
+  grid-template-columns: minmax(0, 166px) minmax(0, 1fr);
+  gap: 24px;
+  margin-top: 16px;
+  font-size: var(--fs-fine);
+  color: var(--subtle);
+}
+
+.plotAxis > span:last-child {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.plotAxis i {
+  font-style: normal;
+}
+
+/* 4. One run at four grains. Each tab is a different analyzer payload drawn
+   with the chart its data calls for, so no grain restates another. */
+.tierTabs {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 30px;
+}
+
+.tierTabs button {
+  display: grid;
+  gap: 4px;
+  padding: 16px 14px;
+  border: 0;
+  border-radius: var(--r-md);
+  background: var(--c-surface-200);
+  box-shadow: inset 0 0 0 1px var(--c-alpha-1500);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background 0.45s cubic-bezier(0.32, 0.72, 0, 1),
+    box-shadow 0.45s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.tierTabs button:hover {
+  box-shadow:
+    inset 0 0 0 1px var(--c-alpha-1600),
+    inset 0 1px 0 var(--c-alpha-1500);
+}
+
+.tierTabs button strong {
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--c-ink-1200);
+}
+
+.tierTabs button > span {
+  font-size: var(--fs-fine);
+  line-height: 1.35;
+  color: var(--c-ink-400);
+}
+
+.tierTabs button[aria-selected="true"] {
+  background: var(--c-surface-400);
+  box-shadow: inset 0 0 0 1px var(--c-surface-accent-200);
+}
+
+.tierTabs button[aria-selected="true"] strong {
+  color: var(--accent);
+}
+
+.tierTabs button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.tierBody:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 6px;
+  border-radius: var(--r-md);
+}
+
+.tierPanel {
+  display: flex;
+  flex-direction: column;
+  min-height: 708px;
+}
+
+.tierNote {
+  margin: 22px 0 0;
+  font-size: var(--fs-sm);
+  line-height: 1.55;
+  color: var(--subtle);
+}
+
+@media (min-width: 1440px) {
+  .tierPanel {
+    min-height: 681px;
+  }
+}
+
+.axis {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 16px;
+  font-size: var(--fs-fine);
+  color: var(--subtle);
+}
+
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px 36px;
+  margin: 26px 0 0;
+  padding-top: 22px;
+  border-top: 1px solid var(--c-line-100);
+}
+
+.stats dt {
+  font-size: var(--fs-fine);
+  color: var(--subtle);
+}
+
+.stats dd {
+  margin: 6px 0 0;
+  white-space: nowrap;
+  font-size: var(--fs-xl);
+  font-weight: 500;
+  color: var(--c-ink-1800);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* The run: requests in flight across the whole experiment. */
+
+.area {
+  position: relative;
+  flex: 1;
+  min-height: 210px;
+  border: 1px solid var(--c-line-100);
+  border-radius: var(--r-md);
+  background: var(--c-surface-200);
+  overflow: hidden;
+}
+
+.area svg {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.areaFill {
+  fill: var(--accent);
+  opacity: 0.16;
+}
+
+.areaLine {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.6;
+  vector-effect: non-scaling-stroke;
+}
+
+/* Each request: three latency distributions, one curve per metric. */
+
+.cdfs {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.cdf {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.cdfHead {
+  display: grid;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+
+.cdfHead strong {
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--c-ink-1600);
+}
+
+.cdfHead > span {
+  font-size: var(--fs-fine);
+  line-height: 1.4;
+  color: var(--subtle);
+  font-variant-numeric: tabular-nums;
+}
+
+.cdfPlot {
+  position: relative;
+  flex: 1;
+  min-height: 120px;
+  border: 1px solid var(--c-line-100);
+  border-radius: var(--r-md);
+  background: var(--c-surface-200);
+  overflow: hidden;
+}
+
+.cdfPlot svg {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.cdfPlot path {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+  stroke-linejoin: round;
+}
+
+.cdfPlot i {
+  position: absolute;
+  top: 50%;
+  left: var(--at);
+  width: 9px;
+  height: 9px;
+  margin: -4.5px 0 0 -4.5px;
+  border-radius: var(--r-round);
+  background: var(--c-ink-1800);
+}
+
+.cdfAxis {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 12px;
+  font-size: var(--fs-fine);
+  color: var(--subtle);
+}
+
+.cdfAxis i {
+  font-style: normal;
+}
+
+/* Each iteration: one dot per scheduler step, not a smoothed line. */
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  margin-bottom: 16px;
+  font-size: var(--fs-fine);
+  color: var(--subtle);
+}
+
+.legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.legend i {
+  width: 9px;
+  height: 9px;
+  border-radius: var(--r-round);
+  background: var(--accent);
+  opacity: 0.65;
+}
+
+.legend i[data-prefill="true"] {
+  background: var(--c-ink-1800);
+  opacity: 0.9;
+}
+
+.scatter {
+  position: relative;
+  flex: 1;
+  min-height: 200px;
+  border: 1px solid var(--c-line-100);
+  border-radius: var(--r-md);
+  background: var(--c-surface-200);
+}
+
+.scatter b {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: var(--y);
+  border-top: 1px dashed var(--c-line-100);
+  font-size: var(--fs-fine);
+  font-weight: 400;
+  color: var(--c-ink-200);
+  text-align: right;
+  padding-right: 10px;
+  line-height: 0;
+}
+
+.scatter i {
+  position: absolute;
+  left: var(--x);
+  bottom: var(--y);
+  width: 6px;
+  height: 6px;
+  margin: 0 0 -3px -3px;
+  border-radius: var(--r-round);
+  background: var(--accent);
+  opacity: 0.45;
+}
+
+.scatter i[data-prefill="true"] {
+  background: var(--c-ink-1800);
+  opacity: 0.8;
+}
+
+/* Each kernel: profiled time by the position in the model that ran it. */
+
+.kernels {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.kernelRow {
+  display: grid;
+  grid-template-columns: minmax(0, 2.3fr) minmax(70px, 0.9fr) 68px;
+  align-items: center;
+  gap: 18px;
+  padding: 13px 0;
+  border-top: 1px solid var(--c-line-100);
+}
+
+.kernelRow:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.kernelName {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 3px 10px;
+  min-width: 0;
+}
+
+.kernelName strong {
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--c-ink-1600);
+  overflow-wrap: anywhere;
+}
+
+.kernelName > span {
+  font-size: var(--fs-fine);
+  color: var(--subtle);
+  white-space: nowrap;
+}
+
+.kernelTrack {
+  height: 10px;
+  border-radius: var(--r-xs);
+  background: var(--c-surface-200);
+  overflow: hidden;
+}
+
+.kernelTrack i {
+  display: block;
+  height: 100%;
+  width: var(--width);
+  min-width: 4px;
+  border-radius: var(--r-xs);
+  background: linear-gradient(90deg, var(--c-surface-accent-100), var(--accent));
+}
+
+.kernelValue {
+  font-size: var(--fs-sm);
+  text-align: right;
+  color: var(--c-ink-1300);
+  font-variant-numeric: tabular-nums;
+}
+
+/* 5. Every GPU second the run held, attributed to a named cause. */
+
+.optimality .figureHead {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.optimality .figureHead strong {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.optimality .figureHead > span {
+  grid-column: 1/-1;
+}
+
+.waterfall {
+  display: flex;
+  height: 48px;
+}
+
+.waterfall > span {
+  flex: 0 0 var(--share);
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--r-xs);
+  background: var(--c-surface-500);
+  box-shadow: inset -1px 0 var(--c-surface-200);
+}
+
+.waterfall > span[data-necessary="true"] {
+  background: var(--accent);
+}
+
+.waterfall > span:hover {
+  background: var(--c-surface-900);
+}
+
+.waterfall[data-has-selection="true"] > span:not([data-highlighted="true"]) {
+  opacity: 0.4;
+}
+
+.waterfall > span[data-highlighted="true"] {
+  background: var(--accent);
+  box-shadow: inset 0 0 0 2px var(--c-ink-2000);
+}
+
+.waterfall > span:focus-visible {
+  position: relative;
+  z-index: 1;
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.buckets > .bucket {
+  position: relative;
+  border-radius: var(--r-xs);
+  cursor: default;
+}
+
+.bucket:hover {
+  background: var(--c-alpha-1300);
+}
+
+.bucket[data-selected="true"] {
+  background: var(--c-alpha-800);
+  box-shadow: inset 3px 0 var(--accent);
+}
+
+.bucket[data-selected="true"] dt,
+.bucket[data-selected="true"] dd b {
+  color: var(--accent);
+}
+
+.bucket:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: var(--r-xs);
+}
+
+.buckets {
+  margin: 24px 0 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 4px;
+}
+
+.buckets > div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) max-content;
+  align-items: center;
+  gap: 20px;
+  min-height: 58px;
+  padding: 14px 12px;
+}
+
+.buckets dt {
+  min-width: 0;
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.buckets dd {
+  margin: 0;
+  font-size: var(--fs-fine);
+  color: var(--subtle);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.buckets dd b {
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--c-ink-1600);
+}
+
+.buckets [data-necessary="true"] dt {
+  color: var(--accent);
+}
+
+.buckets [data-necessary="true"] dd b {
+  color: var(--accent);
+}
+
+.bucketsTotal {
+  grid-column: 1/-1;
+  margin-top: 6px;
+  border-top: 1px solid var(--c-surface-500) !important;
+  padding-top: 14px !important;
+}
+
+.bucketsTotal dt {
+  color: var(--c-ink-1600) !important;
+}
+
+.bucketsTotal dd b {
+  color: var(--c-ink-1800);
+}
+
+/* 6. The round trip from a spoken goal back to a readable answer. The two
+   human ends are full width; the three machine stages are inset on a rail
+   between them, and a return path closes the loop on the right. */
+
+/* The drilldown holds four charts, so its row trades copy width for figure
+   width. Only this row changes ratio. */
+
+.rowWide {
+  gap: clamp(30px, 3vw, 54px);
+}
+
+.rowWide.rowFlip {
+  grid-template-columns: minmax(0, 1.34fr) minmax(0, 0.84fr);
+}
+
+.rowFlow {
+  align-items: stretch;
+}
+
+.rowFlow .copy {
+  align-self: center;
+}
+
+.rowFlow .figure {
+  display: flex;
+}
+
+.flowBlock {
+  flex: 1;
+  display: flex;
+}
+
+.flow {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding-right: 44px;
+}
+
+.flowEnd {
+  margin: 0;
+  padding: 18px 22px;
+  border: 1px solid var(--c-line-200);
+  border-radius: var(--r-md);
+  background: var(--c-surface-200);
+  box-shadow: inset 3px 0 0 var(--c-line-700);
+}
+
+.flowEnd > span {
+  display: block;
+  font-size: var(--fs-fine);
+  color: var(--subtle);
+}
+
+.flowEnd > p {
+  margin: 8px 0 0;
+  font-size: var(--fs-md);
+  line-height: 1.45;
+  letter-spacing: -0.015em;
+  color: var(--c-ink-1800);
+}
+
+.flowEndFinish {
+  position: relative;
+  border-color: var(--c-line-accent-100);
+  background: var(--c-surface-300);
+  box-shadow: inset 3px 0 0 var(--accent);
+}
+
+.flowEndFinish > span {
+  color: var(--c-ink-accent-100);
+}
+
+.flowEndFinish > p {
+  color: var(--c-ink-1700);
+}
+
+.flowStages {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border: 1px solid var(--c-line-200);
+  border-radius: var(--r-md);
+  background: var(--c-surface-200);
+}
+
+.flowStages li {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+  align-items: baseline;
+  gap: 18px;
+  padding: 16px 22px;
+}
+
+.flowStages li + li {
+  border-top: 1px solid var(--c-line-100);
+}
+
+.flowStages strong {
+  font-size: var(--fs-lg);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  color: var(--c-ink-1800);
+}
+
+.flowStages li > span {
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  color: var(--c-ink-200);
+}
+
+/* The result travels back up the right edge to the person who asked. */
+
+.flowStages::before,
+.flowEndFinish::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -30px;
+  width: 1px;
+  height: 30px;
+  background: var(--c-surface-700);
+}
+
+.flowStages::after,
+.flowEndFinish::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -9px;
+  width: 7px;
+  height: 7px;
+  transform: translate(-50%, 0) rotate(45deg);
+  border-right: 1px solid var(--c-line-700);
+  border-bottom: 1px solid var(--c-line-700);
+}
+
+.flowReturn {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 44px;
+  border: 1px solid var(--c-line-accent-200);
+  border-left: 0;
+  border-radius: 0 var(--r-md) var(--r-md) 0;
+}
+
+.flowReturn::before {
+  content: "";
+  position: absolute;
+  left: -3px;
+  top: -5px;
+  width: 0;
+  height: 0;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-right: 9px solid var(--accent-strong);
+}
+
+@media (max-width: 1279px) {
+  .row {
+    gap: 36px;
+    padding: 38px;
+  }
+
+  .directory > div {
+    grid-template-columns: 112px minmax(0, 1fr);
+    gap: 20px;
+  }
+
+  .speedRow,
+  .speedAxis {
+    grid-template-columns: minmax(0, 1.1fr) minmax(90px, 1.25fr) 140px;
+    gap: 18px;
+  }
+
+  .plotRow,
+  .plotAxis {
+    grid-template-columns: minmax(0, 140px) minmax(0, 1fr);
+    gap: 20px;
+  }
+
+  .tierTabs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .cdfs {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .cdfHead {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 4px 16px;
+  }
+
+  .cdfPlot {
+    min-height: 76px;
+  }
+
+  .tierPanel {
+    min-height: 844px;
+  }
+
+  .kernelRow {
+    grid-template-columns: minmax(0, 1.9fr) minmax(60px, 0.9fr) 58px;
+    gap: 14px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .tierPanel {
+    min-height: 654px;
+  }
+
+  .rowFlip .copy {
+    text-align: left;
+  }
+
+  .rowFlip .copy > p,
+  .rowFlip .note {
+    margin-left: 0;
+  }
+
+  .row,
+  .rowFlip,
+  .rowWide.rowFlip {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 38px;
+    padding: 34px 30px;
+  }
+
+  .rowFlip .copy,
+  .rowFlip .figure {
+    order: initial;
+  }
+
+  .copy > p,
+  .note {
+    max-width: 60ch;
+  }
+
+  .buckets {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 767px) {
+  .rows {
+    gap: 18px;
+  }
+
+  .row,
+  .rowFlip {
+    padding: 30px 22px;
+    border-radius: var(--r-lg);
+    gap: 30px;
+  }
+
+  .directory > div {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .directory dd {
+    gap: 8px;
+  }
+
+  .directory dd span {
+    padding: 9px 13px;
+    white-space: normal;
+  }
+
+  .speedRow,
+  .speedAxis {
+    grid-template-columns: minmax(0, 1fr) 96px;
+    gap: 12px;
+  }
+
+  .speedTrack,
+  .speedAxis {
+    display: none;
+  }
+
+  .plotRow,
+  .plotAxis {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .plotAxis > span:first-child {
+    display: none;
+  }
+
+  .flow {
+    padding-right: 0;
+    gap: 26px;
+  }
+
+  .flowReturn {
+    display: none;
+  }
+
+  .flowEnd {
+    padding: 16px 18px;
+  }
+
+  .flowStages li {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 4px;
+    padding: 14px 18px;
+  }
+
+  .tierTabs {
+    grid-template-columns: 1fr;
+    gap: 6px;
+    margin-bottom: 24px;
+  }
+
+  .tierTabs button {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 13px 15px;
+  }
+
+  .stats {
+    gap: 14px 24px;
+  }
+
+  .stats > div {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 14px;
+    width: 100%;
+  }
+
+  .stats dd {
+    margin: 0;
+  }
+
+  .kernelRow {
+    grid-template-columns: minmax(0, 1fr) 56px;
+    gap: 12px;
+  }
+
+  .kernelName > span {
+    white-space: normal;
+  }
+
+  .kernelTrack {
+    display: none;
+  }
+
+  .area,
+  .scatter {
+    min-height: 150px;
+  }
+
+  .tierPanel {
+    min-height: 742px;
+  }
+}
+
+/* Kernel names wrap onto more lines on the narrowest phones, so the shared
+   panel height has to clear the tallest tab there too. */
+@media (max-width: 479px) {
+  .tierPanel {
+    min-height: 1016px;
+  }
+}
+
+@media (max-width: 359px) {
+  .tierPanel {
+    min-height: 1041px;
+  }
+}
+
+/* Short entry motion introduces the figure when a tab is selected.
+
+   The keyframes are declared here rather than pulled from styles/motion.css,
+   because module scoping rewrites animation names as well as class names: a
+   name written here becomes barGrow_<hash> and would never match a keyframe
+   defined in a global sheet. There is no way to opt a name out, since
+   `animation: :global(name)` does not parse. Two short keyframes repeated per
+   section is the cheaper half of that trade, and a module that carries its own
+   motion is self-contained. */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes barGrow {
+    from {
+      transform: scaleX(0.1);
+    }
+
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  @keyframes panelEnter {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  .waterfall > span {
+    transform-origin: left;
+    animation: barGrow 0.7s 0.3s ease both;
+    transition:
+      background 0.18s ease,
+      opacity 0.18s ease;
+  }
+
+  .tierBody {
+    animation: panelEnter 0.35s ease both;
+  }
+}

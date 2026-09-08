@@ -26,6 +26,12 @@
           {
             "message": "CSS Module class names are camelCase; scoping makes a prefix redundant"
           }
+        ],
+        "keyframes-name-pattern": [
+          "^[a-z][a-zA-Z0-9]*$",
+          {
+            "message": "CSS Module keyframe names are scoped like classes, so camelCase"
+          }
         ]
       }
     }

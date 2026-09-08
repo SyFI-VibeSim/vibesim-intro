@@ -12,3 +12,4 @@ dist/
 
 # Refactor verification harness: baseline screenshots and a pristine worktree.
 .refactor/
+agent-trace/

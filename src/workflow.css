@@ -415,7 +415,7 @@
 
 .wf-trunk-label {
   margin: 0 0 20px;
-  font-size: 16px;
+  font-size: var(--fs-fine);
   line-height: 1.5;
   color: var(--c-ink-200);
 }
@@ -594,7 +594,7 @@
 
 .wf-lanes strong,
 .wf-outcomes strong {
-  font-size: 17px;
+  font-size: var(--fs-sm);
 }
 
 .wf-lanes li::after,
@@ -642,7 +642,7 @@
 .wf-checks li {
   position: relative;
   padding-left: 17px;
-  font-size: 16px;
+  font-size: var(--fs-fine);
   line-height: 1.3;
   color: var(--c-ink-700);
 }
@@ -660,7 +660,7 @@
 .wf-verdict .wf-view-note {
   grid-column: 1 / -1;
   margin: 26px 0 0;
-  font-size: 16px;
+  font-size: var(--fs-fine);
   line-height: 1.6;
   color: var(--c-ink-200);
 }

@@ -17,9 +17,9 @@
   display: flex;
   flex-direction: column;
   padding: 42px 40px 36px;
-  border: 1px solid #303237;
+  border: 1px solid var(--c-line-200);
   border-radius: 24px;
-  background: #121315;
+  background: var(--c-surface-200);
 }
 
 .product-part h3 {
@@ -70,7 +70,7 @@
 .product-part-note {
   margin-top: 34px;
   padding-top: 22px;
-  border-top: 1px solid #26282c;
+  border-top: 1px solid var(--c-line-100);
   font-size: var(--fs-fine);
   line-height: 1.6;
   color: var(--subtle);

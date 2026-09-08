@@ -30,6 +30,97 @@
   --nav-layer: 10;
   --page-width: 76%;
 
+  /* One colour scale for the whole page. Before this there were 133 hex
+     literals across four stylesheets, with a single colour written up to nine
+     ways: #15171b, #151618, #15171a, #16191e and #17181b were all the same
+     card background. Values within 6/255 on every channel were folded
+     together, which is below the threshold of perception on these surfaces.
+
+     Names are role plus a step ascending with luminance. Steps go up in
+     hundreds so a value can be inserted later without renumbering the rest.
+     A colour is changed here and nowhere else. */
+
+  /* Surfaces, page background outward to the brightest panel. */
+  --c-surface-200: #15171b; /* x19 */
+  --c-surface-300: #171c26; /* x7 */
+  --c-surface-400: #1b2230; /* x1 */
+  --c-surface-500: #333945; /* x2 */
+  --c-surface-600: #303b4d; /* x1 */
+  --c-surface-700: #3a4049; /* x1 */
+  --c-surface-800: #5d6470; /* x1 */
+  --c-surface-900: #8090aa; /* x1 */
+
+  /* Accent-tinted surfaces, used only where a node is the one
+     the flow is heading towards. */
+  --c-surface-accent-100: #42557a; /* x2 */
+  --c-surface-accent-200: #52689a; /* x1 */
+  --c-surface-accent-300: #637da7; /* x1 */
+  --c-surface-accent-400: #93a4c4; /* x2 */
+
+  /* Hairlines. Borders and diagram connectors come from here. */
+  --c-line-100: #23262c; /* x14 */
+  --c-line-200: #2e333b; /* x10 */
+  --c-line-300: #414957; /* x1 */
+  --c-line-400: #4b5462; /* x1 */
+  --c-line-500: #53647f; /* x2 */
+  --c-line-600: #687991; /* x1 */
+  --c-line-700: #737e90; /* x3 */
+
+  /* Hairlines on the accent-tinted nodes. */
+  --c-line-accent-100: #4a5c8c; /* x2 */
+  --c-line-accent-200: #52618a; /* x1 */
+
+  /* Text, dimmest to brightest. */
+  --c-ink-100: #858b96; /* x1 */
+  --c-ink-200: #8e97a6; /* x10 */
+  --c-ink-300: #8d9aaf; /* x1 */
+  --c-ink-400: #969da8; /* x2 */
+  --c-ink-500: #93a1ba; /* x2 */
+  --c-ink-600: #a5abb5; /* x1 */
+  --c-ink-700: #aab3c1; /* x3 */
+  --c-ink-800: #a7b8d0; /* x1 */
+  --c-ink-900: #b9bec8; /* x1 */
+  --c-ink-1000: #b5c4da; /* x1 */
+  --c-ink-1100: #c0c7d2; /* x1 */
+  --c-ink-1200: #c4ccd9; /* x3 */
+  --c-ink-1300: #d2d7de; /* x2 */
+  --c-ink-1400: #cedaef; /* x2 */
+  --c-ink-1500: #d6dde8; /* x1 */
+  --c-ink-1600: #dde1e7; /* x12 */
+  --c-ink-1700: #dbe6fb; /* x2 */
+  --c-ink-1800: #e8ecf2; /* x14 */
+  --c-ink-2000: #edf2fa; /* x6 */
+  --c-ink-2100: #fff; /* x1 */
+
+  /* Text on or referring to an accent surface. */
+  --c-ink-accent-100: #8fa7d4; /* x1 */
+  --c-ink-accent-200: #91a9cb; /* x1 */
+  --c-ink-accent-300: #9fb2d2; /* x1 */
+  --c-ink-accent-400: #9eb5d9; /* x1 */
+  --c-ink-accent-500: #aac3f3; /* x2 */
+  --c-ink-accent-600: #aec6ff; /* x1 */
+  --c-ink-accent-700: #b6ccef; /* x2 */
+
+  /* Translucent overlays and scrims. Kept apart from the opaque scale
+     because an alpha of zero and an alpha of four are categorically
+     different, not four apart. */
+  --c-alpha-100: #0003; /* x1 */
+  --c-alpha-200: #0009; /* x1 */
+  --c-alpha-300: #0c0d0f19; /* x1 */
+  --c-alpha-400: #0c0d0f30; /* x2 */
+  --c-alpha-500: #0c0d0f90; /* x1 */
+  --c-alpha-600: #0c0d0f99; /* x1 */
+  --c-alpha-700: #0c0d0fa6; /* x1 */
+  --c-alpha-800: #a8bfe914; /* x1 */
+  --c-alpha-900: #f0f1f314; /* x1 */
+  --c-alpha-1000: #f0f1f326; /* x1 */
+  --c-alpha-1100: #f0f1f347; /* x1 */
+  --c-alpha-1200: #fff0; /* x6 */
+  --c-alpha-1300: #ffffff04; /* x7 */
+  --c-alpha-1400: #ffffff0c; /* x2 */
+  --c-alpha-1500: #ffffff14; /* x8 */
+  --c-alpha-1600: #ffffff1f; /* x2 */
+
   /* One type ladder for the whole page. Every font-size in every stylesheet is
      a step on it, so a size is changed here and nowhere else.
 
@@ -248,7 +339,7 @@ h2 {
   width: var(--page-width);
   height: 76px;
   margin: auto;
-  border-bottom: 1px solid #f0f1f326;
+  border-bottom: 1px solid var(--c-alpha-1000);
 }
 
 .brand {
@@ -273,7 +364,7 @@ h2 {
 }
 
 .navigation nav a {
-  color: #dddfe3;
+  color: var(--c-ink-1600);
 }
 
 .navigation nav a:hover {
@@ -290,13 +381,13 @@ h2 {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  border: 1px solid #f0f1f347;
+  border: 1px solid var(--c-alpha-1100);
   border-radius: 999px;
   padding: 10px 17px;
 }
 
 .nav-cta:hover {
-  background: #f0f1f314;
+  background: var(--c-alpha-900);
 }
 
 .menu-toggle {
@@ -331,10 +422,10 @@ h2 {
   z-index: -1;
   background: linear-gradient(
     180deg,
-    #0c0d0f36 0%,
-    #0c0d0f19 28%,
-    #0c0d0f30 58%,
-    #0c0d0fa6 82%,
+    var(--c-alpha-400) 0%,
+    var(--c-alpha-300) 28%,
+    var(--c-alpha-400) 58%,
+    var(--c-alpha-700) 82%,
     var(--bg) 100%
   );
 }
@@ -350,16 +441,16 @@ h2 {
   font-weight: 500;
   letter-spacing: -0.06em;
   line-height: 1.02;
-  text-shadow: 0 3px 34px #0c0d0f90;
+  text-shadow: 0 3px 34px var(--c-alpha-500);
 }
 
 .hero-copy > p {
   margin: 30px auto 0;
-  color: #e1e2e5;
+  color: var(--c-ink-1600);
   font-size: var(--fs-md);
   line-height: 1.6;
   max-width: 640px;
-  text-shadow: 0 2px 20px #0c0d0f;
+  text-shadow: 0 2px 20px var(--bg);
 }
 
 .hero-actions {
@@ -382,12 +473,12 @@ h2 {
 }
 
 .button-primary {
-  color: #17191d;
-  background: #eff1f5;
+  color: var(--c-surface-200);
+  background: var(--c-ink-2000);
 }
 
 .button-primary:hover {
-  background: #dce7fc;
+  background: var(--c-ink-1700);
 }
 
 .hero-secondary {
@@ -432,12 +523,12 @@ h2 {
 
 .tabs button:hover {
   color: var(--ink);
-  background: #ffffff07;
+  background: var(--c-alpha-1300);
 }
 
 .tabs button[aria-selected="true"] {
   color: var(--ink);
-  background: #24262b;
+  background: var(--c-line-100);
 }
 
 .example-tabs {
@@ -476,12 +567,12 @@ h2 {
 
 .user-message p {
   line-height: 1.55;
-  color: #e0e2e7;
+  color: var(--c-ink-1600);
 }
 
 .example-result {
   padding: 36px;
-  background: #17181b;
+  background: var(--c-surface-200);
   min-width: 0;
 }
 
@@ -565,7 +656,7 @@ h2 {
   width: var(--bar-width);
   height: 5px;
   border-radius: 4px;
-  background: #5d6470;
+  background: var(--c-surface-800);
 }
 
 .operation:first-child .operation-bar i {
@@ -609,7 +700,7 @@ dd {
   inset: 0;
   z-index: -1;
   background:
-    linear-gradient(180deg, var(--bg), #0c0d0f99 40%, var(--bg)),
+    linear-gradient(180deg, var(--bg), var(--c-alpha-600) 40%, var(--bg)),
     url("/images/shoreline-v3.webp") center 80% / cover;
   opacity: 0.75;
 }
@@ -739,7 +830,7 @@ dd {
     right: 20px;
     padding: 22px;
     gap: 24px;
-    background: #151618;
+    background: var(--c-surface-200);
     border: 1px solid var(--line);
     border-radius: 14px;
   }

@@ -23,7 +23,7 @@
   padding: 20px 16px;
   text-align: left;
   border-radius: 12px;
-  color: #969da8;
+  color: var(--c-ink-400);
 }
 
 .wf-stages strong {
@@ -34,7 +34,7 @@
 }
 
 .wf-stages > button > svg {
-  color: #8d9aaf;
+  color: var(--c-ink-300);
 }
 
 .wf-stage-arrow {
@@ -42,17 +42,17 @@
 }
 
 .wf-stages > button:hover {
-  color: #e3e8ef;
-  background: #ffffff04;
+  color: var(--c-ink-1800);
+  background: var(--c-alpha-1300);
 }
 
 .wf-stages > button[aria-selected="true"] {
-  background: #1b2028;
-  color: #f0f3f8;
+  background: var(--c-surface-300);
+  color: var(--c-ink-2000);
 }
 
 .wf-stages > button[aria-selected="true"] > svg {
-  color: #aac3f3;
+  color: var(--c-ink-accent-500);
 }
 
 .wf-stages > button[aria-selected="true"] .wf-stage-arrow {
@@ -61,16 +61,16 @@
 
 .wf-stages > button:focus-visible,
 .wf-panel-nav button:focus-visible {
-  outline: 2px solid #aac3f3;
+  outline: 2px solid var(--c-ink-accent-500);
   outline-offset: 4px;
 }
 
 .wf-panel {
   min-width: 0;
   padding: 32px 34px 0;
-  border: 1px solid #30343b;
+  border: 1px solid var(--c-line-200);
   border-radius: 20px;
-  background: #15171a;
+  background: var(--c-surface-200);
 }
 
 .wf-heading-stack,
@@ -106,13 +106,13 @@
   margin-top: 14px;
   font-size: var(--fs-sm);
   line-height: 1.65;
-  color: #aeb6c2;
+  color: var(--c-ink-700);
   max-width: none;
 }
 
 .wf-visual-stack {
   padding: 26px 0;
-  border-top: 1px solid #30343b;
+  border-top: 1px solid var(--c-line-200);
 }
 
 .wf-visual {
@@ -127,27 +127,27 @@
   font-weight: 500;
   line-height: 1.4;
   letter-spacing: -0.015em;
-  color: #e9edf5;
+  color: var(--c-ink-1800);
 }
 
 .wf-visual strong {
   font-size: var(--fs-sm);
   font-weight: 500;
   line-height: 1.5;
-  color: #e2e8f2;
+  color: var(--c-ink-1800);
 }
 
 .wf-visual p,
 .wf-visual dd {
   font-size: var(--fs-sm);
   line-height: 1.6;
-  color: #aeb8c7;
+  color: var(--c-ink-700);
   max-width: none;
 }
 
 .wf-visual svg {
   flex: none;
-  color: #9eb5d9;
+  color: var(--c-ink-accent-400);
   stroke-width: 1.6;
 }
 
@@ -169,15 +169,15 @@
   flex-direction: column;
   justify-content: center;
   --g: 14px;
-  --flow: #59637a;
-  --flow-tip: #8b95a8;
+  --flow: var(--c-line-500);
+  --flow-tip: var(--c-ink-200);
 }
 
 .wf-box {
   padding: 15px 18px;
-  border: 1px solid #2e333b;
+  border: 1px solid var(--c-line-200);
   border-radius: 12px;
-  background: #15171b;
+  background: var(--c-surface-200);
 }
 
 .wf-box strong {
@@ -186,28 +186,28 @@
   font-weight: 500;
   line-height: 1.35;
   letter-spacing: -0.015em;
-  color: #e8ecf2;
+  color: var(--c-ink-1800);
 }
 
 .wf-box p {
   margin: 6px 0 0;
   font-size: var(--fs-fine);
   line-height: 1.5;
-  color: #8e97a6;
+  color: var(--c-ink-200);
 }
 
 /* The one node each stage is heading towards. */
 .wf-box--out {
-  border-color: #4a5c8c;
-  background: #171c26;
+  border-color: var(--c-line-accent-100);
+  background: var(--c-surface-300);
 }
 
 .wf-box--out strong {
-  color: #cfdcf5;
+  color: var(--c-ink-1400);
 }
 
 .wf-box--out p {
-  color: #93a1ba;
+  color: var(--c-ink-500);
 }
 
 /* A connector is a hairline with a small chevron, drawn down the centre. */
@@ -401,7 +401,7 @@
   margin: 26px 0 0;
   font-size: var(--fs-fine);
   line-height: 1.6;
-  color: #8e97a6;
+  color: var(--c-ink-200);
 }
 
 /* 3. Build with the Agent. Every step branches off the baseline, so the dashed
@@ -417,7 +417,7 @@
   margin: 0 0 20px;
   font-size: 16px;
   line-height: 1.5;
-  color: #8e97a6;
+  color: var(--c-ink-200);
 }
 
 .wf-gates {
@@ -437,7 +437,7 @@
   top: -10px;
   bottom: -10px;
   left: 6px;
-  border-left: 1px dashed #4b5462;
+  border-left: 1px dashed var(--c-line-400);
 }
 
 .wf-gates li {
@@ -470,9 +470,9 @@
   align-items: baseline;
   gap: 12px;
   padding: 14px 18px;
-  border: 1px solid #2e333b;
+  border: 1px solid var(--c-line-200);
   border-radius: 12px;
-  background: #15171b;
+  background: var(--c-surface-200);
 }
 
 .wf-lane img,
@@ -481,20 +481,20 @@
   width: 21px;
   height: 21px;
   object-fit: contain;
-  color: #9fb2d2;
+  color: var(--c-ink-accent-300);
 }
 
 .wf-lane strong {
   font-size: var(--fs-sm);
   font-weight: 500;
   letter-spacing: -0.015em;
-  color: #e8ecf2;
+  color: var(--c-ink-1800);
 }
 
 .wf-lane span {
   margin-left: auto;
   font-size: var(--fs-fine);
-  color: #8e97a6;
+  color: var(--c-ink-200);
 }
 
 .wf-ties {
@@ -535,21 +535,21 @@
   font-weight: 500;
   line-height: 1.3;
   letter-spacing: -0.015em;
-  color: #e8ecf2;
+  color: var(--c-ink-1800);
 }
 
 .wf-ties p {
   margin: 6px 0 0;
   font-size: var(--fs-fine);
   line-height: 1.45;
-  color: #8e97a6;
+  color: var(--c-ink-200);
 }
 
 .wf-ladder .wf-view-note {
   margin: 22px 0 0;
   font-size: var(--fs-fine);
   line-height: 1.6;
-  color: #8e97a6;
+  color: var(--c-ink-200);
 }
 
 /* 5. Final validation. An hourglass laid out horizontally, using exactly the
@@ -644,7 +644,7 @@
   padding-left: 17px;
   font-size: 16px;
   line-height: 1.3;
-  color: #aab3c1;
+  color: var(--c-ink-700);
 }
 
 .wf-checks li::before {
@@ -662,7 +662,7 @@
   margin: 26px 0 0;
   font-size: 16px;
   line-height: 1.6;
-  color: #8e97a6;
+  color: var(--c-ink-200);
 }
 
 .wf-panel-nav {
@@ -671,7 +671,7 @@
   align-items: center;
   gap: 15px;
   padding: 20px 0;
-  border-top: 1px solid #30343b;
+  border-top: 1px solid var(--c-line-200);
 }
 
 .wf-panel-nav button {
@@ -681,7 +681,7 @@
   font-size: var(--fs-fine);
   min-height: 38px;
   border-radius: 5px;
-  color: #cedaef;
+  color: var(--c-ink-1400);
   padding: 4px 0;
   white-space: nowrap;
 }
@@ -696,13 +696,13 @@
 }
 
 .wf-panel-nav button:not(:disabled):hover {
-  color: #fff;
+  color: var(--c-ink-2100);
 }
 
 .wf-position {
   text-align: center;
   font-size: var(--fs-fine);
-  color: #98a4b5;
+  color: var(--c-ink-500);
   font-variant-numeric: tabular-nums;
 }
 

@@ -11,5 +11,10 @@ dist/
 /Roofline-Guided Agent for Optimzing LLM Inference.txt
 
 # Refactor verification harness: baseline screenshots and a pristine worktree.
-.refactor/
+# The verification harness is kept; its captures and scratch worktrees are not.
+.refactor/baseline/
+.refactor/current/
+.refactor/pristine/
+.refactor/prev/
+.refactor/report-now.txt
 agent-trace/

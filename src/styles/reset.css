@@ -1,0 +1,138 @@
+/* Reset.
+
+   This replaces Tailwind's preflight, which the page was pulling in through
+   `@import "tailwindcss"` even though not a single utility class was ever used.
+   Preflight was shipping 4,586 bytes of the built CSS purely to reset the
+   document, and the page's typography genuinely depended on it, so it could not
+   simply be dropped.
+
+   What follows is preflight narrowed to the elements this page actually renders.
+   Rules for elements that appear nowhere in the markup (hr, abbr, sub, sup,
+   code, pre, progress, text inputs, date pickers, file selectors) are left out;
+   the browser defaults for those are fine and unreferenced rules are the kind of
+   thing that rots. Every rule that is here is here because removing it moves
+   pixels, and the screenshot diff was used to decide which was which. */
+
+/* Box model, and the margin/padding wipe the whole layout is built on top of.
+   The border shorthand sets a zero-width solid border, so a rule that later
+   gives a width alone still draws. */
+*,
+::before,
+::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 0 solid;
+}
+
+/* line-height is the load-bearing one: every element that does not set its own
+   inherits 1.5 from here. Without it the browser falls back to `normal`, around
+   1.2 for Geist, and every paragraph on the page tightens. */
+html {
+  line-height: 1.5;
+  tab-size: 4;
+
+  /* Prefixed on purpose. Unprefixed `text-size-adjust` is not implemented in
+     WebKit, which is the only engine that needs the rule, and there is no
+     autoprefixer in this build. */
+  /* stylelint-disable-next-line property-no-vendor-prefix */
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Headings opt in to their size and weight rather than opting out. Six of the
+   seven headings here are sized by a component rule; inheriting the weight is
+   what keeps them from falling back to bold. */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+/* `bolder` rather than `bold`: it is relative to the inherited weight, so a
+   <strong> inside a 500-weight label resolves differently than one in body
+   text. Preflight used `bolder` and the design was tuned against it. */
+b,
+strong {
+  font-weight: bolder;
+}
+
+small {
+  font-size: 80%;
+}
+
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+/* Lists here are layout containers, not prose. */
+ol,
+ul,
+menu {
+  list-style: none;
+}
+
+summary {
+  display: list-item;
+}
+
+table {
+  text-indent: 0;
+  border-color: inherit;
+  border-collapse: collapse;
+}
+
+/* Replaced elements as blocks, so icons and logos sit on the box rather than on
+   the text baseline. This is what keeps a stray descender gap from appearing
+   under every lucide icon. */
+img,
+svg,
+video,
+canvas {
+  display: block;
+  vertical-align: middle;
+}
+
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* The page's only form control is <button>, but a future input should not have
+   to remember to re-inherit the font. */
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  font-feature-settings: inherit;
+  font-variation-settings: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+  border-radius: 0;
+  background-color: transparent;
+  opacity: 1;
+}
+
+/* iOS Safari refuses to round a button's corners without this. Stylelint wants
+   `auto` here, but `auto` only resolves to `button` in engines that implement
+   the modern appearance spec, and the ones that do not are exactly the ones
+   this rule is for. */
+button {
+  /* stylelint-disable-next-line declaration-property-value-keyword-no-deprecated */
+  appearance: button;
+}
+
+:-moz-focusring:where(:not(iframe)) {
+  outline: auto;
+}
+
+[hidden]:where(:not([hidden="until-found"])) {
+  display: none !important;
+}

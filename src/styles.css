@@ -1,4 +1,4 @@
-@import url("tailwindcss");
+@import url("./styles/reset.css");
 
 @font-face {
   font-family: Geist;
@@ -194,9 +194,8 @@
   }
 }
 
-* {
-  box-sizing: border-box;
-}
+/* box-sizing now comes from the reset, together with the margin and padding
+   wipe it was always paired with. */
 
 html {
   scroll-behavior: smooth;

@@ -899,23 +899,9 @@
 }
 
 @media (max-width: 600px) {
-  .wf-ladder-heads,
   .wf-lanes {
     grid-template-columns: 1fr;
     gap: 18px;
-  }
-
-  .wf-merge {
-    height: 22px;
-  }
-
-  .wf-merge::before,
-  .wf-merge i:nth-child(2) {
-    display: none;
-  }
-
-  .wf-merge i:nth-child(1) {
-    left: 5px;
   }
 
   .wf-checks,

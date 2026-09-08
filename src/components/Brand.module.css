@@ -1,0 +1,14 @@
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-size: var(--fs-xl);
+  font-weight: 500;
+  letter-spacing: -0.06em;
+}
+
+.brand img {
+  width: 34px;
+  height: 29px;
+  object-fit: contain;
+}

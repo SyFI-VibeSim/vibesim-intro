@@ -1,0 +1,118 @@
+/* Layer 10 is reserved for the single sticky navigation. */
+
+.hero {
+  position: relative;
+  isolation: isolate;
+  min-height: 760px;
+  height: min(940px, 100dvh);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.heroImage,
+.heroShade {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+}
+
+.heroImage {
+  object-fit: cover;
+  object-position: center 57%;
+}
+
+.heroShade {
+  z-index: -1;
+  background: linear-gradient(
+    180deg,
+    var(--c-alpha-400) 0%,
+    var(--c-alpha-300) 28%,
+    var(--c-alpha-400) 58%,
+    var(--c-alpha-700) 82%,
+    var(--bg) 100%
+  );
+}
+
+.heroCopy {
+  text-align: center;
+  padding-top: 40px;
+  padding-bottom: 90px;
+}
+
+.hero h1 {
+  font-size: var(--fs-h1);
+  font-weight: 500;
+  letter-spacing: -0.06em;
+  line-height: 1.02;
+  text-shadow: 0 3px 34px var(--c-alpha-500);
+}
+
+.heroCopy > p {
+  margin: 30px auto 0;
+  color: var(--c-ink-1600);
+  font-size: var(--fs-md);
+  line-height: 1.6;
+  max-width: 640px;
+  text-shadow: 0 2px 20px var(--bg);
+}
+
+.heroActions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 32px;
+}
+
+.heroSecondary {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-size: var(--fs-sm);
+}
+
+.heroSecondary:hover {
+  color: var(--accent);
+}
+
+@media (max-width: 1023px) {
+  .hero {
+    min-height: 700px;
+    height: 850px;
+  }
+}
+
+@media (max-width: 767px) {
+  .hero {
+    min-height: 660px;
+    height: 92svh;
+    max-height: 840px;
+  }
+
+  .heroCopy {
+    padding-top: 35px;
+    padding-bottom: 90px;
+  }
+
+  .hero h1 {
+    letter-spacing: -0.055em;
+  }
+
+  .heroCopy > p {
+    margin-top: 25px;
+    max-width: 345px;
+  }
+
+  .heroActions {
+    gap: 22px;
+    flex-direction: column;
+    margin-top: 28px;
+  }
+
+  .heroImage {
+    object-position: 48% center;
+  }
+}

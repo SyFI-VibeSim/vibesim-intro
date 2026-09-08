@@ -1,0 +1,84 @@
+.closing {
+  position: relative;
+  isolation: isolate;
+  padding: 130px 0 125px;
+  text-align: center;
+}
+
+.closing::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(180deg, var(--bg), var(--c-alpha-600) 40%, var(--bg)),
+    url("/images/shoreline-v3.webp") center 80% / cover;
+  opacity: 0.75;
+}
+
+.closing :global(.button) {
+  margin-top: 30px;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 25px;
+  padding-block: 35px;
+  border-top: 1px solid var(--line);
+}
+
+.footer > span {
+  color: var(--muted);
+}
+
+.footer > a:last-child {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+}
+
+@media (max-width: 767px) {
+  .closing {
+    padding-block: 90px;
+  }
+
+  .footer {
+    flex-wrap: wrap;
+    padding-block: 25px;
+    gap: 20px;
+  }
+
+  .footer > span {
+    order: 3;
+    width: 100%;
+  }
+} /* Compact icon tabs keep attention on the Agent conversation. */
+
+/* The table scrolls inside its own wrapper. Without min-width the wrapper
+   takes the table's intrinsic width and pushes the whole page sideways. */
+
+/* Product walkthrough, with readable controls and all four product roles. */
+
+.closing h2 {
+  font-size: var(--fs-h2-closing);
+}
+
+.footer > span,
+.footer > a:last-child {
+  font-size: var(--fs-fine);
+}
+
+/* The footer's smaller wordmark. Written under .footer so it keeps the two
+   class specificity the old .footer .brand rule had, and so it still wins
+   against Brand's own .brand rule whichever order the two modules are emitted
+   in. */
+.footer .footerBrand {
+  font-size: var(--fs-md);
+}
+
+.footer .footerBrand img {
+  width: 29px;
+}

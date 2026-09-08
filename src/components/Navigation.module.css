@@ -1,0 +1,108 @@
+/* Layer 10 is reserved for the single sticky navigation. */
+.navigation {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: var(--nav-layer);
+}
+
+.navigationInner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  width: var(--page-width);
+  height: 76px;
+  margin: auto;
+  border-bottom: 1px solid var(--c-alpha-1000);
+}
+
+.navigation nav {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.navigation nav a {
+  color: var(--c-ink-1600);
+}
+
+.navigation nav a:hover {
+  color: var(--ink);
+}
+
+.navigationActions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.navCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid var(--c-alpha-1100);
+  border-radius: var(--r-pill);
+  padding: 10px 17px;
+}
+
+.navCta:hover {
+  background: var(--c-alpha-900);
+}
+
+.menuToggle {
+  display: none;
+}
+
+@media (max-width: 1023px) {
+  .navigationInner {
+    gap: 20px;
+  }
+
+  .navigation nav {
+    gap: 22px;
+  }
+}
+
+@media (max-width: 767px) {
+  .navigationInner {
+    height: 68px;
+    width: calc(100% - 40px);
+  }
+
+  .navigation nav {
+    display: none;
+  }
+
+  .navigation nav[data-open="true"] {
+    display: grid;
+    position: absolute;
+    top: 68px;
+    left: 20px;
+    right: 20px;
+    padding: 22px;
+    gap: 24px;
+    background: var(--c-surface-200);
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+  }
+
+  .navCta {
+    display: none;
+  }
+
+  .menuToggle {
+    display: grid;
+    place-items: center;
+    padding: 8px;
+  }
+}
+
+/* Split out of the rule above, which listed both selectors. It is not
+   redundant: .examples-section .section-intro p sets max-width to none at the
+   same specificity, so which of the two wins is decided by source order, and
+   this one has to stay after it. */
+
+.navigation nav a,
+.navCta {
+  font-size: var(--fs-fine);
+}

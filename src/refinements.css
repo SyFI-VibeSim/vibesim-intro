@@ -30,11 +30,6 @@ h2 {
    same specificity, so which of the two wins is decided by source order, and
    this one has to stay after it. */
 
-.navigation nav a,
-.nav-cta {
-  font-size: var(--fs-fine);
-}
-
 .tabs button {
   font-size: var(--fs-sm);
   padding: 16px 24px;
@@ -53,15 +48,6 @@ h2 {
    takes the table's intrinsic width and pushes the whole page sideways. */
 
 /* Product walkthrough, with readable controls and all four product roles. */
-
-.closing h2 {
-  font-size: var(--fs-h2-closing);
-}
-
-.footer > span,
-.footer > a:last-child {
-  font-size: var(--fs-fine);
-}
 
 @media (max-width: 767px) {
   .section {

@@ -1,0 +1,36 @@
+{
+  "source": "VibeSim deployment-scaling benchmark supplied by the maintainer",
+  "simulated_ms": 2000000,
+  "note": "Every run simulates the same 2,000,000 ms of serving. wall_s is simulator wall time on one host and varies with the machine. The measurement host is not recorded yet.",
+  "shapes": [
+    { "tier": "1_local_dense", "name": "Single GPU, dense", "model": "Llama 3 8B" },
+    { "tier": "3_tp", "name": "Tensor parallel", "model": "Llama 3 8B" },
+    { "tier": "2_moe_local", "name": "MoE expert parallel", "model": "Qwen3 235B" },
+    { "tier": "4_dp_tp", "name": "Data and tensor parallel", "model": "Llama 3 8B" },
+    { "tier": "5_pd", "name": "Prefill and decode split", "model": "Llama 3 8B" },
+    { "tier": "6_afd", "name": "Attention and FFN split", "model": "Qwen3 235B" }
+  ],
+  "runs": [
+    { "tier": "1_local_dense", "run": "local", "gpus": 1, "wall_s": 0.722 },
+    { "tier": "2_moe_local", "run": "moe_ep8", "gpus": 8, "wall_s": 0.795 },
+    { "tier": "2_moe_local", "run": "moe_ep32", "gpus": 32, "wall_s": 1.834 },
+    { "tier": "3_tp", "run": "tp2", "gpus": 2, "wall_s": 1.21 },
+    { "tier": "3_tp", "run": "tp4", "gpus": 4, "wall_s": 1.033 },
+    { "tier": "3_tp", "run": "tp8", "gpus": 8, "wall_s": 1.211 },
+    { "tier": "4_dp_tp", "run": "dp2_tp2", "gpus": 4, "wall_s": 1.19 },
+    { "tier": "4_dp_tp", "run": "dp4_tp2", "gpus": 8, "wall_s": 1.708 },
+    { "tier": "4_dp_tp", "run": "dp8_tp2", "gpus": 16, "wall_s": 2.959 },
+    { "tier": "5_pd", "run": "pd_1p_8d", "gpus": 9, "wall_s": 2.565 },
+    { "tier": "5_pd", "run": "pd_1p_16d", "gpus": 17, "wall_s": 4.39 },
+    { "tier": "5_pd", "run": "pd_1p_32d", "gpus": 33, "wall_s": 7.765 },
+    { "tier": "5_pd", "run": "pd_1p_64d", "gpus": 65, "wall_s": 16.386 },
+    { "tier": "6_afd", "run": "afd_4a_1f", "gpus": 24, "wall_s": 40.149 },
+    { "tier": "6_afd", "run": "afd_4a_2f", "gpus": 32, "wall_s": 52.935 },
+    { "tier": "6_afd", "run": "afd_8a_1f", "gpus": 40, "wall_s": 61.068 },
+    { "tier": "6_afd", "run": "afd_8a_2f", "gpus": 48, "wall_s": 76.591 },
+    { "tier": "6_afd", "run": "afd_16a_1f", "gpus": 72, "wall_s": 92.916 },
+    { "tier": "6_afd", "run": "afd_16a_2f", "gpus": 80, "wall_s": 104.6 },
+    { "tier": "6_afd", "run": "afd_32a_1f", "gpus": 136, "wall_s": 112.361 },
+    { "tier": "6_afd", "run": "afd_32a_2f", "gpus": 144, "wall_s": 142.799 }
+  ]
+}

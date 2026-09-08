@@ -1,0 +1,76 @@
+{
+  "source": "VibeSim analyzer optimality report, logs/20260907_0_llama3_h200_throughput/rate128",
+  "setup": "Llama 3 8B BF16, 1 \u00d7 NVIDIA H200",
+  "workload": "512 requests, 1024 in and 256 out, arriving at 128 per second",
+  "gpuUtilizationPct": 99.88,
+  "totalGpuSeconds": 20.643573247528074,
+  "necessaryGpuSeconds": 9.594106893653333,
+  "necessaryFrac": 0.46475030163695913,
+  "buckets": [
+    {
+      "name": "GPU idle time",
+      "gpuSeconds": 0.02483701906204078,
+      "frac": 0.0012031356570023479,
+      "necessary": false,
+      "description": "Time the run holds the GPU without modeled GPU work.",
+      "key": "idle"
+    },
+    {
+      "name": "Load imbalance",
+      "gpuSeconds": 2.961860445793718e-09,
+      "frac": 1.434761516467785e-10,
+      "necessary": false,
+      "description": "The modeled gap between completion limited by stragglers and balanced work.",
+      "key": "imbalance"
+    },
+    {
+      "name": "Batching gap",
+      "gpuSeconds": 2.109258699599406,
+      "frac": 0.10217507765289496,
+      "necessary": false,
+      "description": "The modeled gap between the observed batches and best profiled kernel throughput with batching unconstrained.",
+      "key": "batching"
+    },
+    {
+      "name": "Communication",
+      "gpuSeconds": 0.0,
+      "frac": 0.0,
+      "necessary": false,
+      "description": "The modeled cost removed when communication operations are excluded. This single-GPU run has none.",
+      "key": "communication"
+    },
+    {
+      "name": "Kernel efficiency gap",
+      "gpuSeconds": 4.41994477643036,
+      "frac": 0.21410754443684396,
+      "necessary": false,
+      "description": "The difference between profiled best kernel rates and the matching hardware peak.",
+      "key": "hardware_gap"
+    },
+    {
+      "name": "Redundant work gap",
+      "gpuSeconds": 0.45341079849064947,
+      "frac": 0.02196377502353873,
+      "necessary": false,
+      "description": "The gap between the executed operations at hardware peak and the separate model-required operation bounds.",
+      "key": "excess_over_necessary"
+    },
+    {
+      "name": "Fusion gap",
+      "gpuSeconds": 4.042015057330424,
+      "frac": 0.1958001654492847,
+      "necessary": false,
+      "description": "The difference between separate operation lower bounds and the scope-fused lower bound. This is theoretical headroom, not a measured fusion speedup.",
+      "key": "fusion"
+    },
+    {
+      "name": "Model-required lower bound",
+      "gpuSeconds": 9.594106893653333,
+      "frac": 0.46475030163695913,
+      "necessary": true,
+      "description": "The scope-fused theoretical bound derived from model FLOPs and bytes at hardware peak rates.",
+      "key": "hardware_necessary"
+    }
+  ],
+  "note": "Simulated GPU-seconds, not measured end-to-end hardware results. Buckets sum to the simulated total. This unlocked analysis permits idealized rebatching and uses segmented and scope-fused model-work lower bounds; the gaps are not guaranteed achievable savings."
+}

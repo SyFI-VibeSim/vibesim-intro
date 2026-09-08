@@ -1,0 +1,123 @@
+/* Two boxes, side by side, holding the product definition. The split is the
+   argument the section heading makes, so the two sides stay visually equal:
+   same surface, same width, same internal rhythm. Neither is a sub-card of the
+   other and neither is decorated more than the other. */
+
+.product-section {
+  padding-block: 96px 104px;
+}
+
+.product-parts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 26px;
+}
+
+.product-part {
+  display: flex;
+  flex-direction: column;
+  padding: 42px 40px 36px;
+  border: 1px solid #303237;
+  border-radius: 24px;
+  background: #121315;
+}
+
+.product-part h3 {
+  font-size: var(--fs-2xl);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+}
+
+.product-part-role {
+  margin-top: 10px;
+  font-size: var(--fs-md);
+  line-height: 1.5;
+  color: var(--accent);
+}
+
+.product-part dl {
+  margin: 34px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  /* The lists in the two boxes are the same length, so the notes below them
+     stay on the same baseline without being pushed there. */
+  flex: 1;
+}
+
+.product-part dl > div {
+  display: grid;
+  grid-template-columns: 112px minmax(0, 1fr);
+  gap: 20px;
+  align-items: baseline;
+}
+
+.product-part dt {
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.product-part dd {
+  margin: 0;
+  font-size: var(--fs-sm);
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+.product-part-note {
+  margin-top: 34px;
+  padding-top: 22px;
+  border-top: 1px solid #26282c;
+  font-size: var(--fs-fine);
+  line-height: 1.6;
+  color: var(--subtle);
+}
+
+/* Two boxes still fit side by side here, but a term column inside them does
+   not: it squeezed the detail into four-line ribbons. The term moves above its
+   line instead, which keeps the two-box argument intact down to the stack. */
+@media (max-width: 1180px) {
+  .product-part {
+    padding: 38px 34px 32px;
+  }
+  .product-part dl > div {
+    grid-template-columns: 1fr;
+    gap: 5px;
+  }
+}
+
+/* Below this the two columns cannot hold a term and its detail side by side,
+   so the boxes stack and each row becomes a label above its line. */
+@media (max-width: 900px) {
+  .product-section {
+    padding-block: 64px 72px;
+  }
+  .product-parts {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .product-part {
+    padding: 32px 28px 28px;
+  }
+  .product-part dl {
+    margin-top: 28px;
+    gap: 20px;
+  }
+  .product-part dl > div {
+    grid-template-columns: 1fr;
+    gap: 5px;
+  }
+  .product-part-note {
+    margin-top: 28px;
+    padding-top: 18px;
+  }
+}
+
+@media (max-width: 420px) {
+  .product-part {
+    padding: 26px 22px 24px;
+    border-radius: 20px;
+  }
+}

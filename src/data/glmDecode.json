@@ -1,0 +1,99 @@
+{
+  "experiment": "predict_3627594e221c_glm52_nvfp4_b200_tp4_ep4_decode_b32_kv8192_popularity",
+  "predictionId": "p_59f165c2c22c46c6a4f8f9bd75e6a2b0",
+  "source": "Analyzer HTTP descriptor, cases and case 0 / operation 0 cost-tree",
+  "totalMs": 19.48533058166504,
+  "descriptor": {
+    "arch": {
+      "type": "glm52_vllm_nvfp4_dsa_moe"
+    },
+    "case_count": 1,
+    "display_name": "predict_3627594e221c_glm52_nvfp4_b200_tp4_ep4_decode_b32_kv8192_popularity",
+    "gpu": {
+      "count": 4,
+      "name": "NVIDIA B200"
+    },
+    "kind": "timing_predict",
+    "lifecycle": {
+      "analysis": "complete",
+      "prediction": "complete"
+    },
+    "prediction_id": "p_59f165c2c22c46c6a4f8f9bd75e6a2b0",
+    "resources": {
+      "cases_href": "predictions/p_59f165c2c22c46c6a4f8f9bd75e6a2b0/cases",
+      "kernel_input_distribution_href": "predictions/p_59f165c2c22c46c6a4f8f9bd75e6a2b0/subjects/kernel-input-distribution/payload"
+    },
+    "schema_version": 1,
+    "selector": "iter"
+  },
+  "input": {
+    "groups": [
+      {
+        "decode_kv_lens": [
+          8192,
+          8192,
+          8192,
+          8192,
+          8192,
+          8192,
+          8192,
+          8192,
+          8192,
+          8192,
+          8192,
+          8192,
+          8192,
+          8192,
+          8192,
+          8192,
+          8192,
+          8192,
+          8192,
+          8192,
+          8192,
+          8192,
+          8192,
+          8192,
+          8192,
+          8192,
+          8192,
+          8192,
+          8192,
+          8192,
+          8192,
+          8192
+        ]
+      }
+    ]
+  },
+  "aggregation": "Sum across repeated layers; scale multiplies repetition; max selects the critical rank. Operation names grouped by leaf role.",
+  "operations": [
+    {
+      "name": "NVFP4 fused MoE",
+      "time": 10.331655666232109,
+      "share": 53.022737402021846
+    },
+    {
+      "name": "Sparse MLA decode attention",
+      "time": 1.1096009630709887,
+      "share": 5.69454522939981
+    },
+    {
+      "name": "Attention output projection",
+      "time": 1.03479877486825,
+      "share": 5.310655472491478
+    },
+    {
+      "name": "Fused TP all-reduce",
+      "time": 0.8998787645250559,
+      "share": 4.618237092532614
+    },
+    {
+      "name": "Fused QKV-A projection",
+      "time": 0.7894568871706724,
+      "share": 4.051544744709241
+    }
+  ],
+  "topFiveMs": 14.165391055867076,
+  "topFiveShare": 72.69771994115499
+}

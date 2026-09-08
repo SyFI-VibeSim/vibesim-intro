@@ -1,0 +1,24 @@
+{
+  "tool": "built-in image_gen",
+  "purpose": "Three candidate hero backgrounds; closing and default hero preserved pending selection",
+  "variants": [
+    {
+      "key": "a",
+      "name": "建筑与地景",
+      "prompt": "Use case: ads-marketing. Generate ONE original photorealistic wide 16:9 website hero BACKGROUND photograph, no text or graphic overlays. Subject: a premium contemporary data-center building on a remote coastal plateau, concrete, dark graphite metal cooling louvers and a restrained band of glass revealing a few believable server racks. Architectural editorial photography, grounded and credible, not science fiction. Preserve the visual mood of a moody cinematic rocky shoreline: neutral charcoal, misty warm gray sky, desaturated stone, very subtle warm interior light, deep shadows, atmospheric scale and calm. Composition for centered white website headline: the middle 65% width and upper/middle 55% height must be a quiet low-contrast expanse of dark cloud and atmosphere. Place the low horizontal building and visible louvers mainly along the lower third, with its nearest corner at left edge creating depth. Beautiful overcast twilight light, natural material texture, thin damp reflection on foreground dark pavement, no cars or people. Bottom fades naturally into near-black. Camera 28mm architectural lens, refined expensive real photographic quality. Avoid neon, electric blue, purple, glowing circuit motifs, grids, explosions, excessive LEDs, logos, signs, text, watermarks, fake computer graphics, exaggerated futuristic buildings. Output only this single clean landscape image, not a collage or webpage mockup.",
+      "file": "/images/hero-datacenter-a.png"
+    },
+    {
+      "key": "b",
+      "name": "机房与光线",
+      "prompt": "Use case: ads-marketing. Generate ONE original high-end cinematic photorealistic 16:9 wide background photograph for a premium LLM serving website. Subject: a real modern data center interior, photographed from an oblique architectural angle with tall black server enclosures framing the left and right outer edges and a broad quiet dark central aisle. This is restrained architectural photography, not a stock blue technology photo. Palette neutral graphite, gunmetal, smoke gray, faint silver light with almost no saturation. Racks readable as real server hardware at the edges, tiny sparse warm-white indicators only, large panels and beautifully controlled soft reflections. Upper-middle and center 65% of the frame should be dark, softly shaded and spacious so two lines of large centered white typography can be overlaid later; no bright vanishing-point light behind text. Subtle daylight entering indirectly from high clerestory windows, highlights mainly at far edges and lower third, black polished concrete floor with a delicate reflection, dramatic depth without theatrical fog. Human-scale believable facility, elegant and calm like a premium architecture campaign. Maintain the atmosphere of a dark rocky shoreline image but express it through technology and material. No text, no logos, no people, no screens with data, no neon blue, no purple, no glowing circuitry, no cyberpunk, no lens flares. Output one clean photograph, not a collage and not a website screenshot.",
+      "file": "/images/hero-datacenter-b.png"
+    },
+    {
+      "key": "c",
+      "name": "玻璃后的计算设施",
+      "prompt": "Use case: ads-marketing. Generate ONE original photorealistic cinematic 16:9 landscape website hero background. View from outside a refined contemporary data center through an immense dark smoked-glass facade at twilight. Composition: black vertical mullions and faintly visible rows of real server racks occupy the rightmost third; the leftmost quarter includes close rough dark stone and the building edge; in the broad middle the glass reflects an overcast coastal sky, distant low hills and tranquil dark water. The reflected sky creates a quiet, low-contrast dark-gray field across the central 65% where large centered white website text will be overlaid. Architecture merges naturally with the subdued landscape, so the photograph feels in the same family as a cinematic charcoal rocky shoreline, while the server racks and cooling architecture unmistakably suggest a data center. Dark stone, brushed aluminum, glass, restrained warm-white interior lighting, precise architectural lines, refined natural reflections. Architectural editorial photograph, 35mm lens, real texture, restrained luxury, no fantasy. No text, logos, people, bright blue LED strips, purple, neon, digital patterns, glowing grids, floating UI, science fiction, or watermark. Lower edge naturally very dark. Output one clean background photograph only, not a collage or mockup.",
+      "file": "/images/hero-datacenter-c.png"
+    }
+  ]
+}

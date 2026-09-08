@@ -1,0 +1,316 @@
+{
+  "experiment": "20260902_2_glm52_single_decode_spec_sweep",
+  "source": "Analyzer HTTP descriptor and cases endpoints; measured replay acceptance artifact",
+  "model": "GLM 5.2 NVFP4",
+  "gpu": "8 × B200",
+  "parallelism": "TP8 + EP8",
+  "prefixKv": 14830,
+  "decodeRequests": 1,
+  "acceptanceSource": "logs/20260902_0_glm52_diverse100_spec5_tp8_alignment/profile_workload/spec_decode_metrics.json",
+  "acceptance": {
+    "schema_version": 1,
+    "counter_scope": "replay_prometheus_delta",
+    "num_drafts": 41262,
+    "draft_tokens": 206306,
+    "accepted_tokens": 94004,
+    "accepted_tokens_per_position": {
+      "0": 37023,
+      "1": 26780,
+      "2": 14868,
+      "3": 8811,
+      "4": 6522
+    },
+    "acceptance_rate": 0.4556532529349607,
+    "acceptance_rate_percent": 45.565325293496066,
+    "mean_acceptance_length": 3.2782220929668946,
+    "per_position_acceptance_rates": {
+      "0": 0.8972662498182347,
+      "1": 0.6490233144297417,
+      "2": 0.3603315399156609,
+      "3": 0.2135378798894867,
+      "4": 0.15806310891377054
+    },
+    "before": {
+      "num_drafts": 0,
+      "num_draft_tokens": 0,
+      "num_accepted_tokens": 0,
+      "accepted_per_position": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0
+      }
+    },
+    "after": {
+      "num_drafts": 41262,
+      "num_draft_tokens": 206306,
+      "num_accepted_tokens": 94004,
+      "accepted_per_position": {
+        "0": 37023,
+        "1": 26780,
+        "2": 14868,
+        "3": 8811,
+        "4": 6522
+      }
+    }
+  },
+  "formula": "1000 * (1 + sum(per-position acceptance rates through depth)) / predicted critical-path iteration milliseconds",
+  "rows": [
+    {
+      "depth": 0,
+      "predictionId": "p_e86a6caecb7d4df49c238b3c6c0d36af",
+      "iterationMs": 10.16230583190918,
+      "expectedTokens": 1,
+      "throughput": 98.40286412755314,
+      "descriptor": {
+        "arch": {
+          "type": "glm52_vllm_nvfp4_dsa_moe"
+        },
+        "case_count": 1,
+        "display_name": "20260902_2_glm52_single_decode_spec_sweep/non_spec",
+        "gpu": {
+          "count": 8,
+          "name": "NVIDIA B200"
+        },
+        "kind": "timing_predict",
+        "lifecycle": {
+          "analysis": "complete",
+          "prediction": "complete"
+        },
+        "prediction_id": "p_e86a6caecb7d4df49c238b3c6c0d36af",
+        "resources": {
+          "cases_href": "predictions/p_e86a6caecb7d4df49c238b3c6c0d36af/cases",
+          "kernel_input_distribution_href": "predictions/p_e86a6caecb7d4df49c238b3c6c0d36af/subjects/kernel-input-distribution/payload"
+        },
+        "schema_version": 1,
+        "selector": "iter"
+      },
+      "input": {
+        "groups": [
+          {
+            "decode_kv_lens": [
+              14830
+            ],
+            "prefill_chunk_pairs": []
+          }
+        ]
+      }
+    },
+    {
+      "depth": 1,
+      "predictionId": "p_74c0c00405c5406ebc531934033a60a2",
+      "iterationMs": 10.712262153625488,
+      "expectedTokens": 1.8972662498182347,
+      "throughput": 177.11163362223343,
+      "descriptor": {
+        "arch": {
+          "type": "glm52_vllm_nvfp4_dsa_moe"
+        },
+        "case_count": 1,
+        "display_name": "20260902_2_glm52_single_decode_spec_sweep/spec1",
+        "gpu": {
+          "count": 8,
+          "name": "NVIDIA B200"
+        },
+        "kind": "timing_predict",
+        "lifecycle": {
+          "analysis": "complete",
+          "prediction": "complete"
+        },
+        "prediction_id": "p_74c0c00405c5406ebc531934033a60a2",
+        "resources": {
+          "cases_href": "predictions/p_74c0c00405c5406ebc531934033a60a2/cases",
+          "kernel_input_distribution_href": "predictions/p_74c0c00405c5406ebc531934033a60a2/subjects/kernel-input-distribution/payload"
+        },
+        "schema_version": 1,
+        "selector": "speculative_iter"
+      },
+      "input": {
+        "groups": [
+          {
+            "decode_requests": [
+              [
+                14831,
+                2
+              ]
+            ],
+            "prefill_chunk_pairs": []
+          }
+        ]
+      }
+    },
+    {
+      "depth": 2,
+      "predictionId": "p_d98f56c7d3be4e0ca60b388c6012c46d",
+      "iterationMs": 11.253494262695312,
+      "expectedTokens": 2.546289564247976,
+      "throughput": 226.2665715029313,
+      "descriptor": {
+        "arch": {
+          "type": "glm52_vllm_nvfp4_dsa_moe"
+        },
+        "case_count": 1,
+        "display_name": "20260902_2_glm52_single_decode_spec_sweep/spec2",
+        "gpu": {
+          "count": 8,
+          "name": "NVIDIA B200"
+        },
+        "kind": "timing_predict",
+        "lifecycle": {
+          "analysis": "complete",
+          "prediction": "complete"
+        },
+        "prediction_id": "p_d98f56c7d3be4e0ca60b388c6012c46d",
+        "resources": {
+          "cases_href": "predictions/p_d98f56c7d3be4e0ca60b388c6012c46d/cases",
+          "kernel_input_distribution_href": "predictions/p_d98f56c7d3be4e0ca60b388c6012c46d/subjects/kernel-input-distribution/payload"
+        },
+        "schema_version": 1,
+        "selector": "speculative_iter"
+      },
+      "input": {
+        "groups": [
+          {
+            "decode_requests": [
+              [
+                14832,
+                3
+              ]
+            ],
+            "prefill_chunk_pairs": []
+          }
+        ]
+      }
+    },
+    {
+      "depth": 3,
+      "predictionId": "p_277f67a77bd0469c8cac65e3f22d3a18",
+      "iterationMs": 11.81820297241211,
+      "expectedTokens": 2.906621104163637,
+      "throughput": 245.94442242604268,
+      "descriptor": {
+        "arch": {
+          "type": "glm52_vllm_nvfp4_dsa_moe"
+        },
+        "case_count": 1,
+        "display_name": "20260902_2_glm52_single_decode_spec_sweep/spec3",
+        "gpu": {
+          "count": 8,
+          "name": "NVIDIA B200"
+        },
+        "kind": "timing_predict",
+        "lifecycle": {
+          "analysis": "complete",
+          "prediction": "complete"
+        },
+        "prediction_id": "p_277f67a77bd0469c8cac65e3f22d3a18",
+        "resources": {
+          "cases_href": "predictions/p_277f67a77bd0469c8cac65e3f22d3a18/cases",
+          "kernel_input_distribution_href": "predictions/p_277f67a77bd0469c8cac65e3f22d3a18/subjects/kernel-input-distribution/payload"
+        },
+        "schema_version": 1,
+        "selector": "speculative_iter"
+      },
+      "input": {
+        "groups": [
+          {
+            "decode_requests": [
+              [
+                14833,
+                4
+              ]
+            ],
+            "prefill_chunk_pairs": []
+          }
+        ]
+      }
+    },
+    {
+      "depth": 4,
+      "predictionId": "p_0fa278030da942e0bee3891eec6e176e",
+      "iterationMs": 12.369024276733398,
+      "expectedTokens": 3.120158984053124,
+      "throughput": 252.25587032942127,
+      "descriptor": {
+        "arch": {
+          "type": "glm52_vllm_nvfp4_dsa_moe"
+        },
+        "case_count": 1,
+        "display_name": "20260902_2_glm52_single_decode_spec_sweep/spec4",
+        "gpu": {
+          "count": 8,
+          "name": "NVIDIA B200"
+        },
+        "kind": "timing_predict",
+        "lifecycle": {
+          "analysis": "complete",
+          "prediction": "complete"
+        },
+        "prediction_id": "p_0fa278030da942e0bee3891eec6e176e",
+        "resources": {
+          "cases_href": "predictions/p_0fa278030da942e0bee3891eec6e176e/cases",
+          "kernel_input_distribution_href": "predictions/p_0fa278030da942e0bee3891eec6e176e/subjects/kernel-input-distribution/payload"
+        },
+        "schema_version": 1,
+        "selector": "speculative_iter"
+      },
+      "input": {
+        "groups": [
+          {
+            "decode_requests": [
+              [
+                14834,
+                5
+              ]
+            ],
+            "prefill_chunk_pairs": []
+          }
+        ]
+      }
+    },
+    {
+      "depth": 5,
+      "predictionId": "p_d621970ffd5b446da5324f800e2b8ef4",
+      "iterationMs": 12.904313087463379,
+      "expectedTokens": 3.2782220929668946,
+      "throughput": 254.04080563975992,
+      "descriptor": {
+        "arch": {
+          "type": "glm52_vllm_nvfp4_dsa_moe"
+        },
+        "case_count": 1,
+        "display_name": "20260902_2_glm52_single_decode_spec_sweep/spec5",
+        "gpu": {
+          "count": 8,
+          "name": "NVIDIA B200"
+        },
+        "kind": "timing_predict",
+        "lifecycle": {
+          "analysis": "complete",
+          "prediction": "complete"
+        },
+        "prediction_id": "p_d621970ffd5b446da5324f800e2b8ef4",
+        "resources": {
+          "cases_href": "predictions/p_d621970ffd5b446da5324f800e2b8ef4/cases",
+          "kernel_input_distribution_href": "predictions/p_d621970ffd5b446da5324f800e2b8ef4/subjects/kernel-input-distribution/payload"
+        },
+        "schema_version": 1,
+        "selector": "speculative_iter"
+      },
+      "input": {
+        "groups": [
+          {
+            "decode_requests": [
+              [
+                14835,
+                6
+              ]
+            ],
+            "prefill_chunk_pairs": []
+          }
+        ]
+      }
+    }
+  ]
+}

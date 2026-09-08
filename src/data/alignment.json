@@ -1,0 +1,104 @@
+{
+  "source": "VibeSim PR #28, feat(glm52): add SGLang NVFP4 TP4 alignment (merged 2026-09-03)",
+  "setup": "GLM 5.2 NVFP4, 4 \u00d7 B200, SGLang TP4",
+  "cases": 15,
+  "judgements": 195,
+  "failures": 0,
+  "golden_drift": 0,
+  "kernel_abs_pct": [
+    2.74,
+    2.0,
+    2.13,
+    2.7,
+    5.4,
+    2.09,
+    4.38,
+    4.2,
+    4.81,
+    3.09,
+    3.31,
+    2.98,
+    2.67,
+    3.72,
+    3.36
+  ],
+  "kernel_abs_range_pct": [
+    2.0,
+    5.4
+  ],
+  "map_coverage_range_pct": [
+    97.47,
+    99.78
+  ],
+  "e2e_mean_within_pct": 7,
+  "output_tps_within_pct": 8,
+  "metrics": [
+    {
+      "key": "kernel",
+      "label": "Kernel timing",
+      "claim": "2.0 to 5.4%",
+      "signed": [
+        0.93,
+        -1.39,
+        -0.66,
+        -0.77,
+        -4.83,
+        -1.84,
+        -3.13,
+        -3.47,
+        -4.52,
+        -1.05,
+        -3.31,
+        -2.98,
+        -1.65,
+        -3.16,
+        -3.11
+      ]
+    },
+    {
+      "key": "e2e",
+      "label": "End to end, mean",
+      "claim": "within 7%",
+      "signed": [
+        -2.54,
+        -5.28,
+        -2.4,
+        -2.2,
+        -5.22,
+        -2.65,
+        -5.53,
+        -2.53,
+        -6.87,
+        -5.64,
+        -5.7,
+        -3.74,
+        -2.39,
+        -2.61,
+        -1.0
+      ]
+    },
+    {
+      "key": "tps",
+      "label": "Output tokens / s",
+      "claim": "within 8%",
+      "signed": [
+        3.07,
+        5.88,
+        2.76,
+        2.26,
+        5.17,
+        2.98,
+        5.84,
+        1.82,
+        0.73,
+        6.46,
+        6.05,
+        3.89,
+        2.28,
+        3.02,
+        1.19
+      ]
+    }
+  ],
+  "axis_pct": 8
+}

@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>VibeSim · 首屏背景比较</title>
+    <style>
+      @font-face{font-family:Geist;src:url('/fonts/geist-regular.woff2') format('woff2');font-display:swap}
+      *{box-sizing:border-box}body{margin:0;background:#0c0d0f;color:#f1f3f6;font-family:Geist,system-ui,sans-serif}
+      header{display:flex;align-items:center;flex-wrap:wrap;gap:16px 24px;padding:16px 24px;border-bottom:1px solid #30343c}
+      h1{font-size:17px;font-weight:500;margin:0}nav{display:flex;gap:7px;flex-wrap:wrap}
+      button,a{font:inherit;font-size:14px;color:#b7bfcb}button{cursor:pointer;padding:10px 14px;border:1px solid transparent;border-radius:8px;background:transparent}
+      button:hover{color:white}button[aria-pressed=true]{background:#292e37;border-color:#4c5a70;color:#edf2fc}
+      a{text-decoration:none}a:hover{text-decoration:underline}.links{display:flex;gap:17px;margin-left:auto}
+      iframe{display:block;width:100%;height:calc(100dvh - 77px);border:0;background:#0c0d0f}
+      :focus-visible{outline:2px solid #adc6ff;outline-offset:3px}
+      @media(max-width:767px){header{padding:14px 16px;gap:12px}nav{order:3;width:100%;gap:3px}button{font-size:12px;padding:9px 10px}h1{font-size:15px}.links a{font-size:12px}iframe{height:calc(100dvh - 116px)}}
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>首屏背景比较</h1>
+      <nav aria-label="背景候选">
+        <button data-key="a" aria-pressed="true">A · 建筑与地景</button>
+        <button data-key="b" aria-pressed="false">B · 机房与光线</button>
+        <button data-key="c" aria-pressed="false">C · 玻璃与倒影</button>
+        <button data-key="original" aria-pressed="false">原版</button>
+      </nav>
+      <div class="links"><a id="original-image" href="/images/hero-datacenter-a.png" target="_blank" rel="noopener">查看原图</a><a id="full-page" href="/?hero=datacenter-a" target="_blank" rel="noopener">整页预览 ↗</a></div>
+    </header>
+    <iframe title="VibeSim 首屏背景预览" src="/?hero=datacenter-a"></iframe>
+    <script>
+      const buttons=[...document.querySelectorAll('button[data-key]')];
+      for(const button of buttons){button.addEventListener('click',()=>{
+        const key=button.dataset.key;
+        for(const item of buttons)item.setAttribute('aria-pressed',String(item===button));
+        const url=key==='original' ? '/?hero=original' : '/?hero=datacenter-'+key;
+        document.querySelector('iframe').src=url;
+        document.getElementById('full-page').href=url;
+        document.getElementById('original-image').href=key==='original'?'/images/shoreline-v3.webp':'/images/hero-datacenter-'+key+'.png';
+      });}
+    </script>
+  </body>
+</html>

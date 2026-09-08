@@ -1,0 +1,392 @@
+/* One shared page grid. Larger type, readable transcripts, purposeful diagrams. */
+h2{font-size:var(--fs-h2);line-height:1.1;letter-spacing:-.045em}
+.section{padding-block:120px}
+.section-intro{max-width:none;margin-bottom:52px}
+.section-intro h2{max-width:none}
+.section-intro>p,.examples-section .section-intro>p{font-size:var(--fs-lg);line-height:1.6;max-width:68ch;margin-top:24px}
+.examples-section .section-intro{text-align:left}
+.examples-section .section-intro p{margin-inline:0}
+.navigation nav a,.nav-cta{font-size:var(--fs-fine)}
+.tabs button{font-size:var(--fs-sm);padding:16px 24px}
+.text-link{font-size:var(--fs-sm)}
+.caption{font-size:var(--fs-fine);line-height:1.7}
+.examples-section{padding-top:48px}
+.example-tabs{margin:0 0 36px;border:0;background:none;padding:0;gap:12px}
+.example-tabs button{border-radius:10px}
+
+/* Compact icon tabs keep attention on the Agent conversation. */
+.case-selector.example-tabs{position:relative;isolation:isolate;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;width:100%;overflow:visible;border:1px solid #414957;border-radius:16px;background:#1b1f26;margin:0 0 32px;padding:6px}
+.case-selector::before{content:"";position:absolute;z-index:-1;top:6px;bottom:6px;left:6px;width:calc((100% - 12px)/3);border:1px solid #53647f;border-radius:10px;background:#303b4d;box-shadow:0 2px 5px #0003;transform:translateX(calc(var(--selected-tab)*100%));pointer-events:none}
+.case-selector.tabs button{display:flex;align-items:center;justify-content:center;gap:12px;min-width:0;min-height:76px;padding:18px 20px;border:0;border-radius:10px;background:transparent;color:#d6dde8;font-size:var(--fs-lg);font-weight:500;letter-spacing:-.02em;white-space:nowrap}
+.case-selector.tabs button:hover{color:#f0f2f6;background:transparent}
+.case-selector.tabs button[aria-selected="true"]{color:#edf2fa;background:transparent;font-weight:600}
+.case-selector button svg{flex:none;width:26px;height:26px;color:#b5c4da}
+.case-selector button[aria-selected="true"] svg{color:#b6ccef}
+.case-selector.tabs button:focus-visible{outline:2px solid #aec6ff;outline-offset:2px}
+@media(prefers-reduced-motion:no-preference){
+ .case-selector::before{transition:transform .3s cubic-bezier(.22,.68,0,1)}
+ .case-selector button,.case-selector button svg{transition:color .2s}
+}
+.conversation-demo{border:1px solid #303237;border-radius:24px;overflow:hidden;background:#121315}
+.chat-transcript{padding:48px 6% 56px}
+.chat-user-turn{display:grid;grid-template-columns:minmax(0,1fr) 40px;align-items:start;gap:20px;margin-bottom:48px}
+.user-turn-content{display:flex;flex-direction:column;align-items:flex-end;min-width:0}
+.user-turn-content>h3{font-size:var(--fs-md);font-weight:500;margin:5px 0 20px}
+.user-avatar{width:40px;height:40px;display:grid;place-items:center;background:#202329;border-radius:12px;color:#c4ccd9}
+.user-message{display:block;max-width:80%;padding:23px 28px;border-radius:22px 22px 5px 22px;background:#292c32}
+.user-message p{font-size:var(--fs-lg);line-height:1.55;max-width:none;color:#f0f1f3}
+.agent-turn{display:grid;grid-template-columns:40px minmax(0,1fr);gap:20px}
+.agent-avatar{width:40px;height:40px;display:grid;place-items:center;background:#202329;border-radius:12px}
+.agent-avatar img{width:28px;object-fit:contain}
+.agent-turn-content>h3{font-size:var(--fs-md);font-weight:500;margin:5px 0 20px}
+.agent-intro,.agent-answer>p{font-size:var(--fs-md);line-height:1.75;color:#c7cbd3;max-width:72ch}
+.agent-progress{margin:30px 0 36px;border-left:2px solid #687991;padding:0 0 0 22px}
+.agent-progress summary{display:flex;align-items:center;gap:10px;font-size:var(--fs-fine);color:#b7c9e9;cursor:pointer;list-style:none}
+.agent-progress summary>svg:last-child{margin-left:6px;color:var(--muted)}
+.agent-progress ol{display:grid;gap:13px;margin:20px 0 0;padding:0;list-style:none}
+.agent-progress li{display:flex;align-items:center;gap:12px;font-size:var(--fs-fine);line-height:1.6;color:#b9bec8}
+.agent-progress li svg{color:#91a9cb}
+.agent-execution{display:flex;align-items:flex-start;gap:14px;margin:0 0 32px;padding:20px 22px;border:1px solid #ffffff12;border-radius:12px;background:#ffffff04}
+.agent-execution>svg{flex:none;margin-top:4px;color:#a7b8d0}
+.agent-execution .agent-execution-title{margin:0;color:#e0e4eb;font-size:var(--fs-sm);font-weight:500;line-height:1.6}
+.agent-execution .agent-execution-detail{margin:5px 0 0;color:#a5abb5;font-size:var(--fs-fine);line-height:1.6}
+.example-result{margin:28px 0;background:#1a1c20;border:1px solid #33363d;border-radius:16px;padding:32px 36px}
+.example-context{display:flex;justify-content:space-between;gap:20px;margin-bottom:30px;color:var(--muted)}
+.example-context span:first-child{font-size:var(--fs-fine);color:#d8dce4}
+.example-context span:last-child{font-size:var(--fs-fine)}
+.result-heading h3{font-size:var(--fs-xl);line-height:1.3}
+.iteration-total strong{font-size:var(--fs-num-lg)}
+.iteration-total span{font-size:var(--fs-fine)}
+.chart-meta,.chart-axis{font-size:var(--fs-fine)}
+.operation-chart{gap:24px}
+.operation-label,.operation-label strong{font-size:var(--fs-sm)}
+.operation-label small,.operation-bar>span{font-size:var(--fs-fine)}
+.operation-bar{height:16px;margin-top:12px}
+.operation-bar i{height:7px}
+.example-result figcaption{font-size:var(--fs-fine);line-height:1.6;color:var(--muted);margin-top:20px}
+.agent-conclusion{margin-top:26px}
+.inline-evidence{margin-top:24px;font-size:var(--fs-fine)}
+.inline-evidence summary{display:flex;align-items:center;gap:12px;cursor:pointer;color:var(--accent)}
+/* The table scrolls inside its own wrapper. Without min-width the wrapper
+   takes the table's intrinsic width and pushes the whole page sideways. */
+.operation-table-wrap{overflow-x:auto;min-width:0;max-width:100%;margin-top:20px}
+.operation-table-wrap table{width:100%;border-collapse:collapse;font-size:var(--fs-fine)}
+.operation-table-wrap th,.operation-table-wrap td{padding:14px 12px;border-bottom:1px solid var(--line);text-align:left}
+.operation-table-wrap td:not(:first-child){white-space:nowrap;font-variant-numeric:tabular-nums}
+.speculation-search>p:first-child{font-size:var(--fs-sm)}
+/* The value section. One claim per row, copy and evidence side by side, sides
+   alternating down the page. Every figure is a recorded result, so no graphic
+   here invents a magnitude. */
+.why-rows{display:grid;gap:28px}
+.why-row{display:grid;grid-template-columns:minmax(0,0.88fr) minmax(0,1.12fr);align-items:center;gap:clamp(40px,4.6vw,80px);padding:clamp(44px,4.2vw,70px);border:1px solid #23252a;border-radius:24px;background:radial-gradient(120% 130% at 4% 0%,#1a1e25 0%,#141518 46%,#101113 100%)}
+.why-row--flip{grid-template-columns:minmax(0,1.12fr) minmax(0,0.88fr);background:radial-gradient(120% 130% at 96% 0%,#1a1e25 0%,#141518 46%,#101113 100%)}
+.why-row--flip .why-copy{order:2;text-align:right}
+.why-row--flip .why-copy>p,.why-row--flip .why-note{margin-left:auto}
+.why-row--flip .why-figure{order:1}
+.why-copy h3{font-size:var(--fs-3xl);font-weight:500;line-height:1.22;letter-spacing:-.032em;color:#eef0f3;text-wrap:balance}
+.why-copy h3>span{color:var(--accent)}
+.why-copy>p{margin-top:22px;max-width:38ch;font-size:var(--fs-lg);line-height:1.6;color:var(--muted)}
+.why-note{display:block;margin-top:28px;max-width:38ch;font-size:var(--fs-sm);line-height:1.6;color:var(--subtle)}
+.why-figure{min-width:0}
+.why-figure-block{margin:0}
+/* No enclosures. Figures sit directly on the row and are grouped by space,
+   not by a box inside a box. The padding stays because the tab panel heights
+   are tuned against it. */
+.why-directory,.why-speed,.why-plots,.why-buckets,.why-tier-panel{padding:22px 0}
+/* Hairlines fade at both ends instead of running edge to edge. */
+.why-figure-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 16px;margin-bottom:30px;padding-bottom:26px;border-bottom:1px solid #262930}
+.why-figure-head strong{font-size:var(--fs-num-xl);font-weight:500;line-height:1;letter-spacing:-.035em;color:#f2f4f7;font-variant-numeric:tabular-nums}
+.why-figure-head strong span{color:var(--accent)}
+.why-figure-head--pair{gap:8px 28px}
+.why-figure-head--pair strong b{font-size:var(--fs-sm);font-weight:400;letter-spacing:0;color:var(--subtle)}
+.why-figure-head--pair strong:nth-of-type(2){color:var(--accent)}
+.why-figure-head--pair>span{flex-basis:100%;max-width:52ch}
+.why-figure-head>span{max-width:44ch;font-size:var(--fs-sm);line-height:1.45;color:var(--subtle)}
+/* 1. Built configurations, listed. Deliberately not a set of axes to multiply. */
+.why-directory{display:grid;gap:26px;margin:0}
+.why-directory>div{display:grid;grid-template-columns:112px minmax(0,1fr);align-items:baseline;gap:22px;padding:0}
+.why-directory dt{font-size:var(--fs-sm);color:#858b96}
+.why-directory dd{display:flex;flex-wrap:wrap;min-width:0;gap:10px;margin:0}
+.why-directory dd span{padding:10px 16px;border-radius:12px;background:#191c22;box-shadow:0 0 0 1px #ffffff12;font-size:var(--fs-sm);line-height:1.25;letter-spacing:-.01em;color:#dde2ea;white-space:nowrap}
+/* 2. Speedup against the serving time the run stands in for, on a log axis. */
+.why-speed-row{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(110px,1.4fr) 152px;align-items:center;gap:22px;padding:17px 0}
+.why-speed-row+.why-speed-row{background-image:linear-gradient(90deg,transparent,#ffffff14 6%,#ffffff14 94%,transparent);background-repeat:no-repeat;background-size:100% 1px;background-position:top}
+.why-speed-row:first-child{padding-top:0}
+.why-speed-name{display:grid;gap:3px;min-width:0}
+.why-speed-name strong{font-size:var(--fs-sm);font-weight:500;line-height:1.3;color:#dde1e7}
+.why-speed-name>span{font-size:var(--fs-fine);color:var(--subtle)}
+.why-speed-track{position:relative;height:16px;border-radius:8px;background:#0e1014;box-shadow:inset 0 0 0 1px #ffffff0c,inset 0 1px 2px #0009}
+.why-speed-track b{position:absolute;top:-5px;bottom:-5px;left:var(--at);width:1px;background:linear-gradient(#ffffff00,#ffffff1f,#ffffff00)}
+.why-speed-track i{position:absolute;top:0;bottom:0;left:0;width:var(--width);min-width:8px;border-radius:8px;background:linear-gradient(90deg,#42557a,var(--accent))}
+.why-speed-track em{position:absolute;top:0;bottom:0;left:var(--start);width:var(--width);min-width:3px;border-radius:0 8px 8px 0;background:var(--accent);opacity:.34}
+.why-speed-value{font-size:var(--fs-sm);text-align:right;color:#d5dae1;font-variant-numeric:tabular-nums}
+.why-speed-axis{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(110px,1.4fr) 152px;gap:22px;margin-top:18px;font-size:var(--fs-fine);color:var(--subtle)}
+.why-speed-axis>span:nth-child(2){position:relative;height:1.4em}
+.why-speed-axis>span:last-child{text-align:right}
+.why-speed-axis i{position:absolute;left:var(--at);transform:translateX(-50%);font-style:normal;white-space:nowrap}
+/* 3. Fifteen measured cases per metric, signed against the framework run. */
+.why-plot-row{display:grid;grid-template-columns:minmax(0,166px) minmax(0,1fr);align-items:center;gap:24px;padding:18px 0}
+.why-plot-row+.why-plot-row{background-image:linear-gradient(90deg,transparent,#ffffff14 6%,#ffffff14 94%,transparent);background-repeat:no-repeat;background-size:100% 1px;background-position:top}
+.why-plot-row:first-child{padding-top:0}
+.why-plot-label{display:grid;gap:3px}
+.why-plot-label strong{font-size:var(--fs-sm);font-weight:500;color:#dde1e7}
+.why-plot-label>span{font-size:var(--fs-fine);color:var(--accent)}
+.why-plot{position:relative;height:74px;isolation:isolate}
+.why-plot::before{content:"";position:absolute;top:14px;bottom:14px;left:0;right:0;border-radius:13px;background:linear-gradient(90deg,#ffffff00,#ffffff09 18%,#ffffff09 82%,#ffffff00);box-shadow:inset 0 1px 0 #ffffff0d}
+.why-plot-zero{position:absolute;top:2px;bottom:2px;left:50%;width:1px;background:linear-gradient(#ffffff00,#93a4c4 28%,#93a4c4 72%,#ffffff00)}
+.why-plot i{position:absolute;top:50%;left:var(--at);width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;background:var(--accent);opacity:.5;mix-blend-mode:screen}
+.why-plot-axis{display:grid;grid-template-columns:minmax(0,166px) minmax(0,1fr);gap:24px;margin-top:16px;font-size:var(--fs-fine);color:var(--subtle)}
+.why-plot-axis>span:last-child{display:flex;justify-content:space-between;gap:14px}
+.why-plot-axis i{font-style:normal}
+/* 4. One run at four grains. Each tab is a different analyzer payload drawn
+   with the chart its data calls for, so no grain restates another. */
+.why-tier-tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:30px}
+.why-tier-tabs button{display:grid;gap:4px;padding:16px 14px;border:0;border-radius:12px;background:#16191e;box-shadow:inset 0 0 0 1px #ffffff10;text-align:left;cursor:pointer;transition:background .45s cubic-bezier(.32,.72,0,1),box-shadow .45s cubic-bezier(.32,.72,0,1)}
+.why-tier-tabs button:hover{box-shadow:inset 0 0 0 1px #ffffff1f,inset 0 1px 0 #ffffff16}
+.why-tier-tabs button strong{font-size:var(--fs-sm);font-weight:500;color:#c9cdd4}
+.why-tier-tabs button>span{font-size:var(--fs-fine);line-height:1.35;color:#9aa1ac}
+.why-tier-tabs button[aria-selected=true]{background:#1b2230;box-shadow:inset 0 0 0 1px #52689a}
+.why-tier-tabs button[aria-selected=true] strong{color:var(--accent)}
+.why-tier-tabs button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.why-tier-body:focus-visible{outline:2px solid var(--accent);outline-offset:6px;border-radius:12px}
+.why-tier-panel{display:flex;flex-direction:column;min-height:708px}
+.why-tier-note{margin:22px 0 0;font-size:var(--fs-sm);line-height:1.55;color:var(--subtle)}
+@media(min-width:1440px){.why-tier-panel{min-height:681px}}
+.why-axis{display:flex;justify-content:space-between;gap:16px;margin-top:16px;font-size:var(--fs-fine);color:var(--subtle)}
+.why-stats{display:flex;flex-wrap:wrap;justify-content:space-between;gap:20px 36px;margin:26px 0 0;padding-top:22px;border-top:1px solid #23262c}
+.why-stats dt{font-size:var(--fs-fine);color:var(--subtle)}
+.why-stats dd{margin:6px 0 0;white-space:nowrap;font-size:var(--fs-xl);font-weight:500;color:#e9ecf0;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+/* The run: requests in flight across the whole experiment. */
+.why-area{position:relative;flex:1;min-height:210px;border:1px solid #23262c;border-radius:12px;background:#15171b;overflow:hidden}
+.why-area svg{position:absolute;inset:0;display:block;width:100%;height:100%}
+.why-area-fill{fill:var(--accent);opacity:.16}
+.why-area-line{fill:none;stroke:var(--accent);stroke-width:1.6;vector-effect:non-scaling-stroke}
+/* Each request: three latency distributions, one curve per metric. */
+.why-cdfs{flex:1;min-height:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.why-cdf{display:flex;flex-direction:column;min-height:0}
+.why-cdf-head{display:grid;gap:4px;margin-bottom:12px}
+.why-cdf-head strong{font-size:var(--fs-sm);font-weight:500;color:#dde1e7}
+.why-cdf-head>span{font-size:var(--fs-fine);line-height:1.4;color:var(--subtle);font-variant-numeric:tabular-nums}
+.why-cdf-plot{position:relative;flex:1;min-height:120px;border:1px solid #23262c;border-radius:12px;background:#15171b;overflow:hidden}
+.why-cdf-plot svg{position:absolute;inset:0;display:block;width:100%;height:100%}
+.why-cdf-plot path{fill:none;stroke:var(--accent);stroke-width:2;vector-effect:non-scaling-stroke;stroke-linejoin:round}
+.why-cdf-plot i{position:absolute;top:50%;left:var(--at);width:9px;height:9px;margin:-4.5px 0 0 -4.5px;border-radius:50%;background:#e9ecf0}
+.why-cdf-axis{display:flex;justify-content:space-between;gap:8px;margin-top:12px;font-size:var(--fs-fine);color:var(--subtle)}
+.why-cdf-axis i{font-style:normal}
+/* Each iteration: one dot per scheduler step, not a smoothed line. */
+.why-legend{display:flex;flex-wrap:wrap;gap:8px 24px;margin-bottom:16px;font-size:var(--fs-fine);color:var(--subtle)}
+.why-legend span{display:inline-flex;align-items:center;gap:8px}
+.why-legend i{width:9px;height:9px;border-radius:50%;background:var(--accent);opacity:.65}
+.why-legend i.is-prefill{background:#e2e7ef;opacity:.9}
+.why-scatter{position:relative;flex:1;min-height:200px;border:1px solid #23262c;border-radius:12px;background:#15171b}
+.why-scatter b{position:absolute;left:0;right:0;bottom:var(--y);border-top:1px dashed #262a31;font-size:var(--fs-fine);font-weight:400;color:#949aa4;text-align:right;padding-right:10px;line-height:0}
+.why-scatter i{position:absolute;left:var(--x);bottom:var(--y);width:6px;height:6px;margin:0 0 -3px -3px;border-radius:50%;background:var(--accent);opacity:.45}
+.why-scatter i.is-prefill{background:#e2e7ef;opacity:.8}
+/* Each kernel: profiled time by the position in the model that ran it. */
+.why-kernels{flex:1;display:flex;flex-direction:column;justify-content:space-between}
+.why-kernel-row{display:grid;grid-template-columns:minmax(0,2.3fr) minmax(70px,0.9fr) 68px;align-items:center;gap:18px;padding:13px 0;border-top:1px solid #1f2126}
+.why-kernel-row:first-child{border-top:0;padding-top:0}
+.why-kernel-name{display:flex;flex-wrap:wrap;align-items:baseline;gap:3px 10px;min-width:0}
+.why-kernel-name strong{font-size:var(--fs-sm);font-weight:500;color:#dde1e7;overflow-wrap:anywhere}
+.why-kernel-name>span{font-size:var(--fs-fine);color:var(--subtle);white-space:nowrap}
+.why-kernel-track{height:10px;border-radius:5px;background:#191b1f;overflow:hidden}
+.why-kernel-track i{display:block;height:100%;width:var(--width);min-width:4px;border-radius:5px;background:linear-gradient(90deg,#42557a,var(--accent))}
+.why-kernel-value{font-size:var(--fs-sm);text-align:right;color:#d2d7de;font-variant-numeric:tabular-nums}
+/* 5. Every GPU second the run held, attributed to a named cause. */
+.why-optimality .why-figure-head{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.why-optimality .why-figure-head strong{display:flex;flex-direction:column;gap:10px}
+.why-optimality .why-figure-head>span{grid-column:1/-1}
+.why-waterfall{display:flex;height:48px}
+.why-waterfall>span{flex:0 0 var(--share);min-width:0;padding:0;border:0;border-radius:3px;background:#333945;box-shadow:inset -1px 0 #14161a}
+.why-waterfall>span.is-necessary{background:var(--accent)}
+.why-waterfall>span:hover{background:#8090aa}
+.why-waterfall.has-selection>span:not([data-highlighted=true]){opacity:.4}
+.why-waterfall>span[data-highlighted=true]{background:var(--accent);box-shadow:inset 0 0 0 2px #eef3ff}
+.why-waterfall>span:focus-visible{position:relative;z-index:1;outline:2px solid var(--accent);outline-offset:4px}
+.why-buckets>.why-bucket{position:relative;border-radius:6px;cursor:default}
+.why-bucket:hover{background:#ffffff06}
+.why-bucket.is-selected{background:#a8bfe914;box-shadow:inset 3px 0 var(--accent)}
+.why-bucket.is-selected dt,.why-bucket.is-selected dd b{color:var(--accent)}
+.why-bucket:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:2px}
+.why-buckets{margin:24px 0 0;display:grid;grid-template-columns:minmax(0,1fr);gap:4px}
+.why-buckets>div{display:grid;grid-template-columns:minmax(0,1fr) max-content;align-items:center;gap:20px;min-height:58px;padding:14px 12px}
+.why-buckets dt{min-width:0;font-size:var(--fs-sm);line-height:1.5;color:var(--muted)}
+.why-buckets dd{margin:0;font-size:var(--fs-fine);color:var(--subtle);white-space:nowrap;font-variant-numeric:tabular-nums}
+.why-buckets dd b{font-size:var(--fs-sm);font-weight:500;color:#dde1e7}
+.why-buckets .is-necessary dt{color:var(--accent)}
+.why-buckets .is-necessary dd b{color:var(--accent)}
+.why-buckets-total{grid-column:1/-1;margin-top:6px;border-top:1px solid #333945!important;padding-top:14px!important}
+.why-buckets-total dt{color:#dde1e7!important}
+.why-buckets-total dd b{color:#eef0f3}
+/* 6. The round trip from a spoken goal back to a readable answer. The two
+   human ends are full width; the three machine stages are inset on a rail
+   between them, and a return path closes the loop on the right. */
+/* The drilldown holds four charts, so its row trades copy width for figure
+   width. Only this row changes ratio. */
+.why-row--wide{gap:clamp(30px,3vw,54px)}
+.why-row--wide.why-row--flip{grid-template-columns:minmax(0,1.34fr) minmax(0,0.84fr)}
+.why-row--flow{align-items:stretch}
+.why-row--flow .why-copy{align-self:center}
+.why-row--flow .why-figure{display:flex}
+.why-flow-block{flex:1;display:flex}
+.why-flow{position:relative;flex:1;display:flex;flex-direction:column;gap:30px;padding-right:44px}
+.why-flow-end{margin:0;padding:18px 22px;border:1px solid #2e333b;border-radius:12px;background:#15171b;box-shadow:inset 3px 0 0 #79828f}
+.why-flow-end>span{display:block;font-size:var(--fs-fine);color:var(--subtle)}
+.why-flow-end>p{margin:8px 0 0;font-size:var(--fs-md);line-height:1.45;letter-spacing:-.015em;color:#e8ecf2}
+.why-flow-end--finish{border-color:#4a5c8c;background:#171c26;box-shadow:inset 3px 0 0 var(--accent)}
+.why-flow-end--finish>span{color:#8fa7d4}
+.why-flow-end--finish>p{color:#dbe6fb}
+.why-flow-stages{position:relative;flex:1;display:flex;flex-direction:column;justify-content:center;margin:0;padding:0;list-style:none;border:1px solid #2e333b;border-radius:12px;background:#15171b}
+
+.why-flow-stages li{display:grid;grid-template-columns:120px minmax(0,1fr);align-items:baseline;gap:18px;padding:16px 22px}
+.why-flow-stages li+li{border-top:1px solid #24282f}
+
+.why-flow-stages strong{font-size:var(--fs-lg);font-weight:500;letter-spacing:-.015em;color:#e8ecf2}
+.why-flow-stages li>span{font-size:var(--fs-sm);line-height:1.5;color:#8e97a6}
+/* The result travels back up the right edge to the person who asked. */
+.why-flow-stages::before,.why-flow-end--finish::before{content:"";position:absolute;left:50%;top:-30px;width:1px;height:30px;background:#3a4049}
+.why-flow-stages::after,.why-flow-end--finish::after{content:"";position:absolute;left:50%;top:-9px;width:7px;height:7px;transform:translate(-50%,0) rotate(45deg);border-right:1px solid #737e90;border-bottom:1px solid #737e90}
+.why-flow-end--finish{position:relative}
+.why-flow-return{position:absolute;right:0;top:0;bottom:0;width:44px;border:1px solid #52618a;border-left:0;border-radius:0 12px 12px 0}
+.why-flow-return::before{content:"";position:absolute;left:-3px;top:-5px;width:0;height:0;border-top:5px solid transparent;border-bottom:5px solid transparent;border-right:9px solid var(--accent-strong)}
+@media(max-width:1279px){
+ .why-row{gap:36px;padding:38px}
+ .why-directory>div{grid-template-columns:112px minmax(0,1fr);gap:20px}
+ .why-speed-row,.why-speed-axis{grid-template-columns:minmax(0,1.1fr) minmax(90px,1.25fr) 140px;gap:18px}
+ .why-plot-row,.why-plot-axis{grid-template-columns:minmax(0,140px) minmax(0,1fr);gap:20px}
+ .why-tier-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .why-cdfs{grid-template-columns:1fr;gap:16px}
+ .why-cdf-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 16px}
+ .why-cdf-plot{min-height:76px}
+ .why-tier-panel{min-height:844px}
+ .why-kernel-row{grid-template-columns:minmax(0,1.9fr) minmax(60px,0.9fr) 58px;gap:14px}
+}
+@media(max-width:1023px){
+ .why-tier-panel{min-height:654px}
+ .why-row--flip .why-copy{text-align:left}
+ .why-row--flip .why-copy>p,.why-row--flip .why-note{margin-left:0}
+ .why-row,.why-row--flip,.why-row--wide.why-row--flip{grid-template-columns:minmax(0,1fr);gap:38px;padding:34px 30px}
+ .why-row--flip .why-copy,.why-row--flip .why-figure{order:initial}
+ .why-copy>p,.why-note{max-width:60ch}
+ .why-buckets{grid-template-columns:1fr}
+}
+@media(max-width:767px){
+ .why-rows{gap:18px}
+ .why-row,.why-row--flip{padding:30px 22px;border-radius:18px;gap:30px}
+ .why-directory>div{grid-template-columns:minmax(0,1fr);gap:10px}
+ .why-directory dd{gap:8px}
+ .why-directory dd span{padding:9px 13px;white-space:normal}
+ .why-speed-row,.why-speed-axis{grid-template-columns:minmax(0,1fr) 96px;gap:12px}
+ .why-speed-track,.why-speed-axis{display:none}
+ .why-plot-row,.why-plot-axis{grid-template-columns:1fr;gap:10px}
+ .why-plot-axis>span:first-child{display:none}
+ .why-flow{padding-right:0;gap:26px}
+ .why-flow-return{display:none}
+ .why-flow-end{padding:16px 18px}
+ .why-flow-stages li{grid-template-columns:minmax(0,1fr);gap:4px;padding:14px 18px}
+ .why-tier-tabs{grid-template-columns:1fr;gap:6px;margin-bottom:24px}
+ .why-tier-tabs button{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:13px 15px}
+ .why-stats{gap:14px 24px}
+ .why-stats>div{display:flex;align-items:baseline;justify-content:space-between;gap:14px;width:100%}
+ .why-stats dd{margin:0}
+ .why-kernel-row{grid-template-columns:minmax(0,1fr) 56px;gap:12px}
+ .why-kernel-name>span{white-space:normal}
+ .why-kernel-track{display:none}
+ .why-area,.why-scatter{min-height:150px}
+ .why-tier-panel{min-height:742px}
+}
+/* Kernel names wrap onto more lines on the narrowest phones, so the shared
+   panel height has to clear the tallest tab there too. */
+@media(max-width:479px){
+ .why-tier-panel{min-height:1016px}
+}
+@media(max-width:359px){
+ .why-tier-panel{min-height:1041px}
+}
+/* Product walkthrough, with readable controls and all four product roles. */
+.closing h2{font-size:var(--fs-h2-closing)}
+.footer>span,.footer>a:last-child{font-size:var(--fs-fine)}
+/* Short entry motion introduces the response when a case is selected. */
+@media(prefers-reduced-motion:no-preference){
+ .chat-user-turn{animation:reply-enter .45s ease both}
+ .agent-turn{animation:reply-enter .6s .12s ease both}
+ .agent-progress li{animation:reply-enter .4s calc(.2s + var(--delay)) ease both}
+ .agent-answer{animation:reply-enter .65s .5s ease both}
+ .operation-bar i{transform-origin:left;animation:chart-grow-x .7s .3s ease both}
+ .why-waterfall>span{transform-origin:left;animation:chart-grow-x .7s .3s ease both;transition:background .18s ease,opacity .18s ease}
+ .why-tier-body{animation:reply-enter .35s ease both}
+ @keyframes reply-enter{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+ @keyframes chart-grow{from{transform:scaleY(.1)}to{transform:scaleY(1)}}
+ @keyframes chart-grow-x{from{transform:scaleX(.1)}to{transform:scaleX(1)}}
+}
+@media(max-width:767px){
+ .case-selector.example-tabs{grid-template-columns:1fr;margin-bottom:26px}
+ .case-selector::before{bottom:auto;width:calc(100% - 12px);height:calc((100% - 12px)/3);transform:translateY(calc(var(--selected-tab)*100%))}
+ .case-selector.tabs button{justify-content:flex-start;min-height:66px;padding:16px;gap:12px}
+ .section{padding-block:75px}
+ h2{line-height:1.12}
+ .section-intro{margin-bottom:32px}
+ .section-intro>p,.examples-section .section-intro>p{line-height:1.65;margin-top:20px}
+ .example-tabs{overflow-x:auto;width:100%;gap:7px;padding-bottom:8px;border-radius:0}
+ .example-tabs button{flex:none;white-space:nowrap;padding:12px 16px}
+ .conversation-demo{border-radius:17px}
+ .chat-transcript{padding:28px 18px 32px}
+ .chat-user-turn{grid-template-columns:minmax(0,1fr) 32px;gap:12px;margin-bottom:32px}
+ .user-avatar{width:32px;height:32px;border-radius:10px}
+ .user-avatar svg{width:20px;height:20px}
+ .user-turn-content{display:contents}
+ .user-turn-content>h3{grid-column:1;grid-row:1;justify-self:end;margin:3px 0 0}
+ .user-avatar{grid-column:2;grid-row:1}
+ .chat-user-turn .user-message{grid-column:1/-1;grid-row:2;justify-self:end}
+ .user-message{max-width:94%;padding:18px 20px}
+ .agent-turn{display:block}
+ .agent-avatar{display:grid;float:left;width:32px;height:32px;border-radius:10px;margin-right:12px}
+ .agent-avatar img{width:23px}
+ .agent-turn-content>h3{min-height:32px;display:flex;align-items:center}
+ .agent-intro{clear:both}
+ .agent-intro,.agent-answer>p{line-height:1.75}
+ .agent-progress{padding-left:14px;margin-block:25px}
+ .example-result{padding:22px 16px;margin-inline:0;border-radius:12px}
+ .example-context{flex-direction:column;gap:7px;margin-bottom:24px}
+ .result-heading{flex-direction:column;gap:20px}
+ .iteration-total{text-align:left}
+ .chart-meta{gap:12px}
+ .operation-label{gap:10px}
+}
+/* Existing GLM depth sweep: six measured-profile-conditioned predictions. */
+.spec-sweep-chart{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:20px;margin-top:30px}
+.spec-sweep-chart button{display:grid;grid-template-rows:auto 230px auto;gap:13px;padding:8px 2px;border-radius:8px}
+.spec-sweep-chart button>strong{font-size:var(--fs-sm);font-weight:500;font-variant-numeric:tabular-nums;color:#c0c7d2}
+.spec-sweep-chart button>span{font-size:var(--fs-fine);color:var(--muted)}
+.spec-column{display:flex;align-items:flex-end;justify-content:center}
+.spec-column i{display:block;width:70%;height:var(--column-height);background:#637da7;border-radius:5px 5px 0 0}
+.spec-sweep-chart button[aria-pressed=true] i{background:var(--accent)}
+.spec-sweep-chart button[aria-pressed=true]>strong{color:var(--ink)}
+.spec-sweep-chart button:hover{background:#ffffff06}
+.spec-sweep-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin:30px 0;padding-top:26px;border-top:1px solid var(--line)}
+.spec-sweep-metrics dt{font-size:var(--fs-fine);line-height:1.5}
+.spec-sweep-metrics dd{font-size:var(--fs-num);line-height:1.5;margin-top:8px;font-variant-numeric:tabular-nums}
+.spec-sweep-metrics dd span{font-size:var(--fs-fine);color:var(--muted)}
+.spec-method{font-size:var(--fs-fine);line-height:1.7;color:var(--muted);margin:20px 0}
+@media(prefers-reduced-motion:no-preference){.spec-column i{transform-origin:bottom;animation:chart-grow .6s ease both}}
+/* A phone column is about 45px wide, which is not enough for a legible value
+   above every bar. The per-column figure is dropped there rather than shrunk
+   below the floor: the selected value is already spelled out full size in the
+   metrics below, each bar carries it in its aria-label, and the table under
+   "View the workload and results" lists every row. */
+@media(max-width:767px){.spec-sweep .chart-meta{flex-direction:column;gap:8px}.spec-sweep-chart{gap:5px}.spec-sweep-chart button{grid-template-rows:155px auto}.spec-sweep-chart button>strong{display:none}.spec-sweep-metrics{grid-template-columns:1fr;gap:18px}.spec-sweep-metrics>div{display:flex;justify-content:space-between;align-items:baseline;gap:12px}/* The label may wrap; the reading and its unit may not be split. */
+.spec-sweep-metrics dd{margin-top:0;white-space:nowrap}.spec-sweep-metrics dt{min-width:0}}
+.llama-sweep-chart{grid-template-columns:repeat(7,minmax(0,1fr));gap:14px}
+@media(max-width:767px){.llama-sweep .chart-meta{flex-direction:column;gap:8px}.llama-sweep-chart{gap:3px}.llama-sweep-chart button>strong{display:none}}
+
+@media(min-width:768px) and (max-width:1100px){
+ .case-selector.tabs button{padding-inline:10px;font-size:var(--fs-sm);gap:10px}
+ .case-selector button svg{width:24px;height:24px}
+}
+@media(min-width:768px) and (max-width:900px){
+ .case-selector.example-tabs{grid-template-columns:1fr}
+ .case-selector::before{bottom:auto;width:calc(100% - 12px);height:calc((100% - 12px)/3);transform:translateY(calc(var(--selected-tab)*100%))}
+ .case-selector.tabs button{justify-content:flex-start;min-height:66px;padding:16px;font-size:var(--fs-md);gap:12px}
+}
+
+@media(max-width:359px){.case-selector.tabs button{font-size:var(--fs-sm);padding-inline:12px;gap:10px}.case-selector button svg{width:23px;height:23px}}

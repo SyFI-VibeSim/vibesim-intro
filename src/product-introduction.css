@@ -18,7 +18,7 @@
   flex-direction: column;
   padding: 42px 40px 36px;
   border: 1px solid var(--c-line-200);
-  border-radius: 24px;
+  border-radius: var(--r-xl);
   background: var(--c-surface-200);
 }
 
@@ -125,6 +125,6 @@
 @media (max-width: 420px) {
   .product-part {
     padding: 26px 22px 24px;
-    border-radius: 20px;
+    border-radius: var(--r-lg);
   }
 }

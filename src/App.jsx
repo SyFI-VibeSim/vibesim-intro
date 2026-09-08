@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowRight, ArrowUpRight, Menu, X } from "lucide-react";
 import logo from "./vibesim-logo.png";
-import { UseCases } from "./Experiences";
+import { UseCases } from "./sections/UseCases";
 import { Workflow } from "./sections/Workflow";
 import { Advantages } from "./sections/Advantages";
 import "./product-introduction.css";

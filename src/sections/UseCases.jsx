@@ -9,10 +9,11 @@ import {
   UserRound,
   SquareTerminal,
 } from "lucide-react";
-import logo from "./vibesim-logo.png";
-import specDepth from "./data/specDepth.json";
-import glmDecode from "./data/glmDecode.json";
-import llamaThroughput from "./data/llamaThroughput.json";
+import logo from "../vibesim-logo.png";
+import s from "./UseCases.module.css";
+import specDepth from "../data/specDepth.json";
+import glmDecode from "../data/glmDecode.json";
+import llamaThroughput from "../data/llamaThroughput.json";
 
 export function Tabs({
   items,
@@ -71,16 +72,16 @@ export const operations = glmDecode.operations;
 
 export function OperationChart({ focus = false }) {
   return (
-    <div className={`operation-chart ${focus ? "operation-chart--focus" : ""}`}>
+    <div className={`${s.operationChart} ${focus ? s.operationChartFocus : ""}`}>
       {operations.map((op, index) => (
-        <div className="operation" key={op.name}>
-          <div className="operation-label">
+        <div className={s.operation} key={op.name}>
+          <div className={s.operationLabel}>
             <span>{op.name}</span>
             <strong>
               {op.time.toFixed(2)} <small>ms</small>
             </strong>
           </div>
-          <div className="operation-bar" style={{ "--bar-width": `${op.share}%` }}>
+          <div className={s.operationBar} style={{ "--bar-width": `${op.share}%` }}>
             <i />
             <span>{op.share.toFixed(1)}%</span>
           </div>
@@ -95,13 +96,13 @@ function ThroughputChart() {
   const row = llamaThroughput.rows[point];
   const maximum = Math.max(...llamaThroughput.rows.map((item) => item.decode_tps));
   return (
-    <div className="throughput-chart llama-sweep">
-      <div className="chart-meta">
+    <div className={s.llamaSweep}>
+      <div className={s.chartMeta}>
         <span>Simulated output throughput · tok/s</span>
         <span>512 requests · BF16</span>
       </div>
       <div
-        className="spec-sweep-chart llama-sweep-chart"
+        className={`${s.specSweepChart} ${s.llamaSweepChart}`}
         aria-label="Simulated output throughput versus incoming requests per second"
       >
         {llamaThroughput.rows.map((item, index) => (
@@ -113,7 +114,7 @@ function ThroughputChart() {
             onClick={() => setPoint(index)}
           >
             <strong>{Math.round(item.decode_tps).toLocaleString("en-US")}</strong>
-            <div className="spec-column">
+            <div className={s.specColumn}>
               <i
                 style={{
                   "--column-height": `${(100 * item.decode_tps) / maximum}%`,
@@ -124,8 +125,8 @@ function ThroughputChart() {
           </button>
         ))}
       </div>
-      <div className="chart-axis">Incoming requests per second</div>
-      <dl className="spec-sweep-metrics">
+      <div className={s.chartAxis}>Incoming requests per second</div>
+      <dl className={s.specSweepMetrics}>
         <div>
           <dt>Output throughput</dt>
           <dd>
@@ -152,11 +153,11 @@ function ThroughputChart() {
         1,024 input + 256 output tokens per request. All 512 requests complete at
         every load.
       </p>
-      <details className="inline-evidence">
+      <details className={s.inlineEvidence}>
         <summary>
           View the workload and results <ChevronDown size={17} />
         </summary>
-        <div className="operation-table-wrap" tabIndex={0}>
+        <div className={s.operationTableWrap} tabIndex={0}>
           <table>
             <thead>
               <tr>
@@ -178,7 +179,7 @@ function ThroughputChart() {
             </tbody>
           </table>
         </div>
-        <p className="spec-method">
+        <p className={s.specMethod}>
           A VibeSim unified-worker simulation with one H200, BF16, an 80 GB KV
           budget and fixed-length synthetic requests. These results compare the
           tested loads; they do not establish a universal maximum or a measured
@@ -201,13 +202,13 @@ function SpeculationSearch() {
   const row = specDepth.rows[depth];
   const maximum = Math.max(...specDepth.rows.map((item) => item.throughput));
   return (
-    <div className="speculation-search spec-sweep">
-      <div className="chart-meta">
+    <div className={`${s.speculationSearch} ${s.specSweep}`}>
+      <div className={s.chartMeta}>
         <span>Derived decode ceiling · output tok/s</span>
         <span>Higher is better</span>
       </div>
       <div
-        className="spec-sweep-chart"
+        className={s.specSweepChart}
         aria-label="Derived single-request throughput ceiling by speculative depth"
       >
         {specDepth.rows.map((item) => (
@@ -219,7 +220,7 @@ function SpeculationSearch() {
             onClick={() => setDepth(item.depth)}
           >
             <strong>{item.throughput.toFixed(1)}</strong>
-            <div className="spec-column">
+            <div className={s.specColumn}>
               <i
                 style={{
                   "--column-height": `${(item.throughput / maximum) * 100}%`,
@@ -230,8 +231,8 @@ function SpeculationSearch() {
           </button>
         ))}
       </div>
-      <div className="chart-axis">Draft tokens per iteration</div>
-      <dl className="spec-sweep-metrics">
+      <div className={s.chartAxis}>Draft tokens per iteration</div>
+      <dl className={s.specSweepMetrics}>
         <div>
           <dt>Predicted iteration</dt>
           <dd>
@@ -256,11 +257,11 @@ function SpeculationSearch() {
         One decode request · 14,830 prefix KV tokens · no prefill. Uses the measured
         Spec5 acceptance profile.
       </p>
-      <details className="inline-evidence">
+      <details className={s.inlineEvidence}>
         <summary>
           View the comparison and method <ChevronDown size={17} />
         </summary>
-        <div className="operation-table-wrap" tabIndex={0}>
+        <div className={s.operationTableWrap} tabIndex={0}>
           <table>
             <thead>
               <tr>
@@ -282,12 +283,12 @@ function SpeculationSearch() {
             </tbody>
           </table>
         </div>
-        <p className="spec-method">
+        <p className={s.specMethod}>
           Expected output = 1 + the sum of per-position acceptance rates up to the
           chosen depth. Divide by the predicted iteration time to get the decode
           ceiling.
         </p>
-        <p className="spec-method">
+        <p className={s.specMethod}>
           Depths 1–4 reuse the corresponding prefix of the measured Spec5 acceptance
           profile. These are kernel critical-path ceilings, excluding scheduler and
           CPU overhead. Acceptance may change in an actual deployment.
@@ -396,7 +397,7 @@ export function UseCases() {
   const example = examples[selected];
   const story = agentStories[selected];
   return (
-    <section id="use-cases" className="section examples-section">
+    <section id="use-cases" className={`section ${s.examplesSection}`}>
       <div className="wrap">
         <div className="section-intro">
           <h2>Run the study with the Agent.</h2>
@@ -410,7 +411,7 @@ export function UseCases() {
           items={examples.map((e) => e.label)}
           selected={selected}
           onChange={setSelected}
-          className="example-tabs case-selector"
+          className={`${s.exampleTabs} ${s.caseSelector}`}
           panelId="case-conversation"
           renderItem={(label, index) => {
             const Icon = caseIcons[index];
@@ -424,30 +425,30 @@ export function UseCases() {
         />
         <div
           id="case-conversation"
-          className="conversation-demo"
+          className={s.conversationDemo}
           role="tabpanel"
           aria-label={example.label}
         >
-          <div className="chat-transcript" key={selected}>
-            <div className="chat-user-turn">
-              <div className="user-turn-content">
+          <div className={s.chatTranscript} key={selected}>
+            <div className={s.chatUserTurn}>
+              <div className={s.userTurnContent}>
                 <h3>You</h3>
-                <div className="user-message">
+                <div className={s.userMessage}>
                   <p>{example.question}</p>
                 </div>
               </div>
-              <div className="user-avatar" aria-hidden="true">
+              <div className={s.userAvatar} aria-hidden="true">
                 <UserRound size={23} strokeWidth={1.7} />
               </div>
             </div>
-            <article className="agent-turn">
-              <div className="agent-avatar">
+            <article className={s.agentTurn}>
+              <div className={s.agentAvatar}>
                 <img src={logo} alt="" />
               </div>
-              <div className="agent-turn-content">
+              <div className={s.agentTurnContent}>
                 <h3>VibeSim Agent</h3>
-                <p className="agent-intro">{story.intro}</p>
-                <details className="agent-progress" open>
+                <p className={s.agentIntro}>{story.intro}</p>
+                <details className={s.agentProgress} open>
                   <summary>
                     <Check size={19} />
                     <span>Experiment plan</span>
@@ -462,23 +463,23 @@ export function UseCases() {
                     ))}
                   </ol>
                 </details>
-                <div className="agent-execution">
+                <div className={s.agentExecution}>
                   <SquareTerminal size={22} strokeWidth={1.6} aria-hidden="true" />
                   <div>
-                    <p className="agent-execution-title">{story.execution}</p>
-                    <p className="agent-execution-detail">
+                    <p className={s.agentExecutionTitle}>{story.execution}</p>
+                    <p className={s.agentExecutionDetail}>
                       {story.executionDetail}
                     </p>
                   </div>
                 </div>
-                <div className="agent-answer">
+                <div className={s.agentAnswer}>
                   <p>{example.answer}</p>
-                  <figure className="example-result">
-                    <div className="example-context">
+                  <figure className={s.exampleResult}>
+                    <div className={s.exampleContext}>
                       <span>{example.model}</span>
                       <span>{example.setup}</span>
                     </div>
-                    <div className="result-heading">
+                    <div className={s.resultHeading}>
                       <h3>
                         {selected === 0
                           ? "Throughput and the cost of extra load"
@@ -487,7 +488,7 @@ export function UseCases() {
                             : "Throughput versus draft length"}
                       </h3>
                       {selected === 1 && (
-                        <div className="iteration-total">
+                        <div className={s.iterationTotal}>
                           <strong>19.49</strong>
                           <span>ms / iteration</span>
                         </div>
@@ -507,13 +508,13 @@ export function UseCases() {
                       <SpeculationSearch />
                     )}
                   </figure>
-                  <p className="agent-conclusion">{story.conclusion}</p>
+                  <p className={s.agentConclusion}>{story.conclusion}</p>
                   {selected === 1 && (
-                    <details className="inline-evidence">
+                    <details className={s.inlineEvidence}>
                       <summary>
                         View the recorded operation times <ChevronDown size={17} />
                       </summary>
-                      <div className="operation-table-wrap" tabIndex={0}>
+                      <div className={s.operationTableWrap} tabIndex={0}>
                         <table>
                           <thead>
                             <tr>
@@ -533,7 +534,7 @@ export function UseCases() {
                           </tbody>
                         </table>
                       </div>
-                      <p className="spec-method">
+                      <p className={s.specMethod}>
                         The five groups account for{" "}
                         {glmDecode.topFiveShare.toFixed(2)}% of the iteration. Costs
                         follow the critical rank and include repeated layers.

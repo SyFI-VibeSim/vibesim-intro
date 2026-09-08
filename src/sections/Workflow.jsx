@@ -248,7 +248,7 @@ export function Workflow() {
     if (focusTab) document.getElementById(`${id}-step-${index}`)?.focus();
   };
   return (
-    <section id="workflow" className={`section ${s.root}`}>
+    <section id="workflow" className="section">
       <div className="wrap">
         <div className="section-intro">
           <h2>

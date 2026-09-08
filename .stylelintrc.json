@@ -22,15 +22,23 @@
       ],
       "rules": {
         "selector-class-pattern": [
-          "^[a-z][a-zA-Z0-9]*$",
+          "^([a-z][a-zA-Z0-9]*|[a-z][a-z0-9]*(-[a-z0-9]+)+)$",
           {
-            "message": "CSS Module class names are camelCase; scoping makes a prefix redundant"
+            "message": "Module classes are camelCase; a kebab-case name here must be a global class reached into with :global()"
           }
         ],
         "keyframes-name-pattern": [
           "^[a-z][a-zA-Z0-9]*$",
           {
             "message": "CSS Module keyframe names are scoped like classes, so camelCase"
+          }
+        ],
+        "selector-pseudo-class-no-unknown": [
+          true,
+          {
+            "ignorePseudoClasses": [
+              "global"
+            ]
           }
         ]
       }

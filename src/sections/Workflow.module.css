@@ -950,9 +950,9 @@
   }
 }
 
-/* The section's own outer rule. It lived in styles.css as .workflow-section,
-   which meant the workflow's styling had two homes for the sake of one
-   declaration. */
-.root {
-  padding-top: 70px;
-}
+/* No .root rule. The one this section used to have, .workflow-section with a
+   70px padding-top, never applied: refinements.css redefines .section with a
+   padding-block after styles.css declared it, so the base won on source order
+   and the section has always rendered at the standard 120px. It is deleted
+   rather than carried across, because inside a module it would have started
+   winning and quietly shortened the section. */

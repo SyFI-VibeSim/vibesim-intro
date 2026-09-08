@@ -25,7 +25,7 @@ function Navigation() {
           {[
             ["Use cases", "#use-cases"],
             ["How it works", "#workflow"],
-            ["Supported systems", "#support"],
+            ["Supported systems", "#advantages"],
           ].map(([name, href]) => (
             <a key={name} href={href} onClick={() => setOpen(false)}>
               {name}

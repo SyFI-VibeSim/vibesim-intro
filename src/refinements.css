@@ -451,7 +451,12 @@ h2 {
   gap: 28px;
 }
 
+/* A row can be a link target (#support), and the header is 76px, so it needs
+   the same landing offset a section gets. Without it the card sits flush
+   against the top of the viewport. */
 .why-row {
+  scroll-margin-top: 76px;
+
   display: grid;
   grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.12fr);
   align-items: center;

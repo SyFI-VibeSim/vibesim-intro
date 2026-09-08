@@ -1302,25 +1302,23 @@
 
   .area,
   .scatter {
-    min-height: 150px;
+    min-height: 190px;
   }
 
-  .tierPanel {
-    min-height: 742px;
-  }
-}
+  /* No shared panel height on a phone.
 
-/* Kernel names wrap onto more lines on the narrowest phones, so the shared
-   panel height has to clear the tallest tab there too. */
-@media (max-width: 479px) {
-  .tierPanel {
-    min-height: 1016px;
-  }
-}
+     The four tabs are pinned to one height on wider screens so the page below
+     does not jump when you switch. On a phone that costs far more than it
+     buys: the tallest tab is the kernel list, whose names wrap onto several
+     lines each, and at 390px it wanted 935px while the first tab wanted 410.
+     The panel is a flex column and the plot is the flexible child, so those
+     600 extra pixels all went into the chart. A time series a phone screen
+     and a half tall is the result, and it is the first thing a visitor sees.
 
-@media (max-width: 359px) {
+     Here each tab is its own height instead. The tab list is stacked above
+     the panel and does not move, so switching reflows only what is below. */
   .tierPanel {
-    min-height: 1041px;
+    min-height: 0;
   }
 }
 

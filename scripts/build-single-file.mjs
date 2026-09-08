@@ -13,6 +13,10 @@ const outputFile = path.join(outputDirectory, "vibesim-intro.html");
 // Inline binary assets during Vite's build, then fold emitted CSS and JS into HTML.
 await build({
   root: projectDirectory,
+  // The published site sets base to its subpath, but this file is meant to be
+  // opened straight from disk, where a root-absolute URL resolves to the
+  // filesystem root. Relative paths keep it self-contained.
+  base: "./",
   build: {
     assetsInlineLimit: Number.MAX_SAFE_INTEGER,
     cssCodeSplit: false,
@@ -22,7 +26,7 @@ await build({
 let html = await readFile(path.join(outputDirectory, "index.html"), "utf8");
 
 const resolveOutputAsset = (assetReference) =>
-  path.join(outputDirectory, assetReference.replace(/^\//, ""));
+  path.join(outputDirectory, assetReference.replace(/^\.?\//, ""));
 
 const stylesheetPattern = /<link rel="stylesheet" crossorigin href="([^"]+)">/g;
 for (const stylesheetMatch of [...html.matchAll(stylesheetPattern)]) {
@@ -54,7 +58,7 @@ if (moduleScriptStart >= 0) {
 }
 
 const externalAssetTag = html.match(
-  /<(?:script|link|img)\b[^>]*\b(?:src|href)="\/assets\//,
+  /<(?:script|link|img)\b[^>]*\b(?:src|href)="\.?\/assets\//,
 );
 if (externalAssetTag) {
   throw new Error(

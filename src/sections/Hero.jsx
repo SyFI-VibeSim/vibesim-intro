@@ -2,18 +2,22 @@ import { ArrowRight, ArrowUpRight } from "lucide-react";
 import s from "./Hero.module.css";
 
 export function Hero() {
+  /* These live in public/, so they are not import-resolved and Vite cannot
+     rewrite them: the base prefix has to be applied here. It is "/" in dev and
+     "/vibesim-intro/" in the published build. */
+  const asset = (name) => `${import.meta.env.BASE_URL}images/${name}`;
   const previewImages = {
-    original: "/images/shoreline-v3.webp",
-    "datacenter-a": "/images/hero-datacenter-a.png",
-    "datacenter-b": "/images/hero-datacenter-b.png",
-    "datacenter-c": "/images/hero-datacenter-c.png",
+    original: asset("shoreline-v3.webp"),
+    "datacenter-a": asset("hero-datacenter-a.png"),
+    "datacenter-b": asset("hero-datacenter-b.png"),
+    "datacenter-c": asset("hero-datacenter-c.png"),
   };
   const preview = new URLSearchParams(window.location.search).get("hero");
   return (
     <section className={s.hero} aria-labelledby="page-title">
       <img
         className={s.heroImage}
-        src={previewImages[preview] || "/images/hero-datacenter-b.png"}
+        src={previewImages[preview] || asset("hero-datacenter-b.png")}
         alt=""
         fetchPriority="high"
         width="1672"

@@ -21,4 +21,11 @@ agent-trace/
 
 # Markdown is not committed. goal.md, progress.md and notes.md are the working
 # journals for this worktree and are kept on disk, not in the repository.
+# README.md is the exception: it documents how to build the site.
 *.md
+!/README.md
+
+# Scratch from picking the hero background: a comparison page and the image
+# prompts. Moved out of public/, because everything under public/ is copied
+# into the build verbatim and would have been served. Kept on disk.
+/designs/

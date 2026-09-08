@@ -8,9 +8,9 @@ const { chromium } = require('/home/kanzhu/.npm/_npx/705bc6b22212b352/node_modul
 
 const SKIP = /^(--|animation|transition|webkitAnimation|webkitTransition|perspectiveOrigin|transformOrigin)/;
 
-const grab = async (b, port, width) => {
+const grab = async (b, port, width, base = '/') => {
   const p = await b.newPage({ viewport: { width, height: 1000 }, reducedMotion: 'reduce' });
-  await p.goto(`http://127.0.0.1:${port}/`, { waitUntil: 'networkidle' });
+  await p.goto(`http://127.0.0.1:${port}${base}`, { waitUntil: 'networkidle' });
   await p.evaluate(async () => {
     for (let y = 0; y < document.body.scrollHeight; y += 500) { window.scrollTo(0, y); await new Promise((r) => setTimeout(r, 25)); }
     window.scrollTo(0, 0);
@@ -35,12 +35,13 @@ const grab = async (b, port, width) => {
 };
 
 const REF = process.argv[2] || 5197, CUR = process.argv[3] || 5199;
+const REF_BASE = process.argv[4] || '/', CUR_BASE = process.argv[5] || '/';
 
 (async () => {
   const b = await chromium.launch();
   let bad = 0, elements = 0;
   for (const width of [390, 1440]) {
-    const [a, c] = [await grab(b, REF, width), await grab(b, CUR, width)];
+    const [a, c] = [await grab(b, REF, width, REF_BASE), await grab(b, CUR, width, CUR_BASE)];
     const cm = new Map(c);
     if (a.length !== c.length) {
       console.log(`${width}: ELEMENT COUNT ${a.length} -> ${c.length}`);

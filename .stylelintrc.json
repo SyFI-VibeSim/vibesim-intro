@@ -17,9 +17,7 @@
   },
   "overrides": [
     {
-      "files": [
-        "**/*.module.css"
-      ],
+      "files": ["**/*.module.css"],
       "rules": {
         "selector-class-pattern": [
           "^([a-z][a-zA-Z0-9]*|[a-z][a-z0-9]*(-[a-z0-9]+)+)$",
@@ -36,17 +34,13 @@
         "selector-pseudo-class-no-unknown": [
           true,
           {
-            "ignorePseudoClasses": [
-              "global"
-            ]
+            "ignorePseudoClasses": ["global"]
           }
         ],
         "property-no-unknown": [
           true,
           {
-            "ignoreProperties": [
-              "composes"
-            ]
+            "ignoreProperties": ["composes"]
           }
         ]
       }

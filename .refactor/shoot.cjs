@@ -1,7 +1,7 @@
 /* Capture the page in every state the refactor could disturb.
    Usage: node .refactor/shoot.cjs <outdir> <port> */
 const { chromium } = require('/home/kanzhu/.npm/_npx/705bc6b22212b352/node_modules/playwright/index.js');
-const out = process.argv[2], port = process.argv[3] || 5198;
+const out = process.argv[2], port = process.argv[3] || 5198, base = process.argv[4] || '/';
 const WIDTHS = [320, 390, 768, 1024, 1440, 1920, 2560];
 
 (async () => {
@@ -11,7 +11,7 @@ const WIDTHS = [320, 390, 768, 1024, 1440, 1920, 2560];
     const p = await b.newPage({ viewport: { width: w, height: 1000 }, reducedMotion: 'reduce' });
     p.on('pageerror', e => errs.push(`${w}: ${e}`));
     p.on('console', m => m.type() === 'error' && errs.push(`${w}: ${m.text()}`));
-    await p.goto(`http://127.0.0.1:${port}/`, { waitUntil: 'networkidle' });
+    await p.goto(`http://127.0.0.1:${port}${base}`, { waitUntil: 'networkidle' });
     // settle every scroll-reveal before capturing
     await p.evaluate(async () => {
       for (let y = 0; y < document.body.scrollHeight; y += 400) {
@@ -29,7 +29,7 @@ const WIDTHS = [320, 390, 768, 1024, 1440, 1920, 2560];
   // interactive states at one representative width
   const p = await b.newPage({ viewport: { width: 1440, height: 1100 }, reducedMotion: 'reduce' });
   p.on('pageerror', e => errs.push(`states: ${e}`));
-  await p.goto(`http://127.0.0.1:${port}/`, { waitUntil: 'networkidle' });
+  await p.goto(`http://127.0.0.1:${port}${base}`, { waitUntil: 'networkidle' });
   await p.evaluate(async () => {
     for (let y = 0; y < document.body.scrollHeight; y += 400) {
       window.scrollTo(0, y); await new Promise(r => setTimeout(r, 40));

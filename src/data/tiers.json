@@ -1145,8 +1145,8 @@
         "kind": "nvfp4_fused_moe",
         "ms": 3512.164928608014,
         "share": 1.930437403651914,
-        "name": "sparse_initial_index_share.moe.routed_experts.fused_moe",
-        "scope": ""
+        "name": "moe.routed_experts.fused_moe",
+        "scope": "initial index share"
       },
       {
         "kind": "dsa_sparse_mla_prefill",

@@ -1,7 +1,7 @@
 {
   "source": "VibeSim deployment-scaling benchmark supplied by the maintainer",
   "simulated_ms": 2000000,
-  "note": "Every run simulates the same 2,000,000 ms of serving. wall_s is simulator wall time on one host and varies with the machine. The measurement host is not recorded yet.",
+  "note": "Every run simulates the same 2,000,000 ms of serving. wall_s is simulator wall time on one host and varies with the machine.",
   "shapes": [
     { "tier": "1_local_dense", "name": "Single GPU, dense", "model": "Llama 3 8B" },
     { "tier": "3_tp", "name": "Tensor parallel", "model": "Llama 3 8B" },

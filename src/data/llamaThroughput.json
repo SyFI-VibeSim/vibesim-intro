@@ -12,8 +12,7 @@
     "requests": 512,
     "inputTokens": 1024,
     "outputTokens": 256,
-    "arrival": "evenly spaced, rates in requests/second",
-    "seed": "not random"
+    "arrival": "evenly spaced, rates in requests/second"
   },
   "metrics": [
     {

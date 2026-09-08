@@ -1,7 +1,7 @@
 /* The screenshot harness captures with reduced motion, so it cannot see whether
    an animation still resolves. This checks the thing modules put at risk: that
    every animation-name in use still matches a reachable @keyframes rule. */
-const { chromium } = require('/home/kanzhu/.npm/_npx/705bc6b22212b352/node_modules/playwright/index.js');
+const { chromium } = require('playwright');
 const port = process.argv[2] || 5199;
 
 (async () => {

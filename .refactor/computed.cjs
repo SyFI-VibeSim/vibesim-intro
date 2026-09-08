@@ -4,7 +4,7 @@
    to, which is the thing a refactor of stylesheets actually risks. It catches a
    changed value even where nothing overlaps it visually, and it names the
    element and property instead of pointing at a rectangle. */
-const { chromium } = require('/home/kanzhu/.npm/_npx/705bc6b22212b352/node_modules/playwright/index.js');
+const { chromium } = require('playwright');
 
 const SKIP = /^(--|animation|transition|webkitAnimation|webkitTransition|perspectiveOrigin|transformOrigin)/;
 

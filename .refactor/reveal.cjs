@@ -2,7 +2,7 @@
    captures and the computed-style comparison both run with reduced motion,
    where the effect returns before it marks anything. This loads with motion on
    and counts what the observer actually found. */
-const { chromium } = require('/home/kanzhu/.npm/_npx/705bc6b22212b352/node_modules/playwright/index.js');
+const { chromium } = require('playwright');
 const port = process.argv[2] || 5199;
 (async () => {
   const b = await chromium.launch();

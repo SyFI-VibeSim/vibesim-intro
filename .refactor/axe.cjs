@@ -1,5 +1,5 @@
-const { chromium } = require('/home/kanzhu/.npm/_npx/705bc6b22212b352/node_modules/playwright/index.js');
-const AXE = '/tmp/vibesim-lighthouse-cache/_npx/0f94ee7615faf582/node_modules/axe-core/axe.min.js';
+const { chromium } = require('playwright');
+const AXE = require.resolve('axe-core/axe.min.js');
 const port = process.argv[2] || 5199;
 (async () => {
   const b = await chromium.launch();

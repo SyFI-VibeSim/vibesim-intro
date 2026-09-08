@@ -1,6 +1,6 @@
 /* The four state classes became data attributes. A static capture only proves
    the default state; this checks each attribute actually selects something. */
-const { chromium } = require('/home/kanzhu/.npm/_npx/705bc6b22212b352/node_modules/playwright/index.js');
+const { chromium } = require('playwright');
 (async () => {
   const b = await chromium.launch();
   const p = await b.newPage({ viewport: { width: 1440, height: 1000 }, reducedMotion: 'reduce' });

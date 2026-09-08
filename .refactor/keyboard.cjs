@@ -1,7 +1,7 @@
 /* All three tablists now share one implementation, so this checks the thing
    that unification puts at risk: that arrow keys, Home and End still move the
    selection and the focus together, and that tabIndex stays roving. */
-const { chromium } = require('/home/kanzhu/.npm/_npx/705bc6b22212b352/node_modules/playwright/index.js');
+const { chromium } = require('playwright');
 const port = process.argv[2] || 5199;
 
 const GROUPS = [

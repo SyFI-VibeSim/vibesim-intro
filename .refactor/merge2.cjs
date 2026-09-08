@@ -12,7 +12,7 @@
    parsed alongside the source; rule order is identical, which pairs them up. */
 const postcss = require('postcss');
 const fs = require('fs');
-const { chromium } = require('/home/kanzhu/.npm/_npx/705bc6b22212b352/node_modules/playwright/index.js');
+const { chromium } = require('playwright');
 
 const [file, servedUrl, apply] = [process.argv[2], process.argv[3], process.argv[4] === '--apply'];
 

@@ -1,6 +1,6 @@
 /* Capture the page in every state the refactor could disturb.
    Usage: node .refactor/shoot.cjs <outdir> <port> */
-const { chromium } = require('/home/kanzhu/.npm/_npx/705bc6b22212b352/node_modules/playwright/index.js');
+const { chromium } = require('playwright');
 const out = process.argv[2], port = process.argv[3] || 5198, base = process.argv[4] || '/';
 const WIDTHS = [320, 390, 768, 1024, 1440, 1920, 2560];
 

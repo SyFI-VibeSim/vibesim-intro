@@ -1,0 +1,48 @@
+/* Shared entry animations.
+
+   These live outside the section stylesheets because two of them are used from
+   more than one section: reply-enter drives both the chat turns in Use cases
+   and the tier panel in Supported systems, and chart-grow-x drives both the
+   operation bars and the waterfall. Once the sections became CSS Modules a
+   keyframe defined inside one of them would be scoped to it and invisible to
+   the other, so they get a global home instead.
+
+   They stay wrapped in the reduced-motion query, which is how the page opts out
+   of motion: with the query unmatched the keyframes are simply not defined, so
+   the animation shorthand naming them resolves to nothing and the element
+   renders in its final state. The `animation` declarations themselves sit in
+   the same query in each section's own stylesheet. */
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes reply-enter {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes chart-grow {
+    from {
+      transform: scaleY(0.1);
+    }
+
+    to {
+      transform: scaleY(1);
+    }
+  }
+
+  @keyframes chart-grow-x {
+    from {
+      transform: scaleX(0.1);
+    }
+
+    to {
+      transform: scaleX(1);
+    }
+  }
+}

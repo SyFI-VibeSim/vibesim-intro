@@ -1808,38 +1808,6 @@ h2 {
   .why-tier-body {
     animation: reply-enter 0.35s ease both;
   }
-
-  @keyframes reply-enter {
-    from {
-      opacity: 0;
-      transform: translateY(10px);
-    }
-
-    to {
-      opacity: 1;
-      transform: none;
-    }
-  }
-
-  @keyframes chart-grow {
-    from {
-      transform: scaleY(0.1);
-    }
-
-    to {
-      transform: scaleY(1);
-    }
-  }
-
-  @keyframes chart-grow-x {
-    from {
-      transform: scaleX(0.1);
-    }
-
-    to {
-      transform: scaleX(1);
-    }
-  }
 }
 
 @media (max-width: 767px) {

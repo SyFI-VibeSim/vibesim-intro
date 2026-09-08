@@ -174,10 +174,8 @@
 }
 
 .box {
+  composes: node from "../components/Flow.module.css";
   padding: 15px 18px;
-  border: 1px solid var(--c-line-200);
-  border-radius: var(--r-md);
-  background: var(--c-surface-200);
 }
 
 .box strong {
@@ -197,7 +195,12 @@
 }
 
 /* The one node each stage is heading towards. */
-.boxOut {
+
+/* Written as .box.boxOut so it outweighs the composed .node rather than
+   merely following it: a composed class lives in another file, and which of
+   the two files the bundler emits first is not something this rule should
+   depend on. */
+.box.boxOut {
   border-color: var(--c-line-accent-100);
   background: var(--c-surface-300);
 }
@@ -466,13 +469,11 @@
 }
 
 .lane {
+  composes: node from "../components/Flow.module.css";
   display: flex;
   align-items: baseline;
   gap: 12px;
   padding: 14px 18px;
-  border: 1px solid var(--c-line-200);
-  border-radius: var(--r-md);
-  background: var(--c-surface-200);
 }
 
 .lane img,

@@ -40,6 +40,14 @@
               "global"
             ]
           }
+        ],
+        "property-no-unknown": [
+          true,
+          {
+            "ignoreProperties": [
+              "composes"
+            ]
+          }
         ]
       }
     }

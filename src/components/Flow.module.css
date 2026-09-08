@@ -1,0 +1,17 @@
+/* The one definition of a diagram node's surface.
+
+   Four rules across the two flow charts drew the same panel: the boxes and the
+   lane cards in How it works, and the two human ends and the stage list in the
+   Agent round trip. They are composed from here so the surface is described
+   once, and a node that wants to stand out, such as the one a flow is heading
+   towards, overrides the border and background in its own module afterwards.
+
+   Only the surface is shared. The connectors are not: the two diagrams draw
+   different things, one arrows and junctions along a dashed trunk, the other a
+   single return line, and pretending they are the same shape would be worse
+   than writing each out. */
+.node {
+  border: 1px solid var(--c-line-200);
+  border-radius: var(--r-md);
+  background: var(--c-surface-200);
+}

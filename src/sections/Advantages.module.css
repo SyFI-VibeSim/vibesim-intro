@@ -977,11 +977,9 @@
 }
 
 .flowEnd {
+  composes: node from "../components/Flow.module.css";
   margin: 0;
   padding: 18px 22px;
-  border: 1px solid var(--c-line-200);
-  border-radius: var(--r-md);
-  background: var(--c-surface-200);
   box-shadow: inset 3px 0 0 var(--c-line-700);
 }
 
@@ -999,7 +997,9 @@
   color: var(--c-ink-1800);
 }
 
-.flowEndFinish {
+/* Compounded for the same reason as .box.boxOut: it has to outweigh the
+   composed .node, not just come after it. */
+.flowEnd.flowEndFinish {
   position: relative;
   border-color: var(--c-line-accent-100);
   background: var(--c-surface-300);
@@ -1015,6 +1015,7 @@
 }
 
 .flowStages {
+  composes: node from "../components/Flow.module.css";
   position: relative;
   flex: 1;
   display: flex;
@@ -1023,9 +1024,6 @@
   margin: 0;
   padding: 0;
   list-style: none;
-  border: 1px solid var(--c-line-200);
-  border-radius: var(--r-md);
-  background: var(--c-surface-200);
 }
 
 .flowStages li {

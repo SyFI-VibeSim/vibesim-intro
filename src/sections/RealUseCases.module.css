@@ -1,0 +1,401 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-xl);
+  background: var(--surface);
+}
+
+.stack {
+  color: var(--accent);
+  font-size: var(--fs-fine);
+  margin-bottom: 26px;
+}
+
+.card h3 {
+  font-size: var(--fs-2xl);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.035em;
+}
+
+.summary {
+  color: var(--muted);
+  font-size: var(--fs-sm);
+  line-height: 1.65;
+  margin-top: 20px;
+  margin-bottom: 34px;
+}
+
+.metric {
+  margin-top: auto;
+  padding-top: 26px;
+  border-top: 1px solid var(--line);
+  display: grid;
+  gap: 10px;
+}
+
+.metric strong {
+  color: var(--accent);
+  font-size: var(--fs-num-xl);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  white-space: nowrap;
+}
+
+.metric span,
+.setup {
+  color: var(--muted);
+  font-size: var(--fs-fine);
+  line-height: 1.6;
+}
+
+.metric span {
+  font-size: var(--fs-sm);
+}
+
+.card .setup {
+  margin-top: 22px;
+  margin-bottom: 28px;
+}
+
+.readMore,
+.sourceLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--accent);
+  font-size: var(--fs-sm);
+}
+
+.readMore {
+  text-align: left;
+  padding: 12px 0;
+  white-space: nowrap;
+}
+
+.readMore:hover,
+.sourceLink:hover {
+  color: var(--ink);
+}
+
+.readMore:active {
+  transform: translateY(1px);
+}
+
+.readMore:focus-visible,
+.dialog button:focus-visible,
+.sourceLink:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 5px;
+  border-radius: var(--r-xs);
+}
+
+/* Native dialog uses the browser top layer, above the existing navigation. */
+.dialog {
+  margin: auto;
+  padding: 0;
+  width: var(--page-width);
+  max-height: calc(100dvh - 64px);
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--c-line-300);
+  border-radius: var(--r-xl);
+  overscroll-behavior: contain;
+}
+
+.dialog::backdrop {
+  background: var(--c-alpha-200);
+}
+
+.dialogBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  position: sticky;
+  top: 0;
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+  padding: 16px 28px;
+  font-size: var(--fs-fine);
+  color: var(--accent);
+}
+
+.dialogBar button {
+  display: grid;
+  place-items: center;
+  min-width: 44px;
+  min-height: 44px;
+  color: var(--ink);
+  border-radius: var(--r-sm);
+}
+
+.dialogBar button:hover {
+  background: var(--raised);
+}
+
+.story {
+  padding: 36px 48px 48px;
+}
+
+.story h2 {
+  font-size: var(--fs-3xl);
+}
+
+.story > .setup {
+  margin-top: 18px;
+}
+
+.comparison {
+  margin: 32px 0;
+  padding: 24px;
+  background: var(--raised);
+  border-radius: var(--r-md);
+}
+
+.comparison figcaption {
+  color: var(--muted);
+  font-size: var(--fs-fine);
+  margin-bottom: 22px;
+}
+
+.readings {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 20px;
+}
+
+.readings > div {
+  display: grid;
+  gap: 8px;
+}
+
+.readings span {
+  font-size: var(--fs-fine);
+  color: var(--muted);
+}
+
+.readings strong {
+  font-size: var(--fs-num);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.readings > div:last-child strong {
+  color: var(--accent);
+}
+
+.readings small {
+  margin-left: 6px;
+  font-size: var(--fs-fine);
+}
+
+.passage {
+  margin-top: 28px;
+}
+
+.plot {
+  margin-block: 32px;
+}
+
+.plot img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--r-sm);
+}
+
+.plot figcaption {
+  color: var(--muted);
+  font-size: var(--fs-fine);
+  line-height: 1.65;
+  margin-top: 16px;
+}
+
+.plot .sourceLink {
+  margin-top: 14px;
+}
+
+.passage p {
+  color: var(--muted);
+  font-size: var(--fs-lg);
+  line-height: 1.75;
+}
+
+.sourceLink {
+  margin-top: 28px;
+}
+
+@media (max-width: 1279px) {
+  .card {
+    padding: 24px;
+  }
+
+  .grid {
+    gap: 14px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 767px) {
+  .dialog {
+    width: calc(100% - 24px);
+    max-height: calc(100dvh - 24px);
+  }
+
+  .dialogBar {
+    padding: 12px 16px;
+    gap: 10px;
+  }
+
+  .story {
+    padding: 26px 20px;
+  }
+
+  .comparison {
+    padding: 20px 14px;
+  }
+
+  .readings {
+    gap: 10px;
+  }
+
+  .readings strong {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+  }
+}
+
+.passage strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.passage h3 {
+  margin: 48px 0 18px;
+  color: var(--ink);
+  font-size: var(--fs-xl);
+  line-height: 1.35;
+}
+
+.passage p + p {
+  margin-top: 20px;
+}
+
+.kernelChart,
+.evidenceTable {
+  margin: 30px 0;
+  padding: 24px 0;
+  border-block: 1px solid var(--line);
+}
+
+.kernelChart figcaption,
+.evidenceTable figcaption {
+  color: var(--ink);
+  font-size: var(--fs-lg);
+  font-weight: 600;
+  line-height: 1.4;
+  margin-bottom: 18px;
+}
+
+.kernelChart .chartKey {
+  font-size: var(--fs-sm);
+  line-height: 1.6;
+}
+
+.kernelRow {
+  margin-block: 24px;
+}
+
+.kernelRow h4 {
+  font-size: var(--fs-sm);
+  color: var(--ink);
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.kernelReading {
+  display: grid;
+  grid-template-columns: 90px minmax(0, 1fr) 65px;
+  gap: 14px;
+  align-items: center;
+  margin-top: 6px;
+  font-size: var(--fs-sm);
+  color: var(--muted);
+}
+
+.kernelReading strong {
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  font-weight: 500;
+}
+
+.barTrack {
+  height: 14px;
+}
+
+.barTrack i {
+  display: block;
+  height: 100%;
+  border-radius: 2px;
+}
+
+.predictedBar {
+  background: #8d98ab;
+}
+
+.measuredBar {
+  background: var(--accent);
+}
+
+.evidenceTable table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+}
+
+.evidenceTable th,
+.evidenceTable td {
+  padding: 14px 10px 14px 0;
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+  font-weight: 400;
+}
+
+.evidenceTable thead th {
+  color: var(--muted);
+}
+
+.evidenceTable td {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 767px) {
+  .kernelReading {
+    grid-template-columns: 76px minmax(0, 1fr) 56px;
+    gap: 8px;
+  }
+
+  .evidenceTable th,
+  .evidenceTable td {
+    padding-right: 8px;
+    overflow-wrap: anywhere;
+  }
+}

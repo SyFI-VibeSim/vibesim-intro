@@ -1,0 +1,111 @@
+{
+  "source": "20260813_9_qwen3_repetitive_16k_production_alignment/analysis_kernel/payloads/alignment_iteration_breakdowns.jsonl",
+  "scope": "One production layer plus embedding/final norm/lm head; 16384-token prefill; H200 x4; TP4/EP4. Arithmetic mean of operation_summary for iterations 1 and 2. Iteration 0 excluded due to startup collective outlier. Values are exported alignment operation contributions, not sums across GPUs. Initial real and simulated implementations differ.",
+  "operations": [
+    {
+      "operation": "attention.input_norm",
+      "measured_ms": 0.06568,
+      "simulated_ms": 0.06646394729614258
+    },
+    {
+      "operation": "attention.kv_cache_append",
+      "measured_ms": 0.010448,
+      "simulated_ms": 0.02878113090991974
+    },
+    {
+      "operation": "attention.o_proj.all_reduce",
+      "measured_ms": 0.961204,
+      "simulated_ms": 0.5622310042381287
+    },
+    {
+      "operation": "attention.o_proj.gemm",
+      "measured_ms": 0.27270300000000003,
+      "simulated_ms": 0.2506006062030792
+    },
+    {
+      "operation": "attention.o_proj.input_quant",
+      "measured_ms": 0.059632,
+      "simulated_ms": 0.07876447588205338
+    },
+    {
+      "operation": "attention.prefill",
+      "measured_ms": 6.2366410000000005,
+      "simulated_ms": 1.227035641670227
+    },
+    {
+      "operation": "attention.qkv.gemm",
+      "measured_ms": 0.274623,
+      "simulated_ms": 0.254635751247406
+    },
+    {
+      "operation": "attention.qkv.input_quant",
+      "measured_ms": 0.1160795,
+      "simulated_ms": 0.15497146546840668
+    },
+    {
+      "operation": "main.embedding",
+      "measured_ms": 0.06544,
+      "simulated_ms": 0.033212799578905106
+    },
+    {
+      "operation": "main.final_norm",
+      "measured_ms": 0.134607,
+      "simulated_ms": 0.06646394729614258
+    },
+    {
+      "operation": "main.lm_head",
+      "measured_ms": 0.0920955,
+      "simulated_ms": 0.15184064977802336
+    },
+    {
+      "operation": "moe.activation",
+      "measured_ms": 0.153791,
+      "simulated_ms": 0.07172539085149765
+    },
+    {
+      "operation": "moe.combine",
+      "measured_ms": 2.368871,
+      "simulated_ms": 0.6199824213981628
+    },
+    {
+      "operation": "moe.dispatch",
+      "measured_ms": 0.9153545000000001,
+      "simulated_ms": 0.23503756523132324
+    },
+    {
+      "operation": "moe.down.gemm",
+      "measured_ms": 0.656925,
+      "simulated_ms": 0.45624440908432007
+    },
+    {
+      "operation": "moe.down.input_quant",
+      "measured_ms": 0.3669745,
+      "simulated_ms": 0.2510592043399811
+    },
+    {
+      "operation": "moe.finalize",
+      "measured_ms": 0.281935,
+      "simulated_ms": 0.17587068676948547
+    },
+    {
+      "operation": "moe.gate_up.gemm",
+      "measured_ms": 1.151387,
+      "simulated_ms": 0.7261484861373901
+    },
+    {
+      "operation": "moe.gate_up.input_quant",
+      "measured_ms": 0.9638515,
+      "simulated_ms": 0.6655473113059998
+    },
+    {
+      "operation": "moe.post_attention_norm",
+      "measured_ms": 0.133296,
+      "simulated_ms": 0.06646394729614258
+    },
+    {
+      "operation": "moe.router",
+      "measured_ms": 0.015871999999999997,
+      "simulated_ms": 0.1840432658791542
+    }
+  ]
+}

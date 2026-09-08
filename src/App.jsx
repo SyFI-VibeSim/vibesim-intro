@@ -6,6 +6,7 @@ import { UseCases } from "./sections/UseCases";
 import { Workflow } from "./sections/Workflow";
 import { Advantages } from "./sections/Advantages";
 import { Closing } from "./sections/Closing";
+import { RealUseCases } from "./sections/RealUseCases";
 
 export default function App() {
   const mainRef = useRef(null);
@@ -45,6 +46,7 @@ export default function App() {
         <ProductIntroduction />
         <UseCases />
         <Workflow />
+        <RealUseCases />
         <Advantages />
       </main>
       <Closing />

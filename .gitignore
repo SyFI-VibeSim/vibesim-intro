@@ -31,3 +31,6 @@ agent-trace/
 # prompts. Moved out of public/, because everything under public/ is copied
 # into the build verbatim and would have been served. Kept on disk.
 /designs/
+
+# Local experiment exports and source material used to review case studies.
+/review/

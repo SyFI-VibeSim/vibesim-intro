@@ -1,0 +1,111 @@
+[
+  {
+    "title": "Build the MoE serving path from scratch.",
+    "paragraphs": [
+      "Mini-SGLang had no MoE support when we began. Supporting **Qwen3-235B Thinking-2507 required building much of the MoE serving path from scratch**: expert routing, expert-parallel execution, and integration with FP8 expert kernels. We connected these components to the model loader, attention and KV cache, and the serving runtime. VibeSim provided a performance reference as we developed and measured the real implementation.",
+      "To make experiments practical, we built a reduced-depth model that retained one real transformer layer, the embedding, final normalization, and language-model head. It used the production checkpoint and execution path. This let us test implementation changes quickly while preserving the tensor shapes that determine kernel behavior. **Full-model latency and serving throughput were measured separately on all 94 layers.**"
+    ]
+  },
+  {
+    "title": "Explain the gaps between prediction and execution.",
+    "paragraphs": [
+      "The first production trace exposed substantial differences from the simulated execution. The chart below compares the original alignment exports for two steady 16K-prefill iterations. Prefill attention was the largest discrepancy: **6.237 ms measured versus 1.227 ms predicted**. The implementation used FA2 with BF16 queries and FP8 KV, while the prediction targeted FA3 with FP8 queries and KV. This pointed to a concrete implementation change.",
+      "Simply selecting FA3 failed because the installed backend did not support the existing query/KV dtype combination. We added FP8 query conversion and then enabled FA3. Across the two steady iterations of the new capture, **the attention kernel averaged 1.313 ms**. Query conversion was measured separately; the one-layer forward time, including surrounding work, fell from approximately 21.9 to 17.2 ms."
+    ],
+    "chart": [
+      {
+        "label": "Prefill attention",
+        "operation": "attention.prefill",
+        "measured_ms": 6.2366410000000005,
+        "simulated_ms": 1.227035641670227
+      },
+      {
+        "label": "MoE combine",
+        "operation": "moe.combine",
+        "measured_ms": 2.368871,
+        "simulated_ms": 0.6199824213981628
+      },
+      {
+        "label": "MoE dispatch",
+        "operation": "moe.dispatch",
+        "measured_ms": 0.9153545000000001,
+        "simulated_ms": 0.23503756523132324
+      },
+      {
+        "label": "Gate/up input quantization",
+        "operation": "moe.gate_up.input_quant",
+        "measured_ms": 0.9638515,
+        "simulated_ms": 0.6655473113059998
+      },
+      {
+        "label": "Gate/up GEMM",
+        "operation": "moe.gate_up.gemm",
+        "measured_ms": 1.151387,
+        "simulated_ms": 0.7261484861373901
+      },
+      {
+        "label": "Down input quantization",
+        "operation": "moe.down.input_quant",
+        "measured_ms": 0.3669745,
+        "simulated_ms": 0.2510592043399811
+      },
+      {
+        "label": "Down GEMM",
+        "operation": "moe.down.gemm",
+        "measured_ms": 0.656925,
+        "simulated_ms": 0.45624440908432007
+      }
+    ]
+  },
+  {
+    "title": "Remove redundant MoE communication.",
+    "paragraphs": [
+      "The communication gaps led us to examine how tokens reached their experts. Early trials reduced traffic by sending each token once per destination rank and combining expert outputs locally. Further inspection revealed a larger opportunity: **attention TP had already replicated the hidden states across all four ranks**. Creating token owners and dispatching those same states again was unnecessary.",
+      "We replaced that machinery with FlashInfer’s native EP filtering. Each rank received the global expert IDs, computed only its local experts, and contributed to a final all-reduce. The old count exchange, payload all-to-all, gathers, and local reconstruction disappeared. In the recorded one-layer trial, **kernel launches per rank fell from 150 to 55**, and the mapped critical path fell from 8.145 to 7.316 ms. We also updated the simulator’s Mini-SGLang architecture to represent the new execution path."
+    ]
+  },
+  {
+    "title": "Use kernel analysis to choose the fusion targets.",
+    "paragraphs": [
+      "Once the main execution differences were understood, we returned to the prefill-heavy workload. We used the model’s actual expert assignments to compare predicted and measured kernel times, then examined how much prefill time was spent on quantization versus matrix multiplication.",
+      "**Quantization took a substantial fraction of the time spent on matrix multiplication.** For MoE gate/up, quantization accounted for **12.65% of prefill time, compared with 15.08% for the GEMM**—about 84% as much time. Across all four inputs, quantization consumed 137.372 ms, or 19.8% of the measured prefill. This made it a significant optimization target. VibeSim’s analysis of necessary work and fusion opportunities helped us identify where producers could generate quantized inputs directly, avoiding a separate pass over an intermediate tensor."
+    ],
+    "table": {
+      "caption": "Quantization and GEMM time · full 94-layer prefill",
+      "headers": ["Operation", "Measured time", "Share of prefill"],
+      "rows": [
+        ["QKV quantization", "10.746 ms", "1.55%"],
+        ["QKV GEMM", "25.723 ms", "3.71%"],
+        ["Attention output quantization", "5.545 ms", "0.80%"],
+        ["Attention output GEMM", "25.403 ms", "3.66%"],
+        ["MoE gate/up quantization", "87.780 ms", "12.65%"],
+        ["MoE gate/up GEMM", "104.674 ms", "15.08%"],
+        ["MoE down quantization", "33.301 ms", "4.80%"],
+        ["MoE down GEMM", "60.975 ms", "8.79%"]
+      ]
+    }
+  },
+  {
+    "title": "Fuse the producers with FP8 quantization.",
+    "paragraphs": [
+      "We first **fused expert-row expansion with FP8 quantization**, producing the input and block scales needed by the gate/up GEMM directly. Next, we fused SiLU-and-multiply with quantization for the down projection. These changes required the expert GEMMs to accept prequantized inputs; a faster producer alone would not remove the existing conversion inside the consumer.",
+      "The integration uncovered a subtle failure. The old implementation reused a workspace buffer safely because a quantization copy separated the two GEMMs. Removing that copy caused input and output to alias, producing NaNs. Allocating a separate FP8 input buffer fixed the problem. We then added a prefill implementation that fused residual addition and RMSNorm with QKV input quantization, preserving the production reduction and rounding behavior.",
+      "Across the full-model trials, **TTFT fell from 724.38 to 616.99 ms, a 14.82% reduction**, after these three fusions. These are recorded individual TTFT samples rather than a repeated-run median. The original trial produced a valid first token but later failed during decode, so this comparison supports a prefill latency result only."
+    ]
+  },
+  {
+    "title": "Keep the changes that survive production measurements.",
+    "paragraphs": [
+      "Several plausible ideas did not survive testing. The first QK-normalization/RoPE fusion was slower than the original kernels; a later version with a different head-to-thread mapping improved the measured decode boundary. Another QKV quantization candidate looked faster in isolation but lost its advantage when tested with the actual four-GPU producer and consumer. Small decode shapes also proved to be a poor guide to the dominant prefill costs.",
+      "We next **moved attention-output quantization into the FA3 epilogue**, allowing the output projection to consume FP8 data directly. Matching the existing rounding order, scale layout, and strided tensors was essential. Shared-memory and packed-store variants were rejected before a register-based implementation produced a measurable gain.",
+      "In a paired test with five requests per variant under one model load, **median TTFT fell from 600.17 to 596.74 ms**. The corresponding attention/output-projection comparison removed two launches and saved approximately 42 microseconds per layer. A final profile confirmed that the steady layers no longer launched separate input-quantization kernels for QKV, query, output projection, or the two expert projections; their work had moved into the producers."
+    ]
+  },
+  {
+    "title": "Validate the complete system against vLLM.",
+    "paragraphs": [
+      "Finally, we compared both serving engines on **four H200 GPUs, with TP4/EP4, 256 requests, 16,384 input tokens and 64 output tokens per request, at concurrency 32**. Mini-SGLang delivered **101.406 output tokens per second versus 80.741 for vLLM—a 25.59% increase**. Both engines completed all 256 requests and returned the requested number of tokens.",
+      "The final comparison checked the same prompt-token inputs and captured native output-token IDs. Output sequences were not identical across the two FP8 implementations, so this benchmark establishes a throughput result rather than equivalent model quality. The throughput advantage is the result of the complete serving implementation; the preceding kernel and latency experiments establish the benefits of individual changes."
+    ]
+  }
+]

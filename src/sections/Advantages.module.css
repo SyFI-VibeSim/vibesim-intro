@@ -1305,6 +1305,25 @@
     min-height: 190px;
   }
 
+  /* See the comment on the markup: the plot's own gridlines carry the scale,
+     so the axis drops its range here rather than wrapping "Iteration" away
+     from its "1". */
+  .axisRange {
+    display: none;
+  }
+
+  /* The two ends of an axis are one reading each and have to stay whole; only
+     the description in the middle may wrap. The narrower gap is what lets all
+     three sit on one line down to 320px. */
+  .axis {
+    gap: 10px;
+  }
+
+  .axis > span:first-child,
+  .axis > span:last-child {
+    white-space: nowrap;
+  }
+
   /* No shared panel height on a phone.
 
      The four tabs are pinned to one height on wider screens so the page below

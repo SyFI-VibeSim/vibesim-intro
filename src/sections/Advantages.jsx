@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { Tabs } from "../components/Tabs";
 import s from "./Advantages.module.css";
 import simSpeed from "../data/simSpeed.json";
@@ -377,7 +377,14 @@ function IterationPanel() {
       </div>
       <div className={s.axis}>
         <span>Iteration 1</span>
-        <span>Iteration duration, 0 to {iterAxis} ms</span>
+        {/* The range drops on a phone. It is the longest label in the row and
+            the one the reader can do without: the gridlines inside the plot
+            already print 25, 50 and 75 ms. Kept everywhere else, because it is
+            what says the plot is clipped at 100. */}
+        <span>
+          Iteration duration
+          <span className={s.axisRange}>, 0 to {iterAxis} ms</span>
+        </span>
         <span>{tiers.iterations.iterations.toLocaleString("en-US")}</span>
       </div>
       <dl className={s.stats}>
@@ -407,6 +414,23 @@ function IterationPanel() {
   );
 }
 
+/* A kernel position is one dotted, underscored identifier with no spaces in it,
+   so on a phone it has to break somewhere. Left to the browser that lands
+   mid-token: "attention.sparse_mla.deco / de". These mark the separators as
+   the places to break, so it comes apart where the name already has joints.
+
+   The CSS keeps overflow-wrap: anywhere underneath as the floor, for a segment
+   still too long for the column. */
+const breakAtSeparators = (name) => {
+  const parts = name.split(/(?<=[._])/);
+  return parts.map((part, index) => (
+    <Fragment key={index}>
+      {part}
+      {index < parts.length - 1 && <wbr />}
+    </Fragment>
+  ));
+};
+
 const kernelMax = tiers.kernels.segments[0].share;
 /* Only the positions that carry real weight are listed, so this tab stays the
    same height as the other three; the tail is summarised underneath. */
@@ -422,7 +446,7 @@ function KernelPanel() {
         {kernelShown.map((segment) => (
           <div className={s.kernelRow} key={segment.name}>
             <span className={s.kernelName}>
-              <strong>{segment.name}</strong>
+              <strong>{breakAtSeparators(segment.name)}</strong>
               <span>
                 {segment.scope ? `${segment.scope}, ` : ""}
                 {segment.kind}

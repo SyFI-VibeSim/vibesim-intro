@@ -691,7 +691,7 @@ export function Advantages() {
   return (
     <section id="advantages" className="section">
       <div className="wrap">
-        <div className="section-intro">
+        <div className="section-intro" data-reveal>
           <h2>Explore VibeSim’s key features.</h2>
           <p>
             See the supported systems and the evidence behind simulation speed,
@@ -702,6 +702,7 @@ export function Advantages() {
         <div className={s.rows}>
           {rows.map((row, index) => (
             <article
+              data-reveal
               className={`${s.row}${index % 2 === 1 ? ` ${s.rowFlip}` : ""}${
                 row.modifier ? ` ${row.modifier}` : ""
               }`}

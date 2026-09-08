@@ -250,7 +250,7 @@ export function Workflow() {
   return (
     <section id="workflow" className="section">
       <div className="wrap">
-        <div className="section-intro">
+        <div className="section-intro" data-reveal>
           <h2>
             From real measurements
             <br className={s.headingBreak} /> to real improvements.

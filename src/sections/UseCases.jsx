@@ -399,7 +399,7 @@ export function UseCases() {
   return (
     <section id="use-cases" className={`section ${s.examplesSection}`}>
       <div className="wrap">
-        <div className="section-intro">
+        <div className="section-intro" data-reveal>
           <h2>Run the study with the Agent.</h2>
           <p>
             Bring a serving question. The Agent designs the experiment, runs it,

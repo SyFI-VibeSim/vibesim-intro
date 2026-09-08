@@ -147,7 +147,7 @@ function ProductIntroduction() {
       aria-labelledby="product-title"
     >
       <div className="wrap">
-        <div className="section-intro">
+        <div className="section-intro" data-reveal>
           <h2 id="product-title">VibeSim. More than a simulator.</h2>
           <p>
             A simulator that predicts how a serving setup performs, and an Agent
@@ -207,7 +207,12 @@ export default function App() {
   const mainRef = useRef(null);
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const elements = mainRef.current.querySelectorAll(".section-intro, .why-row");
+    /* Reveal targets are marked with data-reveal by the section that owns them.
+       Querying by class name meant reaching into another section's internals,
+       which broke silently the moment those classes became CSS Modules and
+       started being hashed: the six rows in Supported systems simply stopped
+       being found, and nothing rendered differently enough to notice. */
+    const elements = mainRef.current.querySelectorAll("[data-reveal]");
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {

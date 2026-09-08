@@ -18,8 +18,8 @@ import {
   MemoryStick,
   CornerDownLeft,
 } from "lucide-react";
-import logo from "./vibesim-logo.png";
-import "./workflow.css";
+import logo from "../vibesim-logo.png";
+import s from "./Workflow.module.css";
 
 const stages = [
   {
@@ -67,18 +67,18 @@ const stages = [
 
 function WorkloadView() {
   return (
-    <div className="wf-view wf-chain">
-      <div className="wf-box">
+    <div className={`${s.view} ${s.chain}`}>
+      <div className={s.box}>
         <strong>Your serving workload</strong>
         <p>The model, the hardware and the requests you actually serve.</p>
       </div>
-      <span className="wf-arrow" aria-hidden="true" />
-      <div className="wf-box">
+      <span className={s.arrow} aria-hidden="true" />
+      <div className={s.box}>
         <strong>Profile vLLM or SGLang</strong>
         <p>Kernel traces, request metrics and MoE routing.</p>
       </div>
-      <span className="wf-arrow" aria-hidden="true" />
-      <div className="wf-box wf-box--out">
+      <span className={s.arrow} aria-hidden="true" />
+      <div className={`${s.box} ${s.boxOut}`}>
         <strong>Build the simulation model</strong>
         <p>Ready to explore configurations against.</p>
       </div>
@@ -88,37 +88,37 @@ function WorkloadView() {
 
 function ExploreView() {
   return (
-    <div className="wf-view wf-fan">
-      <div className="wf-box wf-fan-origin">
+    <div className={`${s.view} ${s.fan}`}>
+      <div className={`${s.box} ${s.fanOrigin}`}>
         <strong>The system you run today</strong>
         <p>Your baseline configuration.</p>
       </div>
-      <span className="wf-fan-out" aria-hidden="true">
+      <span className={s.fanOut} aria-hidden="true">
         <i />
       </span>
-      <ul className="wf-candidates">
-        <li className="wf-box">
-          <i className="wf-tip" aria-hidden="true" />
+      <ul className={s.candidates}>
+        <li className={s.box}>
+          <i className={s.tip} aria-hidden="true" />
           <strong>Kernel and backend</strong>
         </li>
-        <li className="wf-box">
-          <i className="wf-tip" aria-hidden="true" />
+        <li className={s.box}>
+          <i className={s.tip} aria-hidden="true" />
           <strong>Parallelism</strong>
         </li>
-        <li className="wf-box">
-          <i className="wf-tip" aria-hidden="true" />
+        <li className={s.box}>
+          <i className={s.tip} aria-hidden="true" />
           <strong>Batching and KV</strong>
         </li>
       </ul>
-      <span className="wf-fan-in" aria-hidden="true">
+      <span className={s.fanIn} aria-hidden="true">
         <i />
-        <i className="wf-tip" />
+        <i className={s.tip} />
       </span>
-      <div className="wf-box wf-box--out wf-fan-pick">
+      <div className={`${s.box} ${s.boxOut} ${s.fanPick}`}>
         <strong>One feasible target</strong>
         <p>The one you take forward.</p>
       </div>
-      <p className="wf-view-note">
+      <p className={s.viewNote}>
         Every candidate is compared on throughput, latency and memory use, within
         the same workload and hardware.
       </p>
@@ -128,24 +128,24 @@ function ExploreView() {
 
 function BuildView() {
   return (
-    <div className="wf-view wf-branch">
-      <p className="wf-trunk-label">
+    <div className={`${s.view} ${s.branch}`}>
+      <p className={s.trunkLabel}>
         The baseline stays intact and still runnable throughout, so every step below
         has something to be measured against.
       </p>
-      <ol className="wf-gates">
-        <li className="wf-box">
-          <i className="wf-tip" aria-hidden="true" />
+      <ol className={s.gates}>
+        <li className={s.box}>
+          <i className={s.tip} aria-hidden="true" />
           <strong>Code change</strong>
           <p>One focused change, built by the Agent.</p>
         </li>
-        <li className="wf-box">
-          <i className="wf-tip" aria-hidden="true" />
+        <li className={s.box}>
+          <i className={s.tip} aria-hidden="true" />
           <strong>Correctness</strong>
           <p>Output and accuracy checks, before any timing.</p>
         </li>
-        <li className="wf-box wf-box--out">
-          <i className="wf-tip" aria-hidden="true" />
+        <li className={`${s.box} ${s.boxOut}`}>
+          <i className={s.tip} aria-hidden="true" />
           <strong>Trial run</strong>
           <p>Measured, then held against the simulated target.</p>
         </li>
@@ -156,13 +156,13 @@ function BuildView() {
 
 function AlignmentView() {
   return (
-    <div className="wf-view wf-ladder">
-      <div className="wf-lane">
+    <div className={`${s.view} ${s.ladder}`}>
+      <div className={s.lane}>
         <img src={logo} alt="" />
         <strong>Simulated target</strong>
         <span>The reference</span>
       </div>
-      <ul className="wf-ties">
+      <ul className={s.ties}>
         <li>
           <strong>Operation costs</strong>
           <p>Kernels and batch shapes</p>
@@ -176,12 +176,12 @@ function AlignmentView() {
           <p>Throughput and latency</p>
         </li>
       </ul>
-      <div className="wf-lane">
+      <div className={s.lane}>
         <GitBranch size={21} strokeWidth={1.6} aria-hidden="true" />
         <strong>Agent built system</strong>
         <span>The measured implementation</span>
       </div>
-      <p className="wf-view-note">
+      <p className={s.viewNote}>
         Each tie explains part of the difference, so the remaining gap is attributed
         rather than guessed.
       </p>
@@ -191,46 +191,46 @@ function AlignmentView() {
 
 function ValidationView() {
   return (
-    <div className="wf-view wf-verdict">
-      <ul className="wf-lanes">
-        <li className="wf-box">
+    <div className={`${s.view} ${s.verdict}`}>
+      <ul className={s.lanes}>
+        <li className={s.box}>
           <strong>Original baseline</strong>
         </li>
-        <li className="wf-box">
+        <li className={s.box}>
           <strong>Final build</strong>
         </li>
       </ul>
-      <span className="wf-fan-in wf-fan-in--pair" aria-hidden="true">
+      <span className={`${s.fanIn} ${s.fanInPair}`} aria-hidden="true">
         <i />
-        <i className="wf-tip" />
+        <i className={s.tip} />
       </span>
-      <div className="wf-box wf-benchmark">
+      <div className={`${s.box} ${s.benchmark}`}>
         <strong>The same benchmark</strong>
-        <ul className="wf-checks">
+        <ul className={s.checks}>
           <li>Correctness</li>
           <li>Throughput</li>
           <li>Latency</li>
           <li>Repeatability</li>
         </ul>
       </div>
-      <span className="wf-fan-out" aria-hidden="true">
+      <span className={s.fanOut} aria-hidden="true">
         <i />
       </span>
-      <ul className="wf-outcomes">
-        <li className="wf-box wf-box--out">
-          <i className="wf-tip" aria-hidden="true" />
+      <ul className={s.outcomes}>
+        <li className={`${s.box} ${s.boxOut}`}>
+          <i className={s.tip} aria-hidden="true" />
           <strong>Keep it</strong>
         </li>
-        <li className="wf-box">
-          <i className="wf-tip" aria-hidden="true" />
+        <li className={s.box}>
+          <i className={s.tip} aria-hidden="true" />
           <strong>Reject it</strong>
         </li>
-        <li className="wf-box">
-          <i className="wf-tip" aria-hidden="true" />
+        <li className={s.box}>
+          <i className={s.tip} aria-hidden="true" />
           <strong>Measure again</strong>
         </li>
       </ul>
-      <p className="wf-view-note">
+      <p className={s.viewNote}>
         Same hardware, same workload, and an unprofiled run for the final end to end
         numbers.
       </p>
@@ -248,21 +248,21 @@ export function Workflow() {
     if (focusTab) document.getElementById(`${id}-step-${index}`)?.focus();
   };
   return (
-    <section id="workflow" className="section workflow-section">
+    <section id="workflow" className={`section ${s.root}`}>
       <div className="wrap">
         <div className="section-intro">
           <h2>
             From real measurements
-            <br className="wf-heading-break" /> to real improvements.
+            <br className={s.headingBreak} /> to real improvements.
           </h2>
           <p>
             Explore a design, build it with the Agent, and compare it with the
             simulated target. Validate the improvement in the real framework.
           </p>
         </div>
-        <div className="wf-layout">
+        <div className={s.layout}>
           <div
-            className="wf-stages"
+            className={s.stages}
             role="tablist"
             aria-label="Optimization workflow"
             aria-orientation="vertical"
@@ -300,7 +300,7 @@ export function Workflow() {
                   <Icon size={24} strokeWidth={1.6} aria-hidden="true" />
                   <strong>{stage.name}</strong>
                   <ArrowRight
-                    className="wf-stage-arrow"
+                    className={s.stageArrow}
                     size={18}
                     aria-hidden="true"
                   />
@@ -309,17 +309,17 @@ export function Workflow() {
             })}
           </div>
           <div
-            className="wf-panel"
+            className={s.panel}
             role="tabpanel"
             id={`${id}-panel`}
             aria-labelledby={`${id}-step-${selected}`}
           >
             {/* Inactive views still size the shared grid, keeping navigation stationary without clipping text. */}
-            <div className="wf-heading-stack">
+            <div className={s.headingStack}>
               {stages.map((stage, index) => (
                 <div
                   key={stage.name}
-                  className="wf-panel-heading wf-layer"
+                  className={`${s.panelHeading} ${s.layer}`}
                   data-active={selected === index}
                   aria-hidden={selected !== index}
                   inert={selected !== index}
@@ -329,11 +329,11 @@ export function Workflow() {
                 </div>
               ))}
             </div>
-            <div className="wf-visual-stack">
+            <div className={s.visualStack}>
               {views.map((View, index) => (
                 <div
                   key={stages[index].name}
-                  className="wf-visual wf-layer"
+                  className={`${s.visual} ${s.layer}`}
                   data-active={selected === index}
                   aria-hidden={selected !== index}
                   inert={selected !== index}
@@ -342,7 +342,7 @@ export function Workflow() {
                 </div>
               ))}
             </div>
-            <nav className="wf-panel-nav" aria-label="Workflow step navigation">
+            <nav className={s.panelNav} aria-label="Workflow step navigation">
               <button
                 type="button"
                 disabled={selected === 0}
@@ -352,7 +352,7 @@ export function Workflow() {
                 <span>Previous</span>
               </button>
               <span
-                className="wf-position"
+                className={s.position}
                 aria-label={`Step ${selected + 1} of ${stages.length}`}
               >
                 {selected + 1} / {stages.length}

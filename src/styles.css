@@ -695,10 +695,6 @@ dd {
   gap: 18px;
 }
 
-.workflow-section {
-  padding-top: 70px;
-}
-
 .closing {
   position: relative;
   isolation: isolate;

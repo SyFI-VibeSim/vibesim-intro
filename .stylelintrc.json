@@ -7,7 +7,27 @@
     "media-feature-range-notation": null,
     "alpha-value-notation": null,
     "color-function-notation": null,
-    "selector-class-pattern": null,
+    "selector-class-pattern": [
+      "^[a-z][a-z0-9]*(-[a-z0-9]+)*(--[a-z0-9]+(-[a-z0-9]+)*)?$",
+      {
+        "message": "Global class names are kebab-case, with -- for a modifier"
+      }
+    ],
     "value-keyword-case": null
-  }
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/*.module.css"
+      ],
+      "rules": {
+        "selector-class-pattern": [
+          "^[a-z][a-zA-Z0-9]*$",
+          {
+            "message": "CSS Module class names are camelCase; scoping makes a prefix redundant"
+          }
+        ]
+      }
+    }
+  ]
 }

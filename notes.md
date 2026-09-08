@@ -284,3 +284,25 @@ Workflow = `From real measurements to real improvements.`，其说明含 “buil
 页面里根本没有的元素（hr / abbr / sub / sup / code / pre / progress / 文本框 / 日期控件 / file selector）不抄进来。留着没人引用的规则迟早会烂。
 
 stylelint 有两条报错是因为它假定有 autoprefixer，而我们已经没有了：`-webkit-text-size-adjust` 的无前缀版 WebKit 根本没实现，而 WebKit 正是这条规则唯一的服务对象；`appearance: button` 换成 `auto` 只在实现了新 appearance 规范的引擎里等价，没实现的引擎恰恰就是这条规则要照顾的。两处都用 `stylelint-disable-next-line` 并写明原因，不要图省事改成它推荐的写法。
+
+## CSS Modules 的三个坑（都是实测撞出来的）
+
+1. **模块作用域会改写 animation 名，不只是 class 名。** 模块里写 `animation: reply-enter`，编译后变成 `_reply-enter_<hash>`，全局表里定义的同名 keyframes 永远匹配不上。`animation: :global(name)` 这种写法 postcss 直接解析报错（Double colon），没有别的豁免手段。结论：**每个模块自带它要用的 keyframes**，共享 keyframes 的全局文件在最后一个 section 转完之后就没有存在意义了。
+2. **合成（composes）会改变层叠。** `composes: node from "../components/Flow.module.css"` 会让元素同时带两个 class，而 Flow.module.css 被打包器排在两个 section 之后，于是 `.node` 反过来压过了 `.boxOut`。凡是要覆盖被 composes 进来的规则，写成 `.box.boxOut` 这种复合选择器靠**特异性**赢，不要靠顺序。
+3. **模块和全局在同一特异性上打平时，赢家由文件发射顺序决定**，而这个顺序取决于 import 图，不是你以为的样子。这次一共撞了三回（`.examplesSection` 的 padding、`.workflow-section` 的 70px、composes 的 `.node`），每次的正确解法都一样：**加一层特异性把胜负钉死**，不要去调 import 顺序——调顺序会连带影响所有其他 section。
+
+补充：改 main.jsx 的 import 顺序影响面极大，因为 product-introduction.css 当时是从 App.jsx 里 import 的，一起被带着走。
+
+## 三个只能靠专门检查发现的问题
+
+截图和 computed 对比都开 `reducedMotion: 'reduce'`，所以它们对下面这些**结构性失明**：
+
+- **动画名悬空**：reduced motion 下动画根本不跑，截图完全一致。要用 `.refactor/motion.cjs`（开着动画加载，核对每个 animation-name 都能找到 keyframes）。
+- **滚动揭示丢了**：App.jsx 里 `querySelectorAll(".section-intro, .why-row")`，`.why-row` 变成模块 class 之后被 hash，六个 row 直接找不到。而 reduced motion 下这个 effect 提前 return，所有检查都看不见。修法是让每个 section 自己给要揭示的元素打 `data-reveal`，App 只查属性——**不要跨 section 用 class 名找元素**。
+- **交互态**：hover/focus 下的样式截图拍不到。`.refactor/states.cjs` 在浏览器里逐个验证四个 data 属性确实选中了东西，注意 scatter 在第三个 tab 里，不点开根本没挂载。
+
+另外 `computed.cjs`（逐元素逐属性对比计算样式）比截图强得多：footer logo 在 390 下从 29px 变成 34px，七个宽度的整页截图全都没报出来，computed 一下就点名了。
+
+## 跨组件样式在模块下要改写法
+
+`.footer .brand` 这种「A 组件伸手改 B 组件」的规则，在模块化之后必然坏：先被抽走的那个模块会认领它，另一个的 class 名已经 hash 了。正确做法是 **B 接受 className prop，A 传自己的 class 进去**；并且把规则写成 `.footer .footerBrand` 保住原来的两 class 特异性，否则又会退化成拼发射顺序。

@@ -203,3 +203,13 @@ Use cases 节标题：`Ask the VibeSim Agent.` → `Run the study with the Agent
 3. 移除 Tailwind，改写显式 reset（a7a7d1c）。全仓 JSX 零个 utility class，但页面排版实际依赖 preflight，所以不能直接删。新增 src/styles/reset.css，只抄页面真正渲染的元素，承重的七条逐条注释了理由（见 notes.md）。验证方式是把 HEAD 单独 checkout 构建后拍一份再 diff：25 张里 23 张逐字节相同，另两张一共差 4 个像素，全在 x=34、两条 1px 分隔线的左端点，幅度 15/255，图是 678×675。没有一张尺寸变化——这正是能抓住 reset 漏规则的判据。CSS 产物 74.99 → 54.41 kB（gzip 16.71 → 10.91），计划里估的是 preflight 的 4,586 字节，实际 v4 的 theme 变量也在输出，省下的是样式表的 27%。
 
 待办：4. 拆文件并转 CSS Modules（Workflow → Advantages → UseCases → Hero → Closing，refinements.css 与 product-introduction.css 就地解散）；5. 去重（三份 ARIA tab 合成一个 components/Tabs.jsx 带 orientation prop，流程图基元抽进 components/Flow.module.css 用 composes 共享，删 5 条死掉的 .wf-* 选择器）。
+
+4. 拆文件并转 CSS Modules。顺序 Workflow → Advantages → UseCases → App（Hero / ProductIntroduction / Closing / Navigation / Brand）。最终结构：App.jsx 只做组合（0 个组件定义），src/sections/ 六个 section 各自带 .module.css，src/components/ 放 Brand / Navigation / Tabs / Flow，src/styles/ 分 reset / tokens / base 三层。styles.css、refinements.css、product-introduction.css 全部消失。
+   规则搬运用 postcss 按选择器归属自动完成，每次都核对规则数和声明数守恒（UseCases 那次 278 条规则 / 841 条声明，前后一致）。选择器里混了全局 class 的（`.examples-section .section-intro`、`.case-selector.tabs button` 共 15 条）一并搬走，全局那半边包 `:global()`。两条把纯全局选择器和 section 选择器写在同一个规则里的，先拆成两条（已验证拆分本身零像素变化）再搬。
+   合并重复选择器：UseCases 20 条、全局表 13 条，全部由 `.refactor/merge2.cjs` 判定安全后才合。判定条件是「中间没有任何规则以相同特异性、在相同元素上、设置相同属性」，前两条静态算，第三条把选择器丢进真实页面求交集（模块的 hash 名靠按序号跟 dev server 上的已编译版本配对拿到）。33 条全部判定安全，零拒绝。
+5. 去重。三份 ARIA tab 合成 components/Tabs.jsx，差异变成 props（orientation / renderItem / tabId / panelId / labelFor）；顺带补平了 drift——tier tabs 原本没有 Home/End，三份各用一种方式移焦点（查 DOM、ref+effect、按 id 查），现在统一为同步跟随。Tabs 自己不带任何样式：第一版让它统一加 `.tabs` class，结果把胶囊样式漏给了另外两个，1386 个计算值变化。
+   四条画同一个「图节点表面」的规则（Workflow 的 .box/.lane、Advantages 的 .flowEnd/.flowStages）合并进 components/Flow.module.css 用 composes 引用。连接线没有合并——两个图画的东西本来就不一样，强行抽象只会更糟。
+   死掉的 .wf-ladder-heads / .wf-merge 五条选择器删除。
+
+最终核对（计划里的验收项）：tokens.css 之外零个 hex 字面量；非 token 的 border-radius 只剩 `0`；零个 raw px 字号；三个旧样式表全部消失；全仓只剩一处 `role="tablist"`；package.json 无 tailwind；App.jsx 零个组件定义。25 张截图与重构前基线的差异始终等于「刻意变更」那一份报告，逐字节一致；逐元素逐属性的计算样式对比在 390 和 1440 下 1666 个元素全等；键盘、动画、滚动揭示、交互态四项检查通过；axe 在 390/1024/1440 各 1 条 moderate，与重构前完全相同（closing 的 #start 在 </main> 之外，既有问题）。
+产物 CSS 从 74.99 kB 降到 58.38 kB（gzip 16.71 → 11.59）。

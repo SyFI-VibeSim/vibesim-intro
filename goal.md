@@ -136,3 +136,11 @@ Optimality 核实与排版修复：已阅读 main/analyzer/rust/src/optimality/R
 
 用户要求：整页扫一遍字号一致性，用变量控制，且不许再有 "Simulated output throughput · tok/s"、"Output throughput" 这类看不清的小字。
 建立 :root 的单一阶梯：--fs-fine / sm / md / lg / xl / 2xl / 3xl / h2 / h2-closing / h1，外加 --fs-num / num-lg / num-xl 三档数字。--fs-fine=16px 是硬下限，全页不得更小。阶梯在 1279 / 1023 / 767 三个断点整体收缩，组件因此几乎不需要自己写窄屏字号。
+
+## 可维护性重构（保持渲染不变）
+
+用户判定「这个仓库很乱，不符合可维护 web 设计的规范」，要求先出计划再动手：复用组件、整体保持视觉设计、修掉不一致。追问「还在用手写 CSS 吗，能不能现代一点」之后确定方向：上 CSS Modules（Vite 6 原生支持，不引入新依赖），移除 Tailwind 并改写显式 reset，视觉设计一律不动。
+
+判定标准只有一条：同一套页面，逐像素不变。所以每一步都必须过截图比对，而不是靠肉眼看一遍。允许移动像素的只有两处，且都写明理由：圆角归并，以及 stage 5 两个节点标题的 1px 字号修正。
+
+计划全文在 /home/kanzhu/.claude/plans/silly-mapping-pixel.md。

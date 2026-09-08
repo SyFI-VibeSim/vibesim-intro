@@ -193,3 +193,13 @@ Use cases 节标题：`Ask the VibeSim Agent.` → `Run the study with the Agent
    结果：1440 与 390 均为 12 个字号、最小 16px（原 20 个字号、最小 14px、78 种组合 → 63 种）。
    连带修复：.why-tier-panel 四个 tab 的等高 min-height 按新字号逐区间重测（681/708/844/654/742/1016/1041），此前 768/1024/1440 三档偏小会导致切 tab 跳动。窄屏横向溢出 320px +46→0、360px +36→0、390px +28→0。
    验证：320/390/480/768/1024/1280/1440/1920 八个视口全部 pageOverflow=0，五个工作流面板每档等高，无浏览器错误，axe 仅剩既有的 #start region 一条，生产构建通过（CSS 68.4 → 53.9 kB）。
+
+可维护性重构（进行中，每步都过 25 张截图比对）：
+
+0. 建标尺。`.refactor/shoot.cjs` 拍 25 个状态，`.refactor/diff.cjs` 报通道差幅度而非像素数，基线取自重构前提交 5073551 的独立 worktree。噪声底噪 4/255。
+1. 上工具链（64f08fd）。Prettier + Stylelint(stylelint-config-standard)，加 format / format:check / lint:css 三个脚本，全仓格式化单独一个提交。此前 Experiences.jsx 最长行 829 字符、refinements.css 424 字符，而 App.jsx 和 workflow.css 都 ≤96，同一个仓库两种写法，不先统一后面每个 diff 都没法读。
+2. 补齐缺的比例尺。颜色（cafdc87）：四个样式表里 133 个 hex 字面量，同一个颜色最多有九种写法（#15171b / #151618 / #15171a / #16191e / #17181b 全是同一个卡片底色），按每通道 6/255 以内合并成 66 个 token，透明与不透明绝不跨界合并（#fff0 和 #ffffff04 一个是不可见一个是 hover 底色）。圆角（c3244d3）：23 个值收成 7 档，最重的两档保持原值不动（卡片和图节点 12px、大容器 24px），没有任何一处移动超过 4px。字号（58e630c）：workflow.css 是最后还有 raw px 的文件，4 处接回阶梯，其中 .wf-lanes strong / .wf-outcomes strong 原为 17px，而其他所有图节点标题都是 --fs-sm 18px，stage 5 是唯一的例外，改正后该张截图 1.02% 像素变化，是修正不是回归。
+   导航修复（8d1f6d1，用户报的独立问题）：Supported systems 指向 #support，落点是一个 scroll-margin-top 为 0 的 .why-row，会贴到 y=0 把章节标题滚掉；改指 #advantages 并给 .why-row 加 76px scroll-margin-top，三个链接现在落点一致。
+3. 移除 Tailwind，改写显式 reset（a7a7d1c）。全仓 JSX 零个 utility class，但页面排版实际依赖 preflight，所以不能直接删。新增 src/styles/reset.css，只抄页面真正渲染的元素，承重的七条逐条注释了理由（见 notes.md）。验证方式是把 HEAD 单独 checkout 构建后拍一份再 diff：25 张里 23 张逐字节相同，另两张一共差 4 个像素，全在 x=34、两条 1px 分隔线的左端点，幅度 15/255，图是 678×675。没有一张尺寸变化——这正是能抓住 reset 漏规则的判据。CSS 产物 74.99 → 54.41 kB（gzip 16.71 → 10.91），计划里估的是 preflight 的 4,586 字节，实际 v4 的 theme 变量也在输出，省下的是样式表的 27%。
+
+待办：4. 拆文件并转 CSS Modules（Workflow → Advantages → UseCases → Hero → Closing，refinements.css 与 product-introduction.css 就地解散）；5. 去重（三份 ARIA tab 合成一个 components/Tabs.jsx 带 orientation prop，流程图基元抽进 components/Flow.module.css 用 composes 共享，删 5 条死掉的 .wf-* 选择器）。

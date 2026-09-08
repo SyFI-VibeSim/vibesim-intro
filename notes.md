@@ -257,3 +257,30 @@ Workflow = `From real measurements to real improvements.`，其说明含 “buil
 ## 并发修改警告
 
 2026-09-07 17:41–17:45 期间有另一个进程在同一 worktree 改 src/Workflow.jsx 与 src/workflow.css，把第二步的 fan 图从纵向三列重做成横向五列。按系统提示未回退。已做两件事：把对方新代码里两处 raw px（17px/16px）接回 token；删掉我此前为旧纵向布局写的 ≤600px .wf-candidates 覆盖——它会破坏新布局（新版连接线位置依赖 var(--g)，被我的 gap:18px 打乱）。以后在这个 worktree 动 workflow.* 之前先确认没有其他 agent 在写。
+
+## 重构的验证方式：先建标尺，再动代码
+
+- 比对基线取自重构前的提交 5073551，用 `git worktree` 单独 checkout 出来跑，不是靠记忆或旧截图。
+- 截图脚本 `.refactor/shoot.cjs` 打 25 张：7 个视口整页 + 5 个 workflow stage + 4 个 tier tab + 3 个 case + 6 个 why row。必须开 `reducedMotion: 'reduce'`（页面在 App.jsx:209 和媒体查询里认这个），否则会拍到动画中间帧。每次截图前 `p.mouse.move(2, 2)` 把鼠标挪走——不然上一次点击留下的 hover 会串进来，曾因此误报一张 234/255。
+- `playwright` 是 CommonJS，必须 `require`，`import { chromium }` 会报 Named export not found。
+- 比对脚本 `.refactor/diff.cjs` 报的是**幅度**不是像素数：max / mean 通道差，以及超过 8/255 的像素占比。数「有几个像素变了」没有意义——背景整体挪 6/255 会让 99% 的像素都算变了，而人眼根本看不见。
+- **尺寸不一致直接报 STRUCTURAL**。这条是 reset 的关键验证：少写 line-height、list-style 或 margin 清零，整页高度必然变，7 个视口的整页截图会立刻暴露。
+- 单步归因要拿「改动前的构建」直接比，不要只比总基线。做法：`git worktree add --detach .refactor/prev HEAD`，构建后用静态服务器起在另一个端口拍一份，再 diff。移除 Tailwind 这步就是这样确认的：25 张里 23 张逐字节相同。
+- `pkill -f "http.server 5196"` 会匹配到它自己所在的命令行，把 shell 一起杀掉（exit 144）。写成 `pkill -f 'http[.]server 5196'`。
+- Bash 工具的工作目录跨调用保留。`cd src` 之后后续命令都在 src 里跑，`npm` 会往上找 package.json 所以看着像成功，但 `grep *.css` 之类会静默跑错目录。每次用绝对路径。
+
+## reset 是有承重作用的，不能直接删
+
+移除 Tailwind 之前先确认 preflight 到底在替页面干什么。实测这几条一删就变形：
+
+- `* { margin: 0; padding: 0 }`——整个布局建立在这上面。
+- `html { line-height: 1.5 }`——所有没自己写行高的元素都继承它，浏览器默认的 `normal` 在 Geist 下约 1.2，全页段落会收紧。
+- `ol, ul, menu { list-style: none }`——页面里的列表是布局容器，不是正文，删了会冒出项目符号和缩进。
+- `svg { display: block }`——lucide 图标会退回 inline，每个图标底下多一条基线间隙。
+- `h1-h6 { font-weight: inherit }`——6 个 h3 只写了字号没写字重，靠继承。
+- `b, strong { font-weight: bolder }`——是**相对**值不是 `bold`：500 字重里的 `<strong>` 结果不同，设计是照 `bolder` 调的。
+- `table { border-collapse: collapse }`——3 个表格。
+
+页面里根本没有的元素（hr / abbr / sub / sup / code / pre / progress / 文本框 / 日期控件 / file selector）不抄进来。留着没人引用的规则迟早会烂。
+
+stylelint 有两条报错是因为它假定有 autoprefixer，而我们已经没有了：`-webkit-text-size-adjust` 的无前缀版 WebKit 根本没实现，而 WebKit 正是这条规则唯一的服务对象；`appearance: button` 换成 `auto` 只在实现了新 appearance 规范的引擎里等价，没实现的引擎恰恰就是这条规则要照顾的。两处都用 `stylelint-disable-next-line` 并写明原因，不要图省事改成它推荐的写法。

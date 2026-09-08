@@ -355,7 +355,7 @@ export function UseCases() {
           </p>
         </div>
         <Tabs
-          label="Serving examples"
+          label="Serving studies"
           items={examples.map((e) => e.label)}
           selected={selected}
           onChange={setSelected}

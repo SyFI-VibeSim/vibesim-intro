@@ -5,7 +5,7 @@ const { chromium } = require('playwright');
 const port = process.argv[2] || 5199;
 
 const GROUPS = [
-  { name: 'case selector  (horizontal)', label: 'Serving examples', keys: ['ArrowRight', 'ArrowLeft'] },
+  { name: 'case selector  (horizontal)', label: 'Serving studies', keys: ['ArrowRight', 'ArrowLeft'] },
   { name: 'level of detail (horizontal)', label: 'Level of detail', keys: ['ArrowRight', 'ArrowLeft'] },
   { name: 'workflow stages (vertical)', label: 'Optimization workflow', keys: ['ArrowDown', 'ArrowUp'] },
 ];

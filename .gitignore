@@ -16,6 +16,8 @@ dist/
 .refactor/current/
 .refactor/pristine/
 .refactor/prev/
+.refactor/links-before/
+.refactor/links-after/
 .refactor/report-now.txt
 agent-trace/
 

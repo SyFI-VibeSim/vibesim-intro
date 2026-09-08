@@ -16,6 +16,19 @@
   border-bottom: 1px solid var(--c-alpha-1000);
 }
 
+/* The bar is a flex row at a fixed width, and every child shrinks by default.
+   When the content stopped fitting the browser squeezed all three silently:
+   at 768px the wordmark lost 9px, the links wrapped onto two lines and the
+   pill grew to 70px inside a 76px bar. None of that raises a console error or
+   any page overflow, so nothing caught it.
+
+   The wordmark is the one element that must never resize, so it is pinned.
+   Nothing else may wrap, so a label that no longer fits pushes the header past
+   its width instead, which shoot.cjs already reports. */
+.navigationInner > a {
+  flex-shrink: 0;
+}
+
 .navigation nav {
   display: flex;
   align-items: center;
@@ -24,6 +37,7 @@
 
 .navigation nav a {
   color: var(--c-ink-1600);
+  white-space: nowrap;
 }
 
 .navigation nav a:hover {
@@ -43,6 +57,7 @@
   border: 1px solid var(--c-alpha-1100);
   border-radius: var(--r-pill);
   padding: 10px 17px;
+  white-space: nowrap;
 }
 
 .navCta:hover {

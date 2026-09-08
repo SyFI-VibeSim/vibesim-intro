@@ -38,12 +38,16 @@ export function Hero() {
           really requires. The Agent goes after the difference and validates what it
           wins on real hardware.
         </p>
+        {/* Both labels name what is at the other end. "See the examples" did
+            not: nothing in that section is called an example, it is three
+            studies the Agent runs. The workflow section is five numbered
+            stages, and its pager says so. */}
         <div className={s.heroActions}>
           <a className={`button button-primary`} href="#use-cases">
-            See the examples <ArrowRight size={16} />
+            See the Agent run a study <ArrowRight size={16} />
           </a>
           <a className={s.heroSecondary} href="#workflow">
-            See how it works <ArrowUpRight size={16} />
+            See the five stages <ArrowUpRight size={16} />
           </a>
         </div>
       </div>

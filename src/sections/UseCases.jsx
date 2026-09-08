@@ -1,4 +1,4 @@
-import { useId, useState } from "react";
+import { useState } from "react";
 import {
   ArrowRight,
   Check,
@@ -10,63 +10,11 @@ import {
   SquareTerminal,
 } from "lucide-react";
 import logo from "../vibesim-logo.png";
+import { Tabs } from "../components/Tabs";
 import s from "./UseCases.module.css";
 import specDepth from "../data/specDepth.json";
 import glmDecode from "../data/glmDecode.json";
 import llamaThroughput from "../data/llamaThroughput.json";
-
-export function Tabs({
-  items,
-  selected,
-  onChange,
-  label,
-  className = "",
-  renderItem,
-  panelId,
-}) {
-  const id = useId();
-  return (
-    <div
-      className={`tabs ${className}`}
-      role="tablist"
-      aria-label={label}
-      style={{ "--selected-tab": selected }}
-      onKeyDown={(event) => {
-        const keys = ["ArrowLeft", "ArrowRight", "Home", "End"];
-        if (!keys.includes(event.key)) return;
-        event.preventDefault();
-        const buttons = [...event.currentTarget.querySelectorAll("button")];
-        const focused = buttons.indexOf(event.target.closest("button"));
-        const current = focused < 0 ? selected : focused;
-        const next =
-          event.key === "Home"
-            ? 0
-            : event.key === "End"
-              ? items.length - 1
-              : (current + (event.key === "ArrowRight" ? 1 : -1) + items.length) %
-                items.length;
-        onChange(next);
-        event.currentTarget.querySelectorAll("button")[next].focus();
-      }}
-    >
-      {items.map((item, index) => (
-        <button
-          type="button"
-          role="tab"
-          key={item}
-          id={`${id}-${index}`}
-          aria-selected={selected === index}
-          aria-label={item}
-          aria-controls={panelId}
-          tabIndex={selected === index ? 0 : -1}
-          onClick={() => onChange(index)}
-        >
-          {renderItem ? renderItem(item, index) : item}
-        </button>
-      ))}
-    </div>
-  );
-}
 
 export const operations = glmDecode.operations;
 
@@ -411,8 +359,9 @@ export function UseCases() {
           items={examples.map((e) => e.label)}
           selected={selected}
           onChange={setSelected}
-          className={`${s.exampleTabs} ${s.caseSelector}`}
+          className={`tabs ${s.exampleTabs} ${s.caseSelector}`}
           panelId="case-conversation"
+          labelFor={(label) => label}
           renderItem={(label, index) => {
             const Icon = caseIcons[index];
             return (

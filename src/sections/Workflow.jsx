@@ -18,6 +18,7 @@ import {
   MemoryStick,
   CornerDownLeft,
 } from "lucide-react";
+import { Tabs } from "../components/Tabs";
 import logo from "../vibesim-logo.png";
 import s from "./Workflow.module.css";
 
@@ -243,10 +244,6 @@ const views = [WorkloadView, ExploreView, BuildView, AlignmentView, ValidationVi
 export function Workflow() {
   const [selected, setSelected] = useState(0);
   const id = useId();
-  const changeStage = (index, focusTab = false) => {
-    setSelected(index);
-    if (focusTab) document.getElementById(`${id}-step-${index}`)?.focus();
-  };
   return (
     <section id="workflow" className="section">
       <div className="wrap">
@@ -261,42 +258,19 @@ export function Workflow() {
           </p>
         </div>
         <div className={s.layout}>
-          <div
+          <Tabs
+            items={stages}
+            selected={selected}
+            onChange={setSelected}
+            label="Optimization workflow"
+            orientation="vertical"
             className={s.stages}
-            role="tablist"
-            aria-label="Optimization workflow"
-            aria-orientation="vertical"
-            onKeyDown={(event) => {
-              if (!["ArrowDown", "ArrowUp", "Home", "End"].includes(event.key))
-                return;
-              event.preventDefault();
-              const buttons = [...event.currentTarget.querySelectorAll("button")];
-              const current = buttons.indexOf(event.target.closest("button"));
-              const next =
-                event.key === "Home"
-                  ? 0
-                  : event.key === "End"
-                    ? stages.length - 1
-                    : (current +
-                        (event.key === "ArrowDown" ? 1 : -1) +
-                        stages.length) %
-                      stages.length;
-              changeStage(next, true);
-            }}
-          >
-            {stages.map((stage, index) => {
+            tabId={(stage, index) => `${id}-step-${index}`}
+            panelId={`${id}-panel`}
+            renderItem={(stage) => {
               const Icon = stage.icon;
               return (
-                <button
-                  key={stage.name}
-                  type="button"
-                  role="tab"
-                  id={`${id}-step-${index}`}
-                  aria-controls={`${id}-panel`}
-                  aria-selected={selected === index}
-                  tabIndex={selected === index ? 0 : -1}
-                  onClick={() => changeStage(index)}
-                >
+                <>
                   <Icon size={24} strokeWidth={1.6} aria-hidden="true" />
                   <strong>{stage.name}</strong>
                   <ArrowRight
@@ -304,10 +278,10 @@ export function Workflow() {
                     size={18}
                     aria-hidden="true"
                   />
-                </button>
+                </>
               );
-            })}
-          </div>
+            }}
+          />
           <div
             className={s.panel}
             role="tabpanel"
@@ -346,7 +320,7 @@ export function Workflow() {
               <button
                 type="button"
                 disabled={selected === 0}
-                onClick={() => changeStage(selected - 1)}
+                onClick={() => setSelected(selected - 1)}
               >
                 <ArrowLeft size={19} aria-hidden="true" />
                 <span>Previous</span>
@@ -363,7 +337,7 @@ export function Workflow() {
                   selected === stages.length - 1 ? "Explore again" : "Next"
                 }
                 onClick={() =>
-                  changeStage(selected === stages.length - 1 ? 1 : selected + 1)
+                  setSelected(selected === stages.length - 1 ? 1 : selected + 1)
                 }
               >
                 <span>{selected === stages.length - 1 ? "Explore" : "Next"}</span>

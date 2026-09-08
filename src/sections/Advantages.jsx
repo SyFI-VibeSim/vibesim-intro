@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
+import { Tabs } from "../components/Tabs";
 import s from "./Advantages.module.css";
 import simSpeed from "../data/simSpeed.json";
 import tiers from "../data/tiers.json";
@@ -451,53 +452,27 @@ const tierPanels = {
 };
 
 function DrilldownFigure() {
-  const [active, setActive] = useState(TIERS[0].key);
-  const tabs = useRef(null);
-  const moveFocus = useRef(false);
+  const [selected, setSelected] = useState(0);
+  const active = TIERS[selected].key;
   const Panel = tierPanels[active];
-
-  /* Arrow keys change the tab, so focus has to follow it after React commits. */
-  useEffect(() => {
-    if (!moveFocus.current) return;
-    moveFocus.current = false;
-    tabs.current?.querySelector(`#why-tab-${active}`)?.focus();
-  }, [active]);
-
-  function onKeyDown(event) {
-    const step =
-      event.key === "ArrowRight" ? 1 : event.key === "ArrowLeft" ? -1 : 0;
-    if (!step) return;
-    event.preventDefault();
-    const index = TIERS.findIndex((tier) => tier.key === active);
-    moveFocus.current = true;
-    setActive(TIERS[(index + step + TIERS.length) % TIERS.length].key);
-  }
 
   return (
     <figure className={s.figureBlock}>
-      <div
+      <Tabs
+        items={TIERS}
+        selected={selected}
+        onChange={setSelected}
+        label="Level of detail"
         className={s.tierTabs}
-        role="tablist"
-        aria-label="Level of detail"
-        ref={tabs}
-        onKeyDown={onKeyDown}
-      >
-        {TIERS.map((tier) => (
-          <button
-            key={tier.key}
-            id={`why-tab-${tier.key}`}
-            type="button"
-            role="tab"
-            aria-selected={active === tier.key}
-            aria-controls={`why-panel-${tier.key}`}
-            tabIndex={active === tier.key ? 0 : -1}
-            onClick={() => setActive(tier.key)}
-          >
+        tabId={(tier) => `why-tab-${tier.key}`}
+        panelId={(tier) => `why-panel-${tier.key}`}
+        renderItem={(tier) => (
+          <>
             <strong>{tier.name}</strong>
             <span>{tier.detail}</span>
-          </button>
-        ))}
-      </div>
+          </>
+        )}
+      />
       <div
         className={s.tierBody}
         id={`why-panel-${active}`}

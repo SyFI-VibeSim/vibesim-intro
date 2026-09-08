@@ -80,9 +80,9 @@ function Hero() {
             happens. The Agent goes after the gap and the real benchmark decides
             how much of it came back — the page never promises all of it does. */}
         <p>
-          VibeSim measures every simulated GPU second against the work your
-          model really requires. The Agent goes after the difference and
-          validates what it wins on real hardware.
+          VibeSim measures every simulated GPU second against the work your model
+          really requires. The Agent goes after the difference and validates what it
+          wins on real hardware.
         </p>
         <div className="hero-actions">
           <a className="button button-primary" href="#use-cases">
@@ -207,9 +207,7 @@ export default function App() {
   const mainRef = useRef(null);
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const elements = mainRef.current.querySelectorAll(
-      ".section-intro, .why-row",
-    );
+    const elements = mainRef.current.querySelectorAll(".section-intro, .why-row");
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {

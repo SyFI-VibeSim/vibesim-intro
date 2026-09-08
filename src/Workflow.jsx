@@ -119,8 +119,8 @@ function ExploreView() {
         <p>The one you take forward.</p>
       </div>
       <p className="wf-view-note">
-        Every candidate is compared on throughput, latency and memory use,
-        within the same workload and hardware.
+        Every candidate is compared on throughput, latency and memory use, within
+        the same workload and hardware.
       </p>
     </div>
   );
@@ -130,8 +130,8 @@ function BuildView() {
   return (
     <div className="wf-view wf-branch">
       <p className="wf-trunk-label">
-        The baseline stays intact and still runnable throughout, so every step
-        below has something to be measured against.
+        The baseline stays intact and still runnable throughout, so every step below
+        has something to be measured against.
       </p>
       <ol className="wf-gates">
         <li className="wf-box">
@@ -182,8 +182,8 @@ function AlignmentView() {
         <span>The measured implementation</span>
       </div>
       <p className="wf-view-note">
-        Each tie explains part of the difference, so the remaining gap is
-        attributed rather than guessed.
+        Each tie explains part of the difference, so the remaining gap is attributed
+        rather than guessed.
       </p>
     </div>
   );
@@ -231,20 +231,14 @@ function ValidationView() {
         </li>
       </ul>
       <p className="wf-view-note">
-        Same hardware, same workload, and an unprofiled run for the final end to
-        end numbers.
+        Same hardware, same workload, and an unprofiled run for the final end to end
+        numbers.
       </p>
     </div>
   );
 }
 
-const views = [
-  WorkloadView,
-  ExploreView,
-  BuildView,
-  AlignmentView,
-  ValidationView,
-];
+const views = [WorkloadView, ExploreView, BuildView, AlignmentView, ValidationView];
 
 export function Workflow() {
   const [selected, setSelected] = useState(0);
@@ -276,9 +270,7 @@ export function Workflow() {
               if (!["ArrowDown", "ArrowUp", "Home", "End"].includes(event.key))
                 return;
               event.preventDefault();
-              const buttons = [
-                ...event.currentTarget.querySelectorAll("button"),
-              ];
+              const buttons = [...event.currentTarget.querySelectorAll("button")];
               const current = buttons.indexOf(event.target.closest("button"));
               const next =
                 event.key === "Home"
@@ -374,9 +366,7 @@ export function Workflow() {
                   changeStage(selected === stages.length - 1 ? 1 : selected + 1)
                 }
               >
-                <span>
-                  {selected === stages.length - 1 ? "Explore" : "Next"}
-                </span>
+                <span>{selected === stages.length - 1 ? "Explore" : "Next"}</span>
                 {selected === stages.length - 1 ? (
                   <CornerDownLeft size={19} aria-hidden="true" />
                 ) : (

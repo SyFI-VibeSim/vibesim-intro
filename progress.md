@@ -21,6 +21,7 @@
 - Final copy and result provenance are deferred until the visual design is reviewed.
 
 ## Style B visual sketch
+
 - Implemented full-page calm, soft neutral/blue style alternative in isolated worktree.
 - All agreed content groups represented; Agent and zero-code workflow prominent.
 - Added working scenario, product-tool and workflow selectors; system/manual theme and mobile navigation.
@@ -29,6 +30,7 @@
 - Basic Playwright checks passed at 1440px and 390px: no horizontal overflow, hero asset loads, CTA visible, scenario switch and dark theme work. Captures in agent-trace/. Ready for style selection.
 
 ## B v2 completed
+
 - Replaced old B with immersive shoreline direction on same 5175 preview.
 - Entire page now deep blue/slate, redesigned open support grid and benefits composition, precise smaller-radius product panels.
 - Final build passed. Desktop/mobile browser checks pass: no errors/overflow, title two lines, CTA visible, core selections and menu work.
@@ -41,15 +43,18 @@
 - 主代理集中实施B，新增中性自然主视觉并重构用例、Agent/UI、支持目录等产品呈现。
 
 ## 最新用户反馈：统一对齐并适度收窄
+
 - 用户否定92%过宽、1200px固定上限过窄，以及84%演示/76%正文的不同边界。
 - 现统一为76%桌面容器，Agent区域取消额外内缩；导航、标题、演示、目录、页脚共享左右边界。
 - 用例标题删除人为换行；说明改成一句简短任务描述。
 - 实际检查1440/1920截图：导航与内容统一；1920下内容1459px、两侧230px。用例标题与说明各一行，三项标签同排。320–2560检查无横向溢出，核心交互正常，axe无违规，构建通过。
 
 ## 逐节重设计进行中
+
 已对照主仓库plan.md完整清单审查B：文字列表过多、优势缺少演示、流程关系不明显、目录层次不足。继续使用原React/Vite/Tailwind栈、统一76%宽度。将补充有意义的图形与动效；等待视觉检查后记录结果。
 
 ## 逐节样式修复与检查
+
 - 已修复缺少样式造成的文本挤压；新组件配套样式src/refinements.css已接入，生产构建通过。
 - 用例改为一轮用户问题、Agent计划、内嵌结果与解释。GLM原始时间表可展开，场景切换和回放可用。
 - 五项优势增加对应交互图解；UI/Agent/Simulator/Analyzer四项显式展示；五阶段闭环增加连接图；支持范围改成四个可读分组；证据区呈现用户提供的MoE占比及条件。
@@ -61,6 +66,7 @@
 - 删除后的验证：生产构建通过；浏览器确认Workspace区块不再存在，剩余内部锚点有效，无页面运行错误。
 
 ## 2026-09-07：三个 Agent 用例使用真实实验记录
+
 - 新跑 Llama 3 8B / H200 七档负载模拟：7/7 完成 simulate、analyze、render、trace、finalize；每档 512 请求全部完成。缓存预检 0/1533 缺失，无需新 GPU profiling。
 - 从原始 GLM TP4+EP4 popularity 预测的 Analyzer cases 与 cost tree 复核 19.48533058166504 ms 和五项累计耗时，替换手填数据源。
 - 从用户指定 wt-glm52-spec5 定位真实深度 0–5 预测，读取六份 Analyzer 记录及实测 Spec5 接受率；删除占位搜索数据。
@@ -70,6 +76,7 @@
 - 仍未代表视觉获用户认可；未改 A/C，未提交或发布。
 
 ## 选择器：按用户反馈改为图标
+
 - 删除用户否定的缩略图表方案，使用现有 Lucide 图标，去掉额外配置文案和箭头。
 - 修正方向键从当前焦点开始切换；案例内容和真实数据保持完整。
 - 已检查 1440/390 实际截图；六种视口无页面溢出，键盘与案例切换通过，axe 无违规、无页面错误。
@@ -79,9 +86,11 @@
 按用户进一步反馈，已整条删除聊天底栏（Question → experiment → evidence / Explore the workflow）。不要再添加脱离对话内容的总结口号或重复导航。
 
 ## 端到端闭环重设计
+
 按用户要求查阅实际 alignment 管线与优化技能，替换旧五个图标/输入输出文字区。以测量、模拟探索、Agent 实施、验证归因四阶段呈现；每阶段配实际数据流示意，不虚构性能结果。保留统一 76% 布局及当前图标选择器。已完成四阶段桌面/移动截图、键盘切换、六种视口与可访问性检查；等待用户视觉反馈。
 
 ## 四个阶段使用不同的图形结构
+
 用户认可内容方向，但认为四张图结构重复。本轮只修改 Workflow.jsx 与 workflow.css：测量为横向采集分流；模拟为配置—VibeSim—约束关系图；实施为保留基线的试验分支；验证为三层对照分析。字体、颜色与外部布局统一，图形构图和进入动效分别服务各阶段含义。
 已逐项检查四阶段桌面截图及手机布局；320/390/768/1024/1440/1920 无页面溢出，键盘切换正常，axe 无违规，浏览器无错误。构建通过。图形继续表示流程关系，不冒充测量数据。期间其他区域有并行修改，入口同步后重新完成构建和页面检查，没有覆盖这些修改。
 
@@ -94,6 +103,7 @@
 用户选定文案 A：首屏 Understand LLM performance. / Know what to improve.；说明 Ask the VibeSim Agent to compare serving configurations, explain bottlenecks, and help test improvements in your framework.；结尾 What would you like to improve? 已应用。
 
 ## 2026-09-07：三节合并为一个 why 区块，六条主张
+
 - 删除 Experiences.jsx 的 Support 导出与 CoverageVisual，删除 Highlights.jsx 的 Evidence 导出；
   App.jsx 的 main 现在是 Hero / UseCases / Advantages / Workflow 四节。
 - Highlights.jsx 重写：六条主张，每条一整行，文案与可视化左右两栏交替，偶数行文案在右并右对齐。
@@ -115,15 +125,17 @@
 - 仍是待用户验收的视觉稿；未提交、未发布。
 
 ## 首屏数据中心背景候选
+
 用户要求保留暗色电影感，生成几张更贴近数据中心的首屏图供选择；结尾风景图保持原样。使用内置 imagegen 生成建筑外景、机房内部、玻璃反射三种方向，并准备实际首屏对照预览。尚未替换默认首屏。
 
 首屏图片候选已完成（内置 image_gen）：
+
 - A 建筑与地景：public/images/hero-datacenter-a.png。
 - B 机房与光线：public/images/hero-datacenter-b.png。
 - C 玻璃与倒影：public/images/hero-datacenter-c.png。
-完整生成提示词：public/designs/hero-image-prompts.json。原始生成文件保留在 /home/kanzhu/.codex/generated_images/01a07d1f-91ec-79e2-92e3-2b246926b6ad/。
-对照页 /designs/hero-images.html 支持 A/B/C/原版切换、查看原图和实际整页预览。仅白名单 ?hero=datacenter-a/b/c 改变首屏；默认首屏与 closing::before 继续使用 shoreline-v3.webp，等待用户选图。
-已检查三张完整首屏桌面和手机截图、图片成功加载、候选切换、默认图及结尾图保持；无浏览器错误，构建通过。测试 /tmp/hero-image-options-check.mjs。图片是生成的概念背景，不宣称 VibeSim 自有数据中心。
+  完整生成提示词：public/designs/hero-image-prompts.json。原始生成文件保留在 /home/kanzhu/.codex/generated_images/01a07d1f-91ec-79e2-92e3-2b246926b6ad/。
+  对照页 /designs/hero-images.html 支持 A/B/C/原版切换、查看原图和实际整页预览。仅白名单 ?hero=datacenter-a/b/c 改变首屏；默认首屏与 closing::before 继续使用 shoreline-v3.webp，等待用户选图。
+  已检查三张完整首屏桌面和手机截图、图片成功加载、候选切换、默认图及结尾图保持；无浏览器错误，构建通过。测试 /tmp/hero-image-options-check.mjs。图片是生成的概念背景，不宣称 VibeSim 自有数据中心。
 
 用户已选定首屏候选 B（机房与光线），默认 Hero 改用 public/images/hero-datacenter-b.png。结尾继续使用 shoreline-v3.webp；比较页原版入口改为 ?hero=original。
 
@@ -174,9 +186,10 @@ Use cases 节标题：`Ask the VibeSim Agent.` → `Run the study with the Agent
 遗留（均非本轮引入，未处理）：① 390px 全页横向多 3px，来自 workflow-section；② 320px 表格溢出属既有可横滚区；③ axe 全页 1 条 moderate「region」——closing 区块 #start 位于 </main> 之外，不在任何 landmark 内，属既有结构问题。
 
 全页字号系统化（三步）：
+
 1. 删死 CSS：JSX 已不存在的 52 个类（workspace-* / product-roles / support-directory / cost-ring / evidence-* / directory-items / chart-columns / chart-observation / draft-* / setup-grid / wf-node-* 等）。用 postcss 按选择器精确删除，多选择器规则只摘死的那部分：215 条规则、10 处选择器。CSS 2868 → 2101 行。删除前后渲染完全一致（78 种组合、20 个字号不变），证明删掉的都是不生效的。
 2. 建 :root 阶梯并全量映射：203 处 font-size 声明改为 var(--fs-*)，其中冗余的断点覆盖直接删除（阶梯已负责收缩）。styles.css 里被 refinements.css 覆盖的死值一并清掉，消除两处真相打架。校验：组件里已无任何 raw px 字号。
 3. 收尾：手机上两个柱状图的柱顶数值原为 10px/12px，改为隐藏而非缩小（选中值在下方大字、按钮有 aria-label、展开表格有全量数据）；spec-sweep-metrics 的读数与单位加 nowrap，不再拆行。
-结果：1440 与 390 均为 12 个字号、最小 16px（原 20 个字号、最小 14px、78 种组合 → 63 种）。
-连带修复：.why-tier-panel 四个 tab 的等高 min-height 按新字号逐区间重测（681/708/844/654/742/1016/1041），此前 768/1024/1440 三档偏小会导致切 tab 跳动。窄屏横向溢出 320px +46→0、360px +36→0、390px +28→0。
-验证：320/390/480/768/1024/1280/1440/1920 八个视口全部 pageOverflow=0，五个工作流面板每档等高，无浏览器错误，axe 仅剩既有的 #start region 一条，生产构建通过（CSS 68.4 → 53.9 kB）。
+   结果：1440 与 390 均为 12 个字号、最小 16px（原 20 个字号、最小 14px、78 种组合 → 63 种）。
+   连带修复：.why-tier-panel 四个 tab 的等高 min-height 按新字号逐区间重测（681/708/844/654/742/1016/1041），此前 768/1024/1440 三档偏小会导致切 tab 跳动。窄屏横向溢出 320px +46→0、360px +36→0、390px +28→0。
+   验证：320/390/480/768/1024/1280/1440/1920 八个视口全部 pageOverflow=0，五个工作流面板每档等高，无浏览器错误，axe 仅剩既有的 #start region 一条，生产构建通过（CSS 68.4 → 53.9 kB）。

@@ -9,3 +9,6 @@ dist/
 /VibeSim Simulator Walkthrough.md
 /vibesim_intro (1).md
 /Roofline-Guided Agent for Optimzing LLM Inference.txt
+
+# Refactor verification harness: baseline screenshots and a pristine worktree.
+.refactor/

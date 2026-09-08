@@ -17,7 +17,7 @@
     },
     {
       "name": "Load imbalance",
-      "gpuSeconds": 2.961860445793718e-09,
+      "gpuSeconds": 2.961860445793718e-9,
       "frac": 1.434761516467785e-10,
       "necessary": false,
       "description": "The modeled gap between completion limited by stragglers and balanced work.",

@@ -32,12 +32,14 @@
 - Dev server: npm run dev -- --port 5173. Sandbox cannot bind the port; server started with approved elevation.
 
 ## Style B decisions
+
 - Soft neutral background #fafbf9, blue #315db4, dark green-gray text #253330.
 - Broad rounded surfaces; editorial still-life paper asset rather than electronics or decorative floating labels.
 - Natural task-based sentences. Plain source link label, no unsupported quickstart destination.
 - Latest user instruction: sketches and color first; minor details later.
 
 ## B v2 decisions (supersedes old B)
+
 - User explicitly requests immersive scenic backgrounds and wide headline; centered hero and dark-only theme are intentional authorized exceptions.
 - Original blue tidal shoreline image from parent, inspected locally; no copying reference scenery.
 - Natural title: Explore LLM serving before you deploy.
@@ -53,9 +55,11 @@
 - 设计判断：技术产品，克制、有层次，variance6/motion4/density3。
 
 ## 布局约束（覆盖此前宽度方案）
+
 用户明确要求百分比、统一对齐，且84%仍偏宽。采用单一--page-width:76%；不再设演示区独立外宽。文字可自然换行，但不用br拆分用例标题；手机允许自然折行。全幅图片不受内容容器约束。设计验收以实际浏览反馈为准，不能以构建通过替代。
 
 ## 逐节重设计与真实 UI 参考
+
 - 已实际打开localhost:5177的Resume conversation和已有GLM对话，只读查看，无发送消息或启动实验。
 - 参考AgentWorkspace.tsx的用户消息、AssistantTimeline里程碑与最终答复，以及MarkdownBody.tsx的内嵌图片、表格、证据链接。旧记录的实验支持状况不作为当前功能结论。
 - 用户明确要求用例只包含一轮用户提问；Agent的计划、过程、图表与解释连续排布。结果嵌在回复中，禁止左右分栏。
@@ -67,9 +71,11 @@
 - 最新调整：删除独立Workspace区块及三项步骤选择，避免重复Agent用例。清理组件和入口，保留用例/优势中的Agent及零代码表达。
 
 ## 2026-09-07：用例证据（覆盖早期占位约定）
+
 应用 operate-use-analyzer；新 Llama 实验另应用 operate-run-simulation。当前没有可调用的 read_analyzer_resource MCP，改为只读获取 Analyzer 精确 HTTP endpoint；服务没有返回 citation token，因此没有编造引用 token。页面下载文件保留资源 ID、配置、数值及推导边界。
 
 ### Llama 吞吐扫描
+
 - 实验：../main/logs/20260907_0_llama3_h200_throughput；复现命令见该目录 README.md。
 - Analyzer sweep：e_5ae8104896c4411080f6c7ed328ef93f，读取 /api/v1/sweeps/{id}/payload。
 - 七档到达率 1/4/8/16/32/64/128 req/s；每档 512 条合成请求、1,024 输入与 256 输出；barebone unified、BF16、1 H200、80 GB KV、gpuTimeMultiplier=1。
@@ -77,12 +83,14 @@
 - 这是实际完成的模拟实验，并非实测 serving benchmark，也不是任意工作负载下的硬件最大吞吐。
 
 ### GLM 操作归因
+
 - 原记录：../agent-workspaces-claude/w_b04b082bda16/repo/logs/predict_3627594e221c_glm52_nvfp4_b200_tp4_ep4_decode_b32_kv8192_popularity。
 - prediction p_59f165c2c22c46c6a4f8f9bd75e6a2b0；读取 descriptor、cases、cases/0/operations/0/cost-tree。临时只读 Analyzer 在 127.0.0.1:8791 服务原日志目录。
 - 使用匹配 vLLM EP4 popularity 文件，不能选无 popularity 的相邻实验。
 - 分母为 cases 的 19.48533058166504 ms；cost tree 按 sum、scale 和 max 的关键 rank 归并相同操作，包含重复层。前五合计 72.6977%，MoE 53.0227%；不是五次单独 kernel launch。
 
 ### 推测深度
+
 - 原记录：../wt-glm52-spec5/logs/20260902_2_glm52_single_decode_spec_sweep/spec_depth_comparison.md。
 - 接受率：../wt-glm52-spec5/logs/20260902_0_glm52_diverse100_spec5_tp8_alignment/profile_workload/spec_decode_metrics.json。
 - GLM 5.2 NVFP4、8 B200、TP8+EP8、单 decode、14,830 KV、无 prefill；六份预测 ID 及原始数值均在 src/data/specDepth.json。
@@ -92,6 +100,7 @@
 验证脚本 /tmp/three-real-cases-check.mjs；截图 /tmp/real-case-{llama,glm,spec}-{desktop,mobile}.png。全部图表读取 JSON 数据；手机宽表可横向滚动并可键盘聚焦。
 
 ## 用户明确的选择器偏好
+
 用户否定小图表导航，明确要求 icons。采用现有 lucide-react 的 Gauge、ScanLine、Search；不再把导航做成额外的数据展示区。桌面单行图标加标题，手机纵向三项；统一浅灰选中底板和淡蓝图标。截图 /tmp/case-selector-{1440,390}.png。
 
 最新用户要求：已删除 Replay walkthrough 按钮及回放状态，并删除三例答复底部孤立的实验日期/验证状态行。来源、配置和方法留在展开详情及下载数据中，不将内部记录文案作为页面装饰。
@@ -99,6 +108,7 @@
 按用户进一步反馈，已整条删除聊天底栏（Question → experiment → evidence / Explore the workflow）。不要再添加脱离对话内容的总结口号或重复导航。
 
 ## 端到端闭环重设计：来源与范围
+
 - 设计使用 design-taste-frontend、redesign-existing-projects：现代技术产品宣传页，Geist、中性深色、统一 76% 外宽、图标导航、克制进入动效；不是新建真实工作空间 UI。
 - 内容依据 main/skills/top-compose-real-framework-from-sim/SKILL.md、top-align-with-framework/SKILL.md、operate-run-alignment/SKILL.md。这里只将实际工作流转译为营销内容，没有执行真实框架改动，因此不触发优化试验的委派实施流程。
 - 已核读 main/alignment/README.md、alignment/profiler/README.md、alignment/timing_predict_input/builder.py、alignment/request_population.py、launcher/alignment.py 与 alignment_config.py。真实流程区分 nsys、workload_metrics、expert_popularity；时序预测读取真实 batch 形状，完整请求运行负责 E2E 指标，模型预测与真实优化方向必须分清。
@@ -110,6 +120,7 @@
 - 检查脚本 /tmp/workflow-design-check.mjs；截图 /tmp/workflow-{desktop,mobile}-{0,1,2,3}.png。四阶段切换、Up/Down/Home/End、320/390/768/1024/1440/1920 无页面溢出；axe 无违规，浏览器无错误。生产构建通过。
 
 ## 四个阶段使用不同的图形结构
+
 用户认可内容方向，但认为四张图结构重复。本轮只修改 Workflow.jsx 与 workflow.css：测量为横向采集分流；模拟为配置—VibeSim—约束关系图；实施为保留基线的试验分支；验证为三层对照分析。字体、颜色与外部布局统一，图形构图和进入动效分别服务各阶段含义。
 已逐项检查四阶段桌面截图及手机布局；320/390/768/1024/1440/1920 无页面溢出，键盘切换正常，axe 无违规，浏览器无错误。构建通过。图形继续表示流程关系，不冒充测量数据。期间其他区域有并行修改，入口同步后重新完成构建和页面检查，没有覆盖这些修改。
 
@@ -122,7 +133,8 @@
 用户选定文案 A：首屏 Understand LLM performance. / Know what to improve.；说明 Ask the VibeSim Agent to compare serving configurations, explain bottlenecks, and help test improvements in your framework.；结尾 What would you like to improve? 已应用。
 
 ## why 区块的数据来源（每个数字都可追溯）
-- 覆盖范围：main/simulator/src/arch/*.rs、main/model/config/*.json、main/simulator/src/deployment/。
+
+- 覆盖范围：main/simulator/src/arch/_.rs、main/model/config/_.json、main/simulator/src/deployment/。
   只宣传 H200 与 B200（用户指定），不列全部 GPU 目录。
 - 速度：用户提供的 21 行部署扩展基准，存 src/data/simSpeed.json。每次运行都模拟同样的
   2,000,000 ms（33 分钟）服务。页面按用户要求展示**加速比**而不是墙上秒数：
@@ -149,6 +161,7 @@
   图形是"整条迭代 → 放大到占一半的那个算子"的两级缩放，不是装饰性层级图。
 
 ## why 区块被否决的几个方案（不要再做）
+
 - SystemPicker（模型 × 硬件 × 并行 × 服务方式的交互选择器）：被用户否决，因为它暗示任意组合。
 - 用 GLM 53% 成本占比当精度证据：那是成本拆分，不是精度，已换成 PR #28 的真实误差。
 - 把三节内容直接堆在一起：用户明确要求重新设计。
@@ -158,20 +171,23 @@
 - Architecture and compatibility details 折叠块 + Coverage varies 脚注：用户认为是无信息的怪东西，已整段删除。
 
 ## why 区块的排版尺度
+
 用户两次说字号太小。当前桌面：主张标题 clamp(31,2.9vw,44)px，正文 22px，小字 17px，
 图表大数字 clamp(38,3.4vw,50)px，图内标签 18–20px，坐标轴 16px。行内边距 clamp(44,4.2vw,70)px。
 区块允许占更多纵向空间。
 
 ## 首屏数据中心背景候选
+
 用户要求保留暗色电影感，生成几张更贴近数据中心的首屏图供选择；结尾风景图保持原样。使用内置 imagegen 生成建筑外景、机房内部、玻璃反射三种方向，并准备实际首屏对照预览。尚未替换默认首屏。
 
 首屏图片候选已完成（内置 image_gen）：
+
 - A 建筑与地景：public/images/hero-datacenter-a.png。
 - B 机房与光线：public/images/hero-datacenter-b.png。
 - C 玻璃与倒影：public/images/hero-datacenter-c.png。
-完整生成提示词：public/designs/hero-image-prompts.json。原始生成文件保留在 /home/kanzhu/.codex/generated_images/01a07d1f-91ec-79e2-92e3-2b246926b6ad/。
-对照页 /designs/hero-images.html 支持 A/B/C/原版切换、查看原图和实际整页预览。仅白名单 ?hero=datacenter-a/b/c 改变首屏；默认首屏与 closing::before 继续使用 shoreline-v3.webp，等待用户选图。
-已检查三张完整首屏桌面和手机截图、图片成功加载、候选切换、默认图及结尾图保持；无浏览器错误，构建通过。测试 /tmp/hero-image-options-check.mjs。图片是生成的概念背景，不宣称 VibeSim 自有数据中心。
+  完整生成提示词：public/designs/hero-image-prompts.json。原始生成文件保留在 /home/kanzhu/.codex/generated_images/01a07d1f-91ec-79e2-92e3-2b246926b6ad/。
+  对照页 /designs/hero-images.html 支持 A/B/C/原版切换、查看原图和实际整页预览。仅白名单 ?hero=datacenter-a/b/c 改变首屏；默认首屏与 closing::before 继续使用 shoreline-v3.webp，等待用户选图。
+  已检查三张完整首屏桌面和手机截图、图片成功加载、候选切换、默认图及结尾图保持；无浏览器错误，构建通过。测试 /tmp/hero-image-options-check.mjs。图片是生成的概念背景，不宣称 VibeSim 自有数据中心。
 
 用户已选定首屏候选 B（机房与光线），默认 Hero 改用 public/images/hero-datacenter-b.png。结尾继续使用 shoreline-v3.webp；比较页原版入口改为 ?hero=original。
 
@@ -212,27 +228,32 @@ Optimality 核实与排版修复：已阅读 main/analyzer/rust/src/optimality/R
 标题与案例选择器微调：移除 Product introduction 单独偏小的标题字号/行高/字距，沿用公共章节标题样式。实测1440px两节均63.36px，390px均40px。案例选中底色改为深蓝灰 #303b4d，边框 #53647f，浅色文字与图标。桌面和手机浏览器已核验。
 
 ## 首屏文案与第一节的取舍
+
 - 主代理给出的判断：H1 应承担“承诺”，第一节承担“定义”；`More than a simulator.` 是否定式定位，对没听过 VibeSim 的访客第一秒是空的。用户听取后仍选择把它放到 H1，并顺势删掉第一节——即由 Hero 一次性完成定位与定义。这是用户决定，已执行。
 - 因此页面现在没有任何“产品由 Simulator / Analyzer / Agent / 零代码 UI 四部分组成”的显式说明，这一层信息只能从三个案例和五步工作流间接读出。若后续觉得能力交代不够，应回到这里补，而不是再加功能章节。
 - 输入空间（模型/精度/并行/部署/框架/硬件）目前仍只出现在页面最底部 key features 第一行 Flexible configuration，首屏之后很久才出现。
 - 原三个箭头链接的落点核对结果（供以后不要重犯）：#use-cases 的标题是 Ask the VibeSim Agent.、#advantages 的标题是 Explore VibeSim's key features.，都与 Simulate / Understand 对不上；key features 六行里只有第一行有 id="support"，其余五行无锚点，任何深链都需要先补 id。
 
 ## 两个「with the Agent」的分工（避免再撞车）
+
 Use cases = `Run the study with the Agent.`：提问 → 设计实验 → 跑 → 读分析 → 给取舍，全程在模拟里。
 Workflow = `From real measurements to real improvements.`，其说明含 “build it with the Agent”：改真实框架代码，再回真机验证。
 以后若再调这两节标题，必须保持 run the study（研究）与 build the change（实施）的先后与区别，不要两节都只说 “with the Agent”。
 
 ## 第一节的职责边界（两盒结构）
+
 - 结构由用户指定：一个 Simulator 盒 + 一个 Agent 盒，各自列核心能力。左侧是「能建模什么」（名词类目：Models / Hardware / Serving / Results / Accuracy），右侧是「拿它做什么」（动词：Designs / Searches / Explains / Builds / Validates）。名词对动词的非对称是有意的，不要改成两侧同构。
 - 每一条都必须在页面别处有支撑：Simulator 侧 = 底部 coverage 目录 + accuracy 行的 alignment 依据；Agent 侧 = Workflow 五步。往里加新条目前，先确认页面下方能兜住。
 - Simulator 盒脚注沿用既有约束原文「Each of these has been built and run. The groups are not axes to multiply together.」，不得删——目录并排列出会天然暗示任意组合。
 - Agent 盒脚注保留 CLI / API 那句，避免「零代码」被读成只能用界面。
 
 ## 字号只有一个来源
+
 - 全页字号定义在 styles.css 的 :root 阶梯里。改字号改那里，不要在组件里写 px。--fs-fine 是下限（16px，手机也不降），承载坐标轴、caption、表格、脚注、导航这些最容易被写小的文字。
 - 阶梯在 1279/1023/767 整体收缩，所以组件通常不需要自己写窄屏字号。仍然保留自有断点字号的只有一类：尺寸由控件宽度决定而非由阶梯决定（如 .case-selector.tabs button 在 768–1100 与 ≤359 的挤压区间、.wf-stages strong 在窄导航列），这些位置都写了注释说明。
 - 手机上柱状图柱顶数值是隐藏而不是缩小：一列只有约 45px，放不下任何可读字号。信息在下方读数、aria-label 和展开表格里都有，不算丢失。
 - .why-tier-panel 的 min-height 是四个 tab 的等高锁；任何改动字号、行距或内边距之后都必须重测，否则切 tab 会跳。逐区间实测值见 progress.md。
 
 ## 并发修改警告
+
 2026-09-07 17:41–17:45 期间有另一个进程在同一 worktree 改 src/Workflow.jsx 与 src/workflow.css，把第二步的 fan 图从纵向三列重做成横向五列。按系统提示未回退。已做两件事：把对方新代码里两处 raw px（17px/16px）接回 token；删掉我此前为旧纵向布局写的 ≤600px .wf-candidates 覆盖——它会破坏新布局（新版连接线位置依赖 var(--g)，被我的 gap:18px 打乱）。以后在这个 worktree 动 workflow.* 之前先确认没有其他 agent 在写。

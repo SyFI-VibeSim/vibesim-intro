@@ -89,9 +89,7 @@
       "input": {
         "groups": [
           {
-            "decode_kv_lens": [
-              14830
-            ],
+            "decode_kv_lens": [14830],
             "prefill_chunk_pairs": []
           }
         ]
@@ -129,12 +127,7 @@
       "input": {
         "groups": [
           {
-            "decode_requests": [
-              [
-                14831,
-                2
-              ]
-            ],
+            "decode_requests": [[14831, 2]],
             "prefill_chunk_pairs": []
           }
         ]
@@ -172,12 +165,7 @@
       "input": {
         "groups": [
           {
-            "decode_requests": [
-              [
-                14832,
-                3
-              ]
-            ],
+            "decode_requests": [[14832, 3]],
             "prefill_chunk_pairs": []
           }
         ]
@@ -215,12 +203,7 @@
       "input": {
         "groups": [
           {
-            "decode_requests": [
-              [
-                14833,
-                4
-              ]
-            ],
+            "decode_requests": [[14833, 4]],
             "prefill_chunk_pairs": []
           }
         ]
@@ -258,12 +241,7 @@
       "input": {
         "groups": [
           {
-            "decode_requests": [
-              [
-                14834,
-                5
-              ]
-            ],
+            "decode_requests": [[14834, 5]],
             "prefill_chunk_pairs": []
           }
         ]
@@ -301,12 +279,7 @@
       "input": {
         "groups": [
           {
-            "decode_requests": [
-              [
-                14835,
-                6
-              ]
-            ],
+            "decode_requests": [[14835, 6]],
             "prefill_chunk_pairs": []
           }
         ]

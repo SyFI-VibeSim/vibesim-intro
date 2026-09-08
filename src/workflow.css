@@ -5,6 +5,7 @@
   gap: 6%;
   align-items: start;
 }
+
 .wf-stages {
   display: flex;
   flex-direction: column;
@@ -12,6 +13,7 @@
   position: sticky;
   top: 110px;
 }
+
 .wf-stages > button {
   display: grid;
   grid-template-columns: 26px minmax(0, 1fr) 18px;
@@ -23,37 +25,46 @@
   border-radius: 12px;
   color: #969da8;
 }
+
 .wf-stages strong {
   font-size: var(--fs-lg);
   font-weight: 500;
   line-height: 1.4;
   letter-spacing: -0.02em;
 }
+
 .wf-stages > button > svg {
   color: #8d9aaf;
 }
+
 .wf-stage-arrow {
   opacity: 0;
 }
+
 .wf-stages > button:hover {
   color: #e3e8ef;
   background: #ffffff04;
 }
+
 .wf-stages > button[aria-selected="true"] {
   background: #1b2028;
   color: #f0f3f8;
 }
+
 .wf-stages > button[aria-selected="true"] > svg {
   color: #aac3f3;
 }
+
 .wf-stages > button[aria-selected="true"] .wf-stage-arrow {
   opacity: 1;
 }
+
 .wf-stages > button:focus-visible,
 .wf-panel-nav button:focus-visible {
   outline: 2px solid #aac3f3;
   outline-offset: 4px;
 }
+
 .wf-panel {
   min-width: 0;
   padding: 32px 34px 0;
@@ -61,23 +72,28 @@
   border-radius: 20px;
   background: #15171a;
 }
+
 .wf-heading-stack,
 .wf-visual-stack {
   display: grid;
 }
+
 .wf-layer {
   grid-area: 1/1;
   min-width: 0;
   visibility: hidden;
   pointer-events: none;
 }
+
 .wf-layer[data-active="true"] {
   visibility: visible;
   pointer-events: auto;
 }
+
 .wf-panel-heading {
   padding-bottom: 26px;
 }
+
 .wf-panel-heading h3 {
   font-size: var(--fs-2xl);
   line-height: 1.25;
@@ -85,6 +101,7 @@
   letter-spacing: -0.035em;
   text-wrap: pretty;
 }
+
 .wf-panel-heading p {
   margin-top: 14px;
   font-size: var(--fs-sm);
@@ -92,16 +109,19 @@
   color: #aeb6c2;
   max-width: none;
 }
+
 .wf-visual-stack {
   padding: 26px 0;
   border-top: 1px solid #30343b;
 }
+
 .wf-visual {
   min-height: 360px;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
+
 .wf-visual h4 {
   font-size: var(--fs-md);
   font-weight: 500;
@@ -109,12 +129,14 @@
   letter-spacing: -0.015em;
   color: #e9edf5;
 }
+
 .wf-visual strong {
   font-size: var(--fs-sm);
   font-weight: 500;
   line-height: 1.5;
   color: #e2e8f2;
 }
+
 .wf-visual p,
 .wf-visual dd {
   font-size: var(--fs-sm);
@@ -122,17 +144,20 @@
   color: #aeb8c7;
   max-width: none;
 }
+
 .wf-visual svg {
   flex: none;
   color: #9eb5d9;
   stroke-width: 1.6;
 }
+
 .wf-visual img {
   height: 26px;
   width: 26px;
   object-fit: contain;
   flex: none;
 }
+
 /* Five diagrams, five different shapes, because the five stages are five
    different shapes of work: a chain, a fan, a branch off a trunk, a ladder
    between two systems, and a converge then diverge. They share one node style
@@ -147,12 +172,14 @@
   --flow: #59637a;
   --flow-tip: #8b95a8;
 }
+
 .wf-box {
   padding: 15px 18px;
   border: 1px solid #2e333b;
   border-radius: 12px;
   background: #15171b;
 }
+
 .wf-box strong {
   display: block;
   font-size: var(--fs-sm);
@@ -161,29 +188,35 @@
   letter-spacing: -0.015em;
   color: #e8ecf2;
 }
+
 .wf-box p {
   margin: 6px 0 0;
   font-size: var(--fs-fine);
   line-height: 1.5;
   color: #8e97a6;
 }
+
 /* The one node each stage is heading towards. */
 .wf-box--out {
   border-color: #4a5c8c;
   background: #171c26;
 }
+
 .wf-box--out strong {
   color: #cfdcf5;
 }
+
 .wf-box--out p {
   color: #93a1ba;
 }
+
 /* A connector is a hairline with a small chevron, drawn down the centre. */
 .wf-arrow {
   position: relative;
   display: block;
   height: 34px;
 }
+
 .wf-arrow::before {
   content: "";
   position: absolute;
@@ -193,6 +226,7 @@
   width: 1px;
   background: var(--flow);
 }
+
 .wf-arrow::after {
   content: "";
   position: absolute;
@@ -222,15 +256,17 @@
     minmax(0, 1fr) 46px minmax(0, 0.94fr)
     46px minmax(0, 1fr);
   align-items: stretch;
-  align-content: center;
+
   /* The panel is taller than these figures; without this the auto rows
      stretch and the boxes grow empty space instead of centring. */
   align-content: center;
 }
+
 .wf-fan-origin,
 .wf-fan-pick {
   align-self: center;
 }
+
 .wf-candidates {
   display: grid;
   grid-template-rows: repeat(3, minmax(0, 1fr));
@@ -239,15 +275,18 @@
   padding: 0;
   list-style: none;
 }
+
 .wf-candidates li {
   position: relative;
   display: flex;
   align-items: center;
   min-height: 62px;
 }
+
 .wf-candidates li strong {
   font-size: var(--fs-sm);
 }
+
 /* The stub each candidate hangs off, on both sides. */
 .wf-candidates li::before,
 .wf-candidates li::after {
@@ -257,19 +296,23 @@
   height: 1px;
   background: var(--flow);
 }
+
 .wf-candidates li::before {
   right: 100%;
   width: 34px;
 }
+
 .wf-candidates li::after {
   left: 100%;
   width: 26px;
 }
+
 .wf-fan-out,
 .wf-fan-in {
   position: relative;
   display: block;
 }
+
 /* The trunk, entering the gutter at the height of the box it comes from. It is
    short on purpose: the branch should happen at the origin, not halfway across
    the diagram. */
@@ -281,18 +324,17 @@
   height: 1px;
   background: var(--flow);
 }
-.wf-fan-out::before {
-  width: 12px;
-}
-.wf-fan-in::before {
-  width: 20px;
-}
+
 .wf-fan-out::before {
   left: 0;
+  width: 12px;
 }
+
 .wf-fan-in::before {
   right: 0;
+  width: 20px;
 }
+
 /* The junction itself, drawn so the split reads as one point opening into
    three rather than as a line strung between the three. */
 .wf-fan-out::after,
@@ -306,12 +348,15 @@
   transform: translate(-50%, -50%);
   background: var(--flow-tip);
 }
+
 .wf-fan-out::after {
   left: 12px;
 }
+
 .wf-fan-in::after {
   left: calc(100% - 20px);
 }
+
 /* The bus spans the centres of the first and last candidate exactly: with three
    equal rows and a gap of g, a row centre sits at 100%/6 minus g/3. */
 .wf-fan-out > i,
@@ -322,12 +367,15 @@
   width: 1px;
   background: var(--flow);
 }
+
 .wf-fan-out > i {
   left: 12px;
 }
+
 .wf-fan-in > i:not(.wf-tip) {
   right: 20px;
 }
+
 /* A head wherever the flow enters something. */
 .wf-tip {
   position: absolute;
@@ -338,13 +386,16 @@
   border-top: 1px solid var(--flow-tip);
   border-right: 1px solid var(--flow-tip);
 }
+
 /* Outside the box, at the end of the stub that feeds it. */
 .wf-candidates .wf-tip {
   left: -9px;
 }
+
 .wf-fan-in .wf-tip {
   right: 1px;
 }
+
 .wf-fan .wf-view-note {
   grid-column: 1 / -1;
   margin: 26px 0 0;
@@ -361,12 +412,14 @@
   display: grid;
   align-content: center;
 }
+
 .wf-trunk-label {
   margin: 0 0 20px;
   font-size: 16px;
   line-height: 1.5;
   color: #8e97a6;
 }
+
 .wf-gates {
   position: relative;
   display: grid;
@@ -375,6 +428,7 @@
   padding: 0 0 0 54px;
   list-style: none;
 }
+
 /* The trunk. Dashed, and dimmer than the flow lines, because it is the thing
    that stays put rather than part of the sequence. */
 .wf-gates::before {
@@ -385,9 +439,11 @@
   left: 6px;
   border-left: 1px dashed #4b5462;
 }
+
 .wf-gates li {
   position: relative;
 }
+
 .wf-gates li::before {
   content: "";
   position: absolute;
@@ -397,6 +453,7 @@
   height: 1px;
   background: var(--flow);
 }
+
 .wf-gates .wf-tip {
   left: -9px;
 }
@@ -407,6 +464,7 @@
   display: flex;
   flex-direction: column;
 }
+
 .wf-lane {
   display: flex;
   align-items: baseline;
@@ -416,6 +474,7 @@
   border-radius: 12px;
   background: #15171b;
 }
+
 .wf-lane img,
 .wf-lane svg {
   align-self: center;
@@ -424,17 +483,20 @@
   object-fit: contain;
   color: #9fb2d2;
 }
+
 .wf-lane strong {
   font-size: var(--fs-sm);
   font-weight: 500;
   letter-spacing: -0.015em;
   color: #e8ecf2;
 }
+
 .wf-lane span {
   margin-left: auto;
   font-size: var(--fs-fine);
   color: #8e97a6;
 }
+
 .wf-ties {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -443,10 +505,12 @@
   padding: 28px 0;
   list-style: none;
 }
+
 .wf-ties li {
   position: relative;
   text-align: center;
 }
+
 .wf-ties li::before,
 .wf-ties li::after {
   content: "";
@@ -456,12 +520,15 @@
   height: 28px;
   background: var(--flow);
 }
+
 .wf-ties li::before {
   top: -28px;
 }
+
 .wf-ties li::after {
   bottom: -28px;
 }
+
 .wf-ties strong {
   display: block;
   font-size: var(--fs-sm);
@@ -470,12 +537,14 @@
   letter-spacing: -0.015em;
   color: #e8ecf2;
 }
+
 .wf-ties p {
   margin: 6px 0 0;
   font-size: var(--fs-fine);
   line-height: 1.45;
   color: #8e97a6;
 }
+
 .wf-ladder .wf-view-note {
   margin: 22px 0 0;
   font-size: var(--fs-fine);
@@ -492,11 +561,12 @@
     minmax(0, 0.86fr) 46px minmax(0, 1fr)
     46px minmax(0, 0.9fr);
   align-items: stretch;
-  align-content: center;
+
   /* The panel is taller than these figures; without this the auto rows
      stretch and the boxes grow empty space instead of centring. */
   align-content: center;
 }
+
 .wf-lanes,
 .wf-outcomes {
   display: grid;
@@ -505,12 +575,15 @@
   padding: 0;
   list-style: none;
 }
+
 .wf-lanes {
   grid-template-rows: repeat(2, minmax(0, 1fr));
 }
+
 .wf-outcomes {
   grid-template-rows: repeat(3, minmax(0, 1fr));
 }
+
 .wf-lanes li,
 .wf-outcomes li {
   position: relative;
@@ -518,10 +591,12 @@
   align-items: center;
   min-height: 56px;
 }
+
 .wf-lanes strong,
 .wf-outcomes strong {
   font-size: 17px;
 }
+
 .wf-lanes li::after,
 .wf-outcomes li::before {
   content: "";
@@ -530,26 +605,32 @@
   height: 1px;
   background: var(--flow);
 }
+
 .wf-lanes li::after {
   left: 100%;
   width: 26px;
 }
+
 .wf-outcomes li::before {
   right: 100%;
   width: 34px;
 }
+
 .wf-outcomes .wf-tip {
   left: -9px;
 }
+
 /* Two sources rather than three, so the bus spans a different pair of centres:
    with two equal rows and a gap of g, a row centre sits at 25% minus g/4. */
 .wf-fan-in--pair > i:not(.wf-tip) {
   top: calc(25% - var(--g) / 4);
   bottom: calc(25% - var(--g) / 4);
 }
+
 .wf-benchmark {
   align-self: center;
 }
+
 .wf-checks {
   display: grid;
   gap: 9px;
@@ -557,6 +638,7 @@
   padding: 0;
   list-style: none;
 }
+
 .wf-checks li {
   position: relative;
   padding-left: 17px;
@@ -564,6 +646,7 @@
   line-height: 1.3;
   color: #aab3c1;
 }
+
 .wf-checks li::before {
   content: "";
   position: absolute;
@@ -573,6 +656,7 @@
   height: 1px;
   background: var(--flow);
 }
+
 .wf-verdict .wf-view-note {
   grid-column: 1 / -1;
   margin: 26px 0 0;
@@ -589,6 +673,7 @@
   padding: 20px 0;
   border-top: 1px solid #30343b;
 }
+
 .wf-panel-nav button {
   display: flex;
   align-items: center;
@@ -600,89 +685,110 @@
   padding: 4px 0;
   white-space: nowrap;
 }
+
 .wf-panel-nav button:last-child {
   justify-self: end;
 }
+
 .wf-panel-nav button:disabled {
   opacity: 0.3;
   cursor: default;
 }
+
 .wf-panel-nav button:not(:disabled):hover {
   color: #fff;
 }
+
 .wf-position {
   text-align: center;
   font-size: var(--fs-fine);
   color: #98a4b5;
   font-variant-numeric: tabular-nums;
 }
+
 @media (prefers-reduced-motion: no-preference) {
   .wf-stages > button {
     transition:
       background 0.18s ease,
       color 0.18s ease;
   }
+
   .wf-layer[data-active="true"] {
     animation: wf-reveal 0.2s ease both;
   }
+
   @keyframes wf-reveal {
     from {
       opacity: 0;
     }
+
     to {
       opacity: 1;
     }
   }
 }
+
 @media (min-width: 1600px) {
   .wf-panel {
     padding: 38px 44px 0;
   }
+
   .wf-stages > button {
     min-height: 100px;
   }
+
   .wf-visual {
     min-height: 390px;
   }
 }
+
 @media (max-width: 1100px) {
   .wf-layout {
     grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.35fr);
     gap: 4%;
   }
+
   .wf-stages strong {
     font-size: var(--fs-md);
   }
+
   .wf-stages > button {
     gap: 11px;
     padding: 18px 10px;
   }
+
   .wf-panel {
     padding: 26px 24px 0;
   }
 }
+
 @media (max-width: 900px) {
   .wf-layout {
     grid-template-columns: 1fr;
     gap: 24px;
   }
+
   .wf-stages {
     position: static;
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 6px;
   }
+
   .wf-stages > button {
     min-height: 70px;
     padding: 14px 12px;
   }
+
   .wf-stages strong {
     font-size: var(--fs-sm);
   }
+
   .wf-stages > button:last-child {
     grid-column: 1/-1;
   }
 }
+
 @media (max-width: 700px) {
   /* Below this the five diagrams run out of horizontal room, so every one of
      them collapses to a single column and the connectors become plain vertical
@@ -690,10 +796,12 @@
   .wf-fan {
     grid-template-columns: minmax(0, 1fr);
   }
+
   .wf-fan-out,
   .wf-fan-in {
     height: 26px;
   }
+
   .wf-fan-out::before,
   .wf-fan-in::before {
     top: 0;
@@ -701,6 +809,7 @@
     width: 1px;
     height: 100%;
   }
+
   .wf-fan-out > i,
   .wf-fan-in > i,
   .wf-fan-in::after,
@@ -709,117 +818,147 @@
   .wf-candidates .wf-tip {
     display: none;
   }
+
   .wf-candidates {
     grid-template-rows: none;
     gap: 10px;
   }
+
   .wf-candidates li {
     min-height: 0;
   }
+
   .wf-ties {
     grid-template-columns: minmax(0, 1fr);
     gap: 18px;
     padding: 22px 0;
     text-align: left;
   }
+
   .wf-ties li {
     text-align: left;
   }
+
   .wf-ties li::before,
   .wf-ties li::after {
     left: 8px;
     height: 18px;
   }
+
   .wf-ties li::before {
     top: -18px;
   }
+
   .wf-ties li::after {
     bottom: -18px;
   }
+
   .wf-ties li:not(:first-child)::before,
   .wf-ties li:not(:last-child)::after {
     display: none;
   }
+
   .wf-lane {
     flex-wrap: wrap;
   }
+
   .wf-lane span {
     flex-basis: 100%;
     margin-left: 33px;
   }
+
   .wf-verdict {
     grid-template-columns: minmax(0, 1fr);
   }
+
   .wf-lanes,
   .wf-outcomes {
     grid-template-rows: none;
     gap: 10px;
   }
+
   .wf-lanes li,
   .wf-outcomes li {
     min-height: 0;
   }
+
   .wf-lanes li::after,
   .wf-outcomes li::before,
   .wf-outcomes .wf-tip {
     display: none;
   }
+
   .wf-gates {
     padding-left: 34px;
   }
+
   .wf-gates li::before {
     left: -28px;
     width: 28px;
   }
 }
+
 @media (max-width: 600px) {
   .wf-ladder-heads,
   .wf-lanes {
     grid-template-columns: 1fr;
     gap: 18px;
   }
+
   .wf-merge {
     height: 22px;
   }
+
   .wf-merge::before,
   .wf-merge i:nth-child(2) {
     display: none;
   }
+
   .wf-merge i:nth-child(1) {
     left: 5px;
   }
+
   .wf-checks,
   .wf-outcomes {
     gap: 10px 24px;
   }
+
   .wf-outcomes li:first-child {
     margin: 0;
   }
+
   .wf-heading-break {
     display: none;
   }
+
   .wf-stages {
     grid-template-columns: 1fr;
     gap: 3px;
   }
+
   .wf-stages > button {
     min-height: 56px;
     padding: 12px;
     gap: 12px;
   }
+
   .wf-panel {
     padding: 24px 20px 0;
     border-radius: 16px;
   }
+
   .wf-visual-stack {
     padding: 24px 0;
   }
+
   .wf-visual {
     min-height: 0;
   }
+
   .wf-panel-nav {
     gap: 10px;
   }
+
   .wf-panel-nav button {
     gap: 7px;
   }

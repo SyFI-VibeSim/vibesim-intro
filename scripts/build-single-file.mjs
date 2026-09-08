@@ -26,10 +26,7 @@ const resolveOutputAsset = (assetReference) =>
 
 const stylesheetPattern = /<link rel="stylesheet" crossorigin href="([^"]+)">/g;
 for (const stylesheetMatch of [...html.matchAll(stylesheetPattern)]) {
-  const stylesheet = await readFile(
-    resolveOutputAsset(stylesheetMatch[1]),
-    "utf8",
-  );
+  const stylesheet = await readFile(resolveOutputAsset(stylesheetMatch[1]), "utf8");
   html = html.replace(stylesheetMatch[0], () => `<style>${stylesheet}</style>`);
 }
 

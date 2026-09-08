@@ -25,7 +25,6 @@ const coverage = [
   ["Hardware", ["H200", "B200"]],
 ];
 
-
 function CoverageDirectory() {
   return (
     <dl className="why-directory">
@@ -69,8 +68,7 @@ const maxGpus = Math.max(...simSpeed.runs.map((run) => run.gpus));
 const speedTicks = [10, 100, 1000];
 const logLow = 1;
 const logHigh = 3.5;
-const logPos = (value) =>
-  ((Math.log10(value) - logLow) / (logHigh - logLow)) * 100;
+const logPos = (value) => ((Math.log10(value) - logLow) / (logHigh - logLow)) * 100;
 
 const formatSpeed = (value) =>
   value >= 100
@@ -87,8 +85,8 @@ function SpeedChart() {
           <span>&times;</span>
         </strong>
         <span>
-          faster than the system being simulated, across all{" "}
-          {simSpeed.runs.length} runs of {simulatedMinutes} serving minutes each
+          faster than the system being simulated, across all {simSpeed.runs.length}{" "}
+          runs of {simulatedMinutes} serving minutes each
         </span>
       </figcaption>
       <div className="why-speed">
@@ -115,7 +113,9 @@ function SpeedChart() {
                 ))}
                 <i style={{ "--width": `${start}%` }} />
                 {end > start ? (
-                  <em style={{ "--start": `${start}%`, "--width": `${end - start}%` }} />
+                  <em
+                    style={{ "--start": `${start}%`, "--width": `${end - start}%` }}
+                  />
                 ) : null}
               </span>
               <span className="why-speed-value">{label}</span>
@@ -146,7 +146,9 @@ function AlignmentPlot() {
   return (
     <figure className="why-figure-block">
       <figcaption className="why-figure-head">
-        <strong>{alignment.cases} of {alignment.cases}</strong>
+        <strong>
+          {alignment.cases} of {alignment.cases}
+        </strong>
         <span>
           cases accepted, {alignment.judgements} judgements, {alignment.failures}{" "}
           failures
@@ -195,9 +197,21 @@ function AlignmentPlot() {
 
 const TIERS = [
   { key: "run", name: "The run", detail: "End to end" },
-  { key: "request", name: "Each request", detail: `${tiers.requestCdf[0].n} requests` },
-  { key: "iteration", name: "Each iteration", detail: `${tiers.iterations.iterations.toLocaleString("en-US")} steps` },
-  { key: "kernel", name: "Each kernel", detail: `${tiers.kernels.positions} positions` },
+  {
+    key: "request",
+    name: "Each request",
+    detail: `${tiers.requestCdf[0].n} requests`,
+  },
+  {
+    key: "iteration",
+    name: "Each iteration",
+    detail: `${tiers.iterations.iterations.toLocaleString("en-US")} steps`,
+  },
+  {
+    key: "kernel",
+    name: "Each kernel",
+    detail: `${tiers.kernels.positions} positions`,
+  },
 ];
 
 const runSpanS = tiers.spanMs / 1000;
@@ -230,8 +244,14 @@ function RunPanel() {
       </div>
       <dl className="why-stats">
         {[
-          ["Output", `${Math.round(tiers.run.totalTps).toLocaleString("en-US")} tok/s`],
-          ["Concurrent", `${Math.round(tiers.run.meanConcurrent)} of ${tiers.run.peakConcurrent}`],
+          [
+            "Output",
+            `${Math.round(tiers.run.totalTps).toLocaleString("en-US")} tok/s`,
+          ],
+          [
+            "Concurrent",
+            `${Math.round(tiers.run.meanConcurrent)} of ${tiers.run.peakConcurrent}`,
+          ],
           ["GPU busy", `${(tiers.run.utilization * 100).toFixed(2)}%`],
         ].map(([label, value]) => (
           <div key={label}>
@@ -259,7 +279,9 @@ const cdfAxis = Object.fromEntries(
   tiers.requestCdf.map((metric) => [metric.key, axisFor(metric.x)]),
 );
 const formatAxis = (value) =>
-  value >= 1000 ? Math.round(value).toLocaleString("en-US") : String(Math.round(value));
+  value >= 1000
+    ? Math.round(value).toLocaleString("en-US")
+    : String(Math.round(value));
 
 function RequestPanel() {
   return (
@@ -280,7 +302,8 @@ function RequestPanel() {
                 <strong>{metric.label}</strong>
                 <span>
                   p50 {Math.round(metric.markers.p50).toLocaleString("en-US")}, p99{" "}
-                  {Math.round(metric.markers.p99).toLocaleString("en-US")} {metric.unit}
+                  {Math.round(metric.markers.p99).toLocaleString("en-US")}{" "}
+                  {metric.unit}
                 </span>
               </span>
               <div
@@ -360,7 +383,10 @@ function IterationPanel() {
           ["Iterations", tiers.iterations.iterations.toLocaleString("en-US")],
           ["Decode, median", `${tiers.iterations.decode.medianMs.toFixed(1)} ms`],
           ["Prefill, median", `${tiers.iterations.prefill.medianMs.toFixed(1)} ms`],
-          ["Busy", `${((tiers.iterations.busyMs / tiers.spanMs) * 100).toFixed(1)}%`],
+          [
+            "Busy",
+            `${((tiers.iterations.busyMs / tiers.spanMs) * 100).toFixed(1)}%`,
+          ],
         ].map(([label, value]) => (
           <div key={label}>
             <dt>{label}</dt>
@@ -369,11 +395,11 @@ function IterationPanel() {
         ))}
       </dl>
       <p className="why-tier-note">
-        The {tiers.iterations.prefill.count} prefill iterations cost about
-        three times a decode iteration, which is what sets the latency every
-        request feels. {tiers.iterations.plotted} of{" "}
-        {tiers.iterations.iterations.toLocaleString("en-US")} are plotted,
-        evenly sampled.
+        The {tiers.iterations.prefill.count} prefill iterations cost about three
+        times a decode iteration, which is what sets the latency every request
+        feels. {tiers.iterations.plotted} of{" "}
+        {tiers.iterations.iterations.toLocaleString("en-US")} are plotted, evenly
+        sampled.
       </p>
     </div>
   );
@@ -395,7 +421,10 @@ function KernelPanel() {
           <div className="why-kernel-row" key={segment.name}>
             <span className="why-kernel-name">
               <strong>{segment.name}</strong>
-              <span>{segment.scope ? `${segment.scope}, ` : ""}{segment.kind}</span>
+              <span>
+                {segment.scope ? `${segment.scope}, ` : ""}
+                {segment.kind}
+              </span>
             </span>
             <span className="why-kernel-track">
               <i style={{ "--width": `${(segment.share / kernelMax) * 100}%` }} />
@@ -491,7 +520,8 @@ const formatGpuSeconds = (value) =>
 
 function OptimalityFigure() {
   const [previewBucket, setPreviewBucket] = useState(null);
-  const highlightedBucket = previewBucket ?? optimality.buckets.find(bucket => bucket.necessary).name;
+  const highlightedBucket =
+    previewBucket ?? optimality.buckets.find((bucket) => bucket.necessary).name;
   const previewOnPointer = (event, name) => {
     if (event.pointerType === "mouse") setPreviewBucket(name);
   };
@@ -516,7 +546,8 @@ function OptimalityFigure() {
         aria-label={`${optimality.totalGpuSeconds.toFixed(2)} GPU seconds split into ${optimality.buckets.length} named causes; ${necessaryPct.toFixed(0)} percent is work the model requires`}
       >
         {optimality.buckets
-          .slice().reverse()
+          .slice()
+          .reverse()
           .filter((bucket) => bucket.frac > 0)
           .map((bucket) => (
             <span
@@ -580,7 +611,9 @@ function AgentFigure() {
       <div className="why-flow">
         <blockquote className="why-flow-end why-flow-end--start">
           <span>You</span>
-          <p>Find the request rate where Llama 3 8B stops keeping up on one H200.</p>
+          <p>
+            Find the request rate where Llama 3 8B stops keeping up on one H200.
+          </p>
         </blockquote>
         <ol className="why-flow-stages">
           {agentStages.map(([stage, detail]) => (
@@ -656,7 +689,10 @@ export function Advantages() {
       <div className="wrap">
         <div className="section-intro">
           <h2>Explore VibeSim’s key features.</h2>
-          <p>See the supported systems and the evidence behind simulation speed, prediction accuracy and analysis.</p>
+          <p>
+            See the supported systems and the evidence behind simulation speed,
+            prediction accuracy and analysis.
+          </p>
         </div>
 
         <div className="why-rows">
@@ -679,7 +715,6 @@ export function Advantages() {
             </article>
           ))}
         </div>
-
       </div>
     </section>
   );

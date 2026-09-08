@@ -1,0 +1,318 @@
+@font-face {
+  font-family: Geist;
+  src: url("/fonts/geist-regular.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Geist;
+  src: url("/fonts/geist-medium.woff2") format("woff2");
+  font-weight: 500 700;
+  font-display: swap;
+}
+
+/* The floor does not move on phones. The steps above it close up instead. */
+
+/* box-sizing now comes from the reset, together with the margin and padding
+   wipe it was always paired with. */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button {
+  color: inherit;
+  cursor: pointer;
+  background: none;
+  border: 0;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+svg {
+  flex-shrink: 0;
+  stroke-width: 1.6;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+button:focus-visible,
+a:focus-visible,
+summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 5px;
+}
+
+button:active,
+.button:active {
+  transform: translateY(1px);
+}
+
+.wrap {
+  width: var(--page-width);
+  margin-inline: auto;
+}
+
+/* All sections share the same outer edges; only the photography is full bleed. */
+
+.text-link:hover {
+  color: var(--ink);
+}
+
+.skip-link {
+  position: fixed;
+  top: -100px;
+  left: 16px;
+  padding: 12px 20px;
+  background: var(--ink);
+  color: var(--bg);
+  z-index: 20;
+  border-radius: var(--r-sm);
+}
+
+.skip-link:focus {
+  top: 10px;
+}
+
+.skip-link:not(:focus) {
+  clip-path: inset(50%);
+}
+
+/* Layer 10 is reserved for the single sticky navigation. */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 15px 25px;
+  border-radius: var(--r-pill);
+  font-size: var(--fs-sm);
+  white-space: nowrap;
+}
+
+.button-primary {
+  color: var(--c-surface-200);
+  background: var(--c-ink-2000);
+}
+
+.button-primary:hover {
+  background: var(--c-ink-1700);
+}
+
+.tabs {
+  display: flex;
+  gap: 6px;
+}
+
+.tabs button:hover {
+  color: var(--ink);
+  background: var(--c-alpha-1300);
+}
+
+.tabs button[aria-selected="true"] {
+  color: var(--ink);
+  background: var(--c-line-100);
+}
+
+dt {
+  color: var(--muted);
+}
+
+dd {
+  margin: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  button,
+  a {
+    transition:
+      color 0.18s,
+      background-color 0.18s,
+      border-color 0.18s,
+      transform 0.18s;
+  }
+
+  .will-reveal {
+    opacity: 0;
+    transform: translateY(15px);
+    transition:
+      opacity 0.55s,
+      transform 0.55s;
+  }
+
+  .will-reveal.in-view {
+    opacity: 1;
+    transform: none;
+  }
+
+  @keyframes content-enter {
+    from {
+      opacity: 0.4;
+      transform: translateY(6px);
+    }
+
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Keep product typography and chart proportions stable on wide monitors. */
+
+@media (min-width: 1280px) {
+  .section-intro {
+    margin-bottom: 60px;
+  }
+}
+
+/* One shared page grid. Larger type, readable transcripts, purposeful diagrams. */
+
+h2 {
+  font-weight: 500;
+  font-size: var(--fs-h2);
+  line-height: 1.1;
+  letter-spacing: -0.045em;
+}
+
+.section {
+  scroll-margin-top: 76px;
+  padding-block: 120px;
+}
+
+.section-intro {
+  max-width: none;
+  margin-bottom: 52px;
+}
+
+.section-intro h2 {
+  max-width: none;
+}
+
+.section-intro > p {
+  color: var(--muted);
+  font-size: var(--fs-lg);
+  line-height: 1.6;
+  max-width: 68ch;
+  margin-top: 24px;
+}
+
+/* Split out of the rule above, which listed both selectors. It is not
+   redundant: .examples-section .section-intro p sets max-width to none at the
+   same specificity, so which of the two wins is decided by source order, and
+   this one has to stay after it. */
+
+.tabs button {
+  white-space: nowrap;
+  line-height: 1.3;
+  color: var(--muted);
+  border-radius: var(--r-pill);
+  font-size: var(--fs-sm);
+  padding: 16px 24px;
+}
+
+.text-link {
+  color: var(--accent);
+  gap: 12px;
+  align-items: center;
+  display: inline-flex;
+  font-size: var(--fs-sm);
+}
+
+.caption {
+  color: var(--muted);
+  font-size: var(--fs-fine);
+  line-height: 1.7;
+}
+
+/* Compact icon tabs keep attention on the Agent conversation. */
+
+/* The table scrolls inside its own wrapper. Without min-width the wrapper
+   takes the table's intrinsic width and pushes the whole page sideways. */
+
+/* Product walkthrough, with readable controls and all four product roles. */
+
+@media (max-width: 767px) {
+  .section {
+    padding-block: 75px;
+  }
+
+  h2 {
+    line-height: 1.12;
+  }
+
+  .section-intro {
+    margin-bottom: 32px;
+  }
+
+  .section-intro > p {
+    line-height: 1.65;
+    margin-top: 20px;
+  }
+}
+
+/* Existing GLM depth sweep: six measured-profile-conditioned predictions. */
+
+/* A phone column is about 45px wide, which is not enough for a legible value
+   above every bar. The per-column figure is dropped there rather than shrunk
+   below the floor: the selected value is already spelled out full size in the
+   metrics below, each bar carries it in its aria-label, and the table under
+   "View the workload and results" lists every row. */
+
+@media (max-width: 767px) {
+  /* The label may wrap; the reading and its unit may not be split. */
+}

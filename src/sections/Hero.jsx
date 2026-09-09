@@ -37,13 +37,11 @@ export function Hero() {
           <br />
           Then make it go that fast.
         </h1>
-        {/* The headline states the ambition; this line states what actually
-            happens. The Agent goes after the gap and the real benchmark decides
-            how much of it came back — the page never promises all of it does. */}
         <p>
-          VibeSim measures every simulated GPU second against the work your model
-          really requires. The Agent goes after the difference and validates what it
-          wins on real hardware.
+          Grounded in real measurements, VibeSim simulates LLM serving with high
+          speed and fidelity. With the VibeSim Agent, you can search serving
+          configurations, analyze performance bottlenecks, and guide optimizations
+          in real serving frameworks.
         </p>
         <div className={s.heroActions}>
           <a className={`button button-primary`} href="#use-cases">

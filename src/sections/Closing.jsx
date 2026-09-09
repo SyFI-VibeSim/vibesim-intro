@@ -16,7 +16,7 @@ export function Closing() {
             target="_blank"
             rel="noreferrer"
           >
-            Start with a study <ArrowRight size={16} />
+            Get started on GitHub <ArrowRight size={16} />
           </a>
         </div>
       </section>

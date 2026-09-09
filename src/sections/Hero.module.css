@@ -53,9 +53,9 @@
 .heroCopy > p {
   margin: 30px auto 0;
   color: var(--c-ink-1600);
-  font-size: var(--fs-md);
+  font-size: var(--fs-lg);
   line-height: 1.6;
-  max-width: 640px;
+  max-width: 900px;
   text-shadow: 0 2px 20px var(--bg);
 }
 
@@ -87,9 +87,8 @@
 
 @media (max-width: 767px) {
   .hero {
-    min-height: 660px;
-    height: 92svh;
-    max-height: 840px;
+    min-height: max(660px, 92svh);
+    height: auto;
   }
 
   .heroCopy {

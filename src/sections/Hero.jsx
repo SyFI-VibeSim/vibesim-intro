@@ -8,16 +8,23 @@ export function Hero() {
   const asset = (name) => `${import.meta.env.BASE_URL}images/${name}`;
   const previewImages = {
     original: asset("shoreline-v3.webp"),
-    "datacenter-a": asset("hero-datacenter-a.png"),
-    "datacenter-b": asset("hero-datacenter-b.png"),
-    "datacenter-c": asset("hero-datacenter-c.png"),
+    "datacenter-a": asset("hero-datacenter-a.webp"),
+    "datacenter-b": asset("hero-datacenter-b.webp"),
+    "datacenter-c": asset("hero-datacenter-c.webp"),
   };
   const preview = new URLSearchParams(window.location.search).get("hero");
+  const image = previewImages[preview] || asset("hero-datacenter-b.webp");
   return (
     <section className={s.hero} aria-labelledby="page-title">
       <img
         className={s.heroImage}
-        src={previewImages[preview] || asset("hero-datacenter-b.png")}
+        src={image}
+        srcSet={
+          preview === "original"
+            ? undefined
+            : `${image.replace(".webp", "-960.webp")} 960w, ${image} 1672w`
+        }
+        sizes="100vw"
         alt=""
         fetchPriority="high"
         width="1672"

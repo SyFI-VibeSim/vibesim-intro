@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useLayoutEffect, useRef, useState } from "react";
 import { Tabs } from "../components/Tabs";
 import s from "./Advantages.module.css";
 import simSpeed from "../data/simSpeed.json";
@@ -511,7 +511,7 @@ function DrilldownFigure() {
   );
 }
 
-/* ---------- 5. Locate inefficiencies ---------- */
+/* ---------- 5. Optimization insights ---------- */
 
 const necessaryPct = optimality.necessaryFrac * 100;
 const aboveBoundPct = 100 - necessaryPct;
@@ -595,7 +595,7 @@ function OptimalityFigure() {
   );
 }
 
-/* ---------- 6. A zero-code workflow ---------- */
+/* ---------- 6. Zero-code exploration ---------- */
 
 /* The round trip. A person states a goal, three machine stages carry it out,
    and the result comes back to the same person. The two human ends run the
@@ -609,9 +609,30 @@ const agentStages = [
 ];
 
 function AgentFigure() {
+  const flowRef = useRef(null);
+  useLayoutEffect(() => {
+    const flow = flowRef.current;
+    const start = flow.querySelector("blockquote");
+    const finish = flow.querySelector("[data-flow-result]");
+    const alignReturn = () => {
+      flow.style.setProperty(
+        "--return-top",
+        `${start.getBoundingClientRect().height / 2}px`,
+      );
+      flow.style.setProperty(
+        "--return-bottom",
+        `${finish.getBoundingClientRect().height / 2}px`,
+      );
+    };
+    const observer = new ResizeObserver(alignReturn);
+    observer.observe(start);
+    observer.observe(finish);
+    alignReturn();
+    return () => observer.disconnect();
+  }, []);
   return (
     <figure className={`${s.figureBlock} ${s.flowBlock}`}>
-      <div className={s.flow}>
+      <div className={s.flow} ref={flowRef}>
         <blockquote className={s.flowEnd}>
           <span>You</span>
           <p>
@@ -626,7 +647,7 @@ function AgentFigure() {
             </li>
           ))}
         </ol>
-        <div className={`${s.flowEnd} ${s.flowEndFinish}`}>
+        <div data-flow-result className={`${s.flowEnd} ${s.flowEndFinish}`}>
           <span>Back to you</span>
           <p>Charts, tables and the reasoning, in front of you.</p>
         </div>
@@ -670,14 +691,14 @@ const rows = [
     figure: <DrilldownFigure />,
   },
   {
-    name: "Locate inefficiencies.",
+    name: "Optimization insights.",
     claim: "Break down the gap to optimal.",
     body: "Every simulated GPU second is attributed to a named cause and compared with the work the model configuration actually requires. A busy GPU is not the same as a useful one, and the breakdown tells you where to optimize.",
     note: `Simulated workload: ${optimality.setup}. ${optimality.workload}.`,
     figure: <OptimalityFigure />,
   },
   {
-    name: "A zero-code workflow.",
+    name: "Zero-code exploration.",
     claim: "Describe the goal, get a solution.",
     body: "Tell the Agent what you want to find out. It sets up the experiment, reads the analysis and comes back with the tradeoff and the evidence.",
     note: "The same experiments are available from the command line and the API.",
@@ -686,32 +707,39 @@ const rows = [
   },
 ];
 
-export function Advantages() {
+export function Advantages({ standalone = false }) {
+  const RowHeading = standalone ? "h2" : "h3";
   return (
     <section id="advantages" className="section">
       <div className="wrap">
-        <div className="section-intro" data-reveal>
-          <h2>Explore VibeSim’s key features.</h2>
-          <p>
-            See the supported systems and the evidence behind simulation speed,
-            prediction accuracy and analysis.
-          </p>
-        </div>
+        {standalone && (
+          <div className="section-intro" data-reveal>
+            <h2>VibeSim Key Features</h2>
+          </div>
+        )}
+        {!standalone && (
+          <div className="section-intro" data-reveal>
+            <h2>Explore VibeSim’s key features.</h2>
+            <p>
+              See the supported systems and the evidence behind simulation speed,
+              prediction accuracy and analysis.
+            </p>
+          </div>
+        )}
 
         <div className={s.rows}>
           {rows.map((row, index) => (
             <article
-              data-reveal
               className={`${s.row}${index % 2 === 1 ? ` ${s.rowFlip}` : ""}${
                 row.modifier ? ` ${row.modifier}` : ""
               }`}
               id={row.id}
               key={row.name}
             >
-              <div className={s.copy}>
-                <h3>
+              <div className={s.copy} data-reveal>
+                <RowHeading>
                   <span>{row.name}</span> {row.claim}
-                </h3>
+                </RowHeading>
                 <p>{row.body}</p>
                 <span className={s.note}>{row.note}</span>
               </div>

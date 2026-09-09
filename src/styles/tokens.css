@@ -11,6 +11,19 @@
   --line: #2b2d32;
   --accent: #99baff;
   --accent-strong: #709aef;
+  --cost-scale-ink: #c2ace3;
+  --cost-scale-border: #66517f;
+  --cost-scale-surface: #241d30;
+  --cost-sum-ink: #93cbb4;
+  --cost-sum-border: #3f6856;
+  --cost-sum-surface: #17251f;
+  --cost-max-ink: #d9b57a;
+  --cost-max-border: #6b5638;
+  --cost-max-surface: #221d16;
+  --diagram-stage: #141414;
+  --diagram-group: #1e1e1e;
+  --diagram-node: #292929;
+  --diagram-detail: #353535;
   --nav-layer: 10;
   --page-width: 76%;
 

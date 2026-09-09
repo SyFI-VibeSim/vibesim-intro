@@ -5,12 +5,17 @@ import s from "./Closing.module.css";
 export function Closing() {
   return (
     <>
-      <section className={s.closing} id="start">
-        <div className="wrap">
-          <h2>Start exploring your serving setup with VibeSim.</h2>
+      <section className={s.closing} id="start" aria-labelledby="closing-title">
+        <div className="wrap" data-reveal>
+          <h2 id="closing-title">
+            Start exploring your serving setup with VibeSim.
+          </h2>
           {/* Its own wording, not the hero's. The two buttons share a
               destination and used to share a label word for word. */}
-          <a className={`button button-primary`} href="#use-cases">
+          <a
+            className={`button button-primary`}
+            href={`${import.meta.env.BASE_URL}#use-cases`}
+          >
             Start with a study <ArrowRight size={16} />
           </a>
         </div>

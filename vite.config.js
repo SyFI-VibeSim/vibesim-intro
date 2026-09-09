@@ -9,4 +9,13 @@ export default defineConfig({
      import.meta.env.BASE_URL instead. */
   base: "/vibesim-intro/",
   plugins: [react()],
+  build: {
+    rollupOptions: {
+      input: {
+        overview: "index.html",
+        features: "features.html",
+        architecture: "architecture.html",
+      },
+    },
+  },
 });

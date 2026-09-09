@@ -1,959 +1,116 @@
-/* One steady canvas, five views. Intrinsic grid sizing keeps every step equal. */
+.workflow {
+  border-top: 1px solid var(--line);
+}
+
 .layout {
   display: grid;
-  grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.5fr);
-  gap: 6%;
+  grid-template-columns: 1fr;
+  gap: 48px;
   align-items: start;
 }
 
-.stages {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  position: sticky;
-  top: 110px;
+.intro {
+  position: static;
 }
 
-.stages > button {
-  display: grid;
-  grid-template-columns: 26px minmax(0, 1fr) 18px;
-  align-items: center;
-  gap: 16px;
-  min-height: 88px;
-  padding: 20px 16px;
-  text-align: left;
-  border-radius: var(--r-md);
-  color: var(--c-ink-400);
+.intro h2 {
+  font-size: var(--fs-h2);
+  line-height: 1.1;
+  letter-spacing: -0.045em;
 }
 
-.stages strong {
-  font-size: var(--fs-lg);
-  font-weight: 500;
-  line-height: 1.4;
-  letter-spacing: -0.02em;
-}
-
-.stages > button > svg {
-  color: var(--c-ink-300);
-}
-
-.stageArrow {
-  opacity: 0;
-}
-
-.stages > button:hover {
-  color: var(--c-ink-1800);
-  background: var(--c-alpha-1300);
-}
-
-.stages > button[aria-selected="true"] {
-  background: var(--c-surface-300);
-  color: var(--c-ink-2000);
-}
-
-.stages > button[aria-selected="true"] > svg {
-  color: var(--c-ink-accent-500);
-}
-
-.stages > button[aria-selected="true"] .stageArrow {
-  opacity: 1;
-}
-
-.stages > button:focus-visible,
-.panelNav button:focus-visible {
-  outline: 2px solid var(--c-ink-accent-500);
-  outline-offset: 4px;
-}
-
-.panel {
-  min-width: 0;
-  padding: 32px 34px 0;
-  border: 1px solid var(--c-line-200);
-  border-radius: var(--r-lg);
-  background: var(--c-surface-200);
-}
-
-.headingStack,
-.visualStack {
-  display: grid;
-}
-
-.layer {
-  grid-area: 1/1;
-  min-width: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
-
-.layer[data-active="true"] {
-  visibility: visible;
-  pointer-events: auto;
-}
-
-.panelHeading {
-  padding-bottom: 26px;
-}
-
-.panelHeading h3 {
-  font-size: var(--fs-2xl);
-  line-height: 1.25;
-  font-weight: 500;
-  letter-spacing: -0.035em;
-  text-wrap: pretty;
-}
-
-.panelHeading p {
-  margin-top: 14px;
-  font-size: var(--fs-sm);
+.intro > p {
+  margin-top: 24px;
+  color: var(--muted);
+  font-size: var(--fs-xl);
   line-height: 1.65;
-  color: var(--c-ink-700);
-  max-width: none;
 }
 
-.visualStack {
-  padding: 26px 0;
-  border-top: 1px solid var(--c-line-200);
+.stages {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
-.visual {
-  min-height: 360px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+.stage {
+  display: grid;
+  grid-template-columns: 60px minmax(0, 1fr);
+  gap: 24px;
+  position: relative;
+  padding-bottom: 44px;
 }
 
-.visual h4 {
-  font-size: var(--fs-md);
-  font-weight: 500;
-  line-height: 1.4;
-  letter-spacing: -0.015em;
-  color: var(--c-ink-1800);
+.stage:last-child {
+  padding-bottom: 0;
 }
 
-.visual strong {
-  font-size: var(--fs-sm);
-  font-weight: 500;
-  line-height: 1.5;
-  color: var(--c-ink-1800);
+.stage:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  left: 29px;
+  top: 68px;
+  bottom: 8px;
+  width: 1px;
+  background: var(--c-line-accent-100);
 }
 
-.visual p,
-.visual dd {
-  font-size: var(--fs-sm);
-  line-height: 1.6;
-  color: var(--c-ink-700);
-  max-width: none;
-}
-
-.visual svg {
-  flex: none;
-  color: var(--c-ink-accent-400);
-  stroke-width: 1.6;
-}
-
-.visual img {
-  height: 26px;
-  width: 26px;
-  object-fit: contain;
-  flex: none;
-}
-
-/* Five diagrams, five different shapes, because the five stages are five
-   different shapes of work: a chain, a fan, a branch off a trunk, a ladder
-   between two systems, and a converge then diverge. They share one node style
-   and one connector style so the section still reads as one thing.
-   A node is a single hairline on a flat fill. No nested enclosures. */
-.view {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  --g: 14px;
-  --flow: var(--c-line-500);
-  --flow-tip: var(--c-ink-200);
-}
-
-.box {
-  composes: node from "../components/Flow.module.css";
-  padding: 15px 18px;
-}
-
-.box strong {
-  display: block;
-  font-size: var(--fs-sm);
-  font-weight: 500;
-  line-height: 1.35;
-  letter-spacing: -0.015em;
-  color: var(--c-ink-1800);
-}
-
-.box p {
-  margin: 6px 0 0;
-  font-size: var(--fs-fine);
-  line-height: 1.5;
-  color: var(--c-ink-200);
-}
-
-/* The one node each stage is heading towards. */
-
-/* Written as .box.boxOut so it outweighs the composed .node rather than
-   merely following it: a composed class lives in another file, and which of
-   the two files the bundler emits first is not something this rule should
-   depend on. */
-.box.boxOut {
-  border-color: var(--c-line-accent-100);
+.number {
+  display: grid;
+  place-items: center;
+  height: 60px;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--c-line-accent-100);
   background: var(--c-surface-300);
+  color: var(--accent);
+  font-size: var(--fs-xl);
 }
 
-.boxOut strong {
-  color: var(--c-ink-1400);
-}
-
-.boxOut p {
-  color: var(--c-ink-500);
-}
-
-/* A connector is a hairline with a small chevron, drawn down the centre. */
-.arrow {
-  position: relative;
-  display: block;
-  height: 34px;
-}
-
-.arrow::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  width: 1px;
-  background: var(--flow);
-}
-
-.arrow::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  bottom: 2px;
-  width: 9px;
-  height: 9px;
-  transform: translate(-50%, 0) rotate(45deg);
-  border-right: 1px solid var(--flow-tip);
-  border-bottom: 1px solid var(--flow-tip);
-}
-
-/* 1. Understand the workload. A straight chain: what you run, what you measure
-   on it, and the model those two produce. */
-.chain {
-  display: flex;
-  flex-direction: column;
-}
-
-/* 2. Explore in simulation. Horizontal, because the shape of this stage is one
-   baseline opening into several directions and closing back onto one. Stacked
-   vertically the three candidates get squeezed into a band and the branch stops
-   reading as a branch. */
-.fan {
-  display: grid;
-  grid-template-columns:
-    minmax(0, 1fr) 46px minmax(0, 0.94fr)
-    46px minmax(0, 1fr);
-  align-items: stretch;
-
-  /* The panel is taller than these figures; without this the auto rows
-     stretch and the boxes grow empty space instead of centring. */
-  align-content: center;
-}
-
-.fanOrigin,
-.fanPick {
-  align-self: center;
-}
-
-.candidates {
-  display: grid;
-  grid-template-rows: repeat(3, minmax(0, 1fr));
-  gap: var(--g);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.candidates li {
-  position: relative;
-  display: flex;
-  align-items: center;
-  min-height: 62px;
-}
-
-.candidates li strong {
-  font-size: var(--fs-sm);
-}
-
-/* The stub each candidate hangs off, on both sides. */
-.candidates li::before,
-.candidates li::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  height: 1px;
-  background: var(--flow);
-}
-
-.candidates li::before {
-  right: 100%;
-  width: 34px;
-}
-
-.candidates li::after {
-  left: 100%;
-  width: 26px;
-}
-
-.fanOut,
-.fanIn {
-  position: relative;
-  display: block;
-}
-
-/* The trunk, entering the gutter at the height of the box it comes from. It is
-   short on purpose: the branch should happen at the origin, not halfway across
-   the diagram. */
-.fanOut::before,
-.fanIn::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  height: 1px;
-  background: var(--flow);
-}
-
-.fanOut::before {
-  left: 0;
-  width: 12px;
-}
-
-.fanIn::before {
-  right: 0;
-  width: 20px;
-}
-
-/* The junction itself, drawn so the split reads as one point opening into
-   three rather than as a line strung between the three. */
-.fanOut::after,
-.fanIn::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  width: 6px;
-  height: 6px;
-  border-radius: var(--r-round);
-  transform: translate(-50%, -50%);
-  background: var(--flow-tip);
-}
-
-.fanOut::after {
-  left: 12px;
-}
-
-.fanIn::after {
-  left: calc(100% - 20px);
-}
-
-/* The bus spans the centres of the first and last candidate exactly: with three
-   equal rows and a gap of g, a row centre sits at 100%/6 minus g/3. */
-.fanOut > i,
-.fanIn > i:not(.tip) {
-  position: absolute;
-  top: calc(100% / 6 - var(--g) / 3);
-  bottom: calc(100% / 6 - var(--g) / 3);
-  width: 1px;
-  background: var(--flow);
-}
-
-.fanOut > i {
-  left: 12px;
-}
-
-.fanIn > i:not(.tip) {
-  right: 20px;
-}
-
-/* A head wherever the flow enters something. */
-.tip {
-  position: absolute;
-  top: 50%;
-  width: 7px;
-  height: 7px;
-  transform: translate(0, -50%) rotate(45deg);
-  border-top: 1px solid var(--flow-tip);
-  border-right: 1px solid var(--flow-tip);
-}
-
-/* Outside the box, at the end of the stub that feeds it. */
-.candidates .tip {
-  left: -9px;
-}
-
-.fanIn .tip {
-  right: 1px;
-}
-
-.fan .viewNote {
-  grid-column: 1 / -1;
-  margin: 26px 0 0;
-  font-size: var(--fs-fine);
-  line-height: 1.6;
-  color: var(--c-ink-200);
-}
-
-/* 3. Build with the Agent. Every step branches off the baseline, so the dashed
-   trunk is the diagram: three arrows leave it, one for each thing the Agent
-   does. The steps do not chain into each other, because each of them is
-   measured against the baseline, not against the step before it. */
-.branch {
-  display: grid;
-  align-content: center;
-}
-
-.trunkLabel {
-  margin: 0 0 20px;
-  font-size: var(--fs-fine);
-  line-height: 1.5;
-  color: var(--c-ink-200);
-}
-
-.gates {
-  position: relative;
-  display: grid;
-  gap: 16px;
-  margin: 0;
-  padding: 0 0 0 54px;
-  list-style: none;
-}
-
-/* The trunk. Dashed, and dimmer than the flow lines, because it is the thing
-   that stays put rather than part of the sequence. */
-.gates::before {
-  content: "";
-  position: absolute;
-  top: -10px;
-  bottom: -10px;
-  left: 6px;
-  border-left: 1px dashed var(--c-line-400);
-}
-
-.gates li {
-  position: relative;
-}
-
-.gates li::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: -48px;
-  width: 48px;
-  height: 1px;
-  background: var(--flow);
-}
-
-.gates .tip {
-  left: -9px;
-}
-
-/* 4. Align back with simulation. Two systems on two lanes, with one tie drawn
-   across for each thing being compared. */
-.ladder {
-  display: flex;
-  flex-direction: column;
-}
-
-.lane {
-  composes: node from "../components/Flow.module.css";
-  display: flex;
-  align-items: baseline;
-  gap: 12px;
-  padding: 14px 18px;
-}
-
-.lane img,
-.lane svg {
-  align-self: center;
-  width: 21px;
-  height: 21px;
-  object-fit: contain;
-  color: var(--c-ink-accent-300);
-}
-
-.lane strong {
-  font-size: var(--fs-sm);
-  font-weight: 500;
-  letter-spacing: -0.015em;
-  color: var(--c-ink-1800);
-}
-
-.lane span {
-  margin-left: auto;
-  font-size: var(--fs-fine);
-  color: var(--c-ink-200);
-}
-
-.ties {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--g);
-  margin: 0;
-  padding: 28px 0;
-  list-style: none;
-}
-
-.ties li {
-  position: relative;
-  text-align: center;
-}
-
-.ties li::before,
-.ties li::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  width: 1px;
-  height: 28px;
-  background: var(--flow);
-}
-
-.ties li::before {
-  top: -28px;
-}
-
-.ties li::after {
-  bottom: -28px;
-}
-
-.ties strong {
-  display: block;
-  font-size: var(--fs-sm);
+.content h3 {
+  padding-top: 9px;
+  font-size: var(--fs-2xl);
   font-weight: 500;
   line-height: 1.3;
-  letter-spacing: -0.015em;
-  color: var(--c-ink-1800);
+  letter-spacing: -0.025em;
 }
 
-.ties p {
-  margin: 6px 0 0;
-  font-size: var(--fs-fine);
-  line-height: 1.45;
-  color: var(--c-ink-200);
+.content p {
+  margin-top: 14px;
+  color: var(--muted);
+  font-size: var(--fs-xl);
+  line-height: 1.65;
 }
 
-.ladder .viewNote {
-  margin: 22px 0 0;
-  font-size: var(--fs-fine);
-  line-height: 1.6;
-  color: var(--c-ink-200);
-}
-
-/* 5. Final validation. An hourglass laid out horizontally, using exactly the
-   connector vocabulary of stage two: two builds merge onto one benchmark, and
-   that benchmark opens onto one of three decisions. */
-.verdict {
-  display: grid;
-  grid-template-columns:
-    minmax(0, 0.86fr) 46px minmax(0, 1fr)
-    46px minmax(0, 0.9fr);
-  align-items: stretch;
-
-  /* The panel is taller than these figures; without this the auto rows
-     stretch and the boxes grow empty space instead of centring. */
-  align-content: center;
-}
-
-.lanes,
-.outcomes {
-  display: grid;
-  gap: var(--g);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.lanes {
-  grid-template-rows: repeat(2, minmax(0, 1fr));
-}
-
-.outcomes {
-  grid-template-rows: repeat(3, minmax(0, 1fr));
-}
-
-.lanes li,
-.outcomes li {
-  position: relative;
-  display: flex;
-  align-items: center;
-  min-height: 56px;
-}
-
-.lanes strong,
-.outcomes strong {
-  font-size: var(--fs-sm);
-}
-
-.lanes li::after,
-.outcomes li::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  height: 1px;
-  background: var(--flow);
-}
-
-.lanes li::after {
-  left: 100%;
-  width: 26px;
-}
-
-.outcomes li::before {
-  right: 100%;
-  width: 34px;
-}
-
-.outcomes .tip {
-  left: -9px;
-}
-
-/* Two sources rather than three, so the bus spans a different pair of centres:
-   with two equal rows and a gap of g, a row centre sits at 25% minus g/4. */
-.fanInPair > i:not(.tip) {
-  top: calc(25% - var(--g) / 4);
-  bottom: calc(25% - var(--g) / 4);
-}
-
-.benchmark {
-  align-self: center;
-}
-
-.checks {
-  display: grid;
-  gap: 9px;
-  margin: 13px 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-.checks li {
-  position: relative;
-  padding-left: 17px;
-  font-size: var(--fs-fine);
-  line-height: 1.3;
-  color: var(--c-ink-700);
-}
-
-.checks li::before {
-  content: "";
-  position: absolute;
-  top: 9px;
-  left: 0;
-  width: 7px;
-  height: 1px;
-  background: var(--flow);
-}
-
-.verdict .viewNote {
-  grid-column: 1 / -1;
-  margin: 26px 0 0;
-  font-size: var(--fs-fine);
-  line-height: 1.6;
-  color: var(--c-ink-200);
-}
-
-.panelNav {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 15px;
-  padding: 20px 0;
-  border-top: 1px solid var(--c-line-200);
-}
-
-.panelNav button {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  font-size: var(--fs-fine);
-  min-height: 38px;
-  border-radius: var(--r-xs);
-  color: var(--c-ink-1400);
-  padding: 4px 0;
-  white-space: nowrap;
-}
-
-.panelNav button:last-child {
-  justify-self: end;
-}
-
-.panelNav button:disabled {
-  opacity: 0.3;
-  cursor: default;
-}
-
-.panelNav button:not(:disabled):hover {
-  color: var(--c-ink-2100);
-}
-
-.position {
-  text-align: center;
-  font-size: var(--fs-fine);
-  color: var(--c-ink-500);
-  font-variant-numeric: tabular-nums;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .stages > button {
-    transition:
-      background 0.18s ease,
-      color 0.18s ease;
-  }
-
-  .layer[data-active="true"] {
-    animation: reveal 0.2s ease both;
-  }
-
-  @keyframes reveal {
-    from {
-      opacity: 0;
-    }
-
-    to {
-      opacity: 1;
-    }
-  }
-}
-
-@media (min-width: 1600px) {
-  .panel {
-    padding: 38px 44px 0;
-  }
-
-  .stages > button {
-    min-height: 100px;
-  }
-
-  .visual {
-    min-height: 390px;
-  }
-}
-
-@media (max-width: 1100px) {
+@media (max-width: 1023px) {
   .layout {
-    grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.35fr);
-    gap: 4%;
-  }
-
-  .stages strong {
-    font-size: var(--fs-md);
-  }
-
-  .stages > button {
-    gap: 11px;
-    padding: 18px 10px;
-  }
-
-  .panel {
-    padding: 26px 24px 0;
+    gap: 36px;
   }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 767px) {
   .layout {
     grid-template-columns: 1fr;
-    gap: 24px;
+    gap: 40px;
   }
 
-  .stages {
+  .intro {
     position: static;
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 6px;
   }
 
-  .stages > button {
-    min-height: 70px;
-    padding: 14px 12px;
+  .stage {
+    grid-template-columns: 48px minmax(0, 1fr);
+    gap: 16px;
   }
 
-  .stages strong {
-    font-size: var(--fs-sm);
+  .number {
+    height: 48px;
   }
 
-  .stages > button:last-child {
-    grid-column: 1/-1;
-  }
-}
-
-@media (max-width: 700px) {
-  /* Below this the five diagrams run out of horizontal room, so every one of
-     them collapses to a single column and the connectors become plain vertical
-     rails. */
-  .fan {
-    grid-template-columns: minmax(0, 1fr);
+  .content h3 {
+    padding-top: 6px;
   }
 
-  .fanOut,
-  .fanIn {
-    height: 26px;
-  }
-
-  .fanOut::before,
-  .fanIn::before {
-    top: 0;
-    left: 50%;
-    width: 1px;
-    height: 100%;
-  }
-
-  .fanOut > i,
-  .fanIn > i,
-  .fanIn::after,
-  .candidates li::before,
-  .candidates li::after,
-  .candidates .tip {
-    display: none;
-  }
-
-  .candidates {
-    grid-template-rows: none;
-    gap: 10px;
-  }
-
-  .candidates li {
-    min-height: 0;
-  }
-
-  .ties {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 18px;
-    padding: 22px 0;
-    text-align: left;
-  }
-
-  .ties li {
-    text-align: left;
-  }
-
-  .ties li::before,
-  .ties li::after {
-    left: 8px;
-    height: 18px;
-  }
-
-  .ties li::before {
-    top: -18px;
-  }
-
-  .ties li::after {
-    bottom: -18px;
-  }
-
-  .ties li:not(:first-child)::before,
-  .ties li:not(:last-child)::after {
-    display: none;
-  }
-
-  .lane {
-    flex-wrap: wrap;
-  }
-
-  .lane span {
-    flex-basis: 100%;
-    margin-left: 33px;
-  }
-
-  .verdict {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .lanes,
-  .outcomes {
-    grid-template-rows: none;
-    gap: 10px;
-  }
-
-  .lanes li,
-  .outcomes li {
-    min-height: 0;
-  }
-
-  .lanes li::after,
-  .outcomes li::before,
-  .outcomes .tip {
-    display: none;
-  }
-
-  .gates {
-    padding-left: 34px;
-  }
-
-  .gates li::before {
-    left: -28px;
-    width: 28px;
+  .stage:not(:last-child)::before {
+    left: 23px;
+    top: 56px;
   }
 }
-
-@media (max-width: 600px) {
-  .lanes {
-    grid-template-columns: 1fr;
-    gap: 18px;
-  }
-
-  .checks,
-  .outcomes {
-    gap: 10px 24px;
-  }
-
-  .outcomes li:first-child {
-    margin: 0;
-  }
-
-  .headingBreak {
-    display: none;
-  }
-
-  .stages {
-    grid-template-columns: 1fr;
-    gap: 3px;
-  }
-
-  .stages > button {
-    min-height: 56px;
-    padding: 12px;
-    gap: 12px;
-  }
-
-  .panel {
-    padding: 24px 20px 0;
-    border-radius: var(--r-lg);
-  }
-
-  .visualStack {
-    padding: 24px 0;
-  }
-
-  .visual {
-    min-height: 0;
-  }
-
-  .panelNav {
-    gap: 10px;
-  }
-
-  .panelNav button {
-    gap: 7px;
-  }
-}
-
-/* No .root rule. The one this section used to have, .workflow-section with a
-   70px padding-top, never applied: refinements.css redefines .section with a
-   padding-block after styles.css declared it, so the base won on source order
-   and the section has always rendered at the standard 120px. It is deleted
-   rather than carried across, because inside a module it would have started
-   winning and quietly shortened the section. */

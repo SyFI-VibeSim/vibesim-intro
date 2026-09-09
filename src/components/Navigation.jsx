@@ -1,49 +1,36 @@
-import { useState } from "react";
-import { ArrowUpRight, Menu, X } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { Brand } from "./Brand";
 import s from "./Navigation.module.css";
 
-export function Navigation() {
-  const [open, setOpen] = useState(false);
+export function Navigation({ page = "overview" }) {
+  const base = import.meta.env.BASE_URL;
   return (
     <header className={s.navigation}>
       <div className={s.navigationInner}>
         <Brand />
-        <nav aria-label="Main navigation" data-open={open}>
-          {/* Each label names what is at the other end, so arriving confirms
-              the click. Two read off the heading, "Run the study with the
-              Agent." and "Explore VibeSim's key features."; the middle one
-              names the section itself, five stages from profiling a real
-              framework through to benchmarking the final build.
-
-              They also have to stay short. The bar is a fixed-width flex row,
-              and at 768px there is no slack. */}
+        <nav aria-label="Main navigation">
           {[
-            ["Run a study", "#use-cases"],
-            ["E2E workflow", "#workflow"],
-            ["Key features", "#advantages"],
-          ].map(([name, href]) => (
-            <a key={name} href={href} onClick={() => setOpen(false)}>
+            ["overview", "Overview", base],
+            ["features", "Features", `${base}features.html`],
+            ["architecture", "Architecture", `${base}architecture.html`],
+          ].map(([id, name, href]) => (
+            <a key={id} href={href} aria-current={page === id ? "page" : undefined}>
               {name}
             </a>
           ))}
         </nav>
         <div className={s.navigationActions}>
-          {/* Not "Explore VibeSim": that is the opening of a different
-              section's heading, "Explore VibeSim's key features.", so the label
-              named one destination and went to another. */}
-          <a className={s.navCta} href="#use-cases">
-            See it run <ArrowUpRight size={14} />
-          </a>
-          <button
-            className={s.menuToggle}
-            type="button"
-            aria-label={open ? "Close navigation" : "Open navigation"}
-            aria-expanded={open}
-            onClick={() => setOpen(!open)}
+          <a
+            className={s.github}
+            href="https://github.com/SyFI-VibeSim/VibeSim"
+            target="_blank"
+            rel="noreferrer"
           >
-            {open ? <X /> : <Menu />}
-          </button>
+            GitHub <ArrowUpRight size={16} aria-hidden="true" />
+          </a>
+          <a className={s.navCta} href={`${base}#use-cases`}>
+            Get started <ArrowUpRight size={16} aria-hidden="true" />
+          </a>
         </div>
       </div>
     </header>

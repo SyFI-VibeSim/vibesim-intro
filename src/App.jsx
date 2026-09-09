@@ -1,23 +1,27 @@
-import { useEffect, useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
+import { useSiteNavigation } from "./hooks/useSiteNavigation";
 import { Navigation } from "./components/Navigation";
 import { Hero } from "./sections/Hero";
 import { ProductIntroduction } from "./sections/ProductIntroduction";
 import { UseCases } from "./sections/UseCases";
 import { Workflow } from "./sections/Workflow";
-import { Advantages } from "./sections/Advantages";
+import { Features } from "./pages/Features";
 import { Closing } from "./sections/Closing";
+import { Architecture } from "./pages/Architecture";
 import { RealUseCases } from "./sections/RealUseCases";
 
 export default function App() {
   const mainRef = useRef(null);
-  useEffect(() => {
+  const page = useSiteNavigation(mainRef);
+  useLayoutEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     /* Reveal targets are marked with data-reveal by the section that owns them.
        Querying by class name meant reaching into another section's internals,
        which broke silently the moment those classes became CSS Modules and
        started being hashed: the six rows in Supported systems simply stopped
        being found, and nothing rendered differently enough to notice. */
-    const elements = mainRef.current.querySelectorAll("[data-reveal]");
+    const elements =
+      mainRef.current.parentElement.querySelectorAll("[data-reveal]");
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -34,20 +38,32 @@ export default function App() {
       observer.observe(element);
     });
     return () => observer.disconnect();
-  }, []);
+  }, [page]);
   return (
     <div className="site" id="top">
       <a href="#main" className="skip-link">
         Skip to content
       </a>
-      <Navigation />
-      <main ref={mainRef} id="main">
-        <Hero />
-        <ProductIntroduction />
-        <UseCases />
-        <Workflow />
-        <RealUseCases />
-        <Advantages />
+      <Navigation page={page} />
+      <main ref={mainRef} id="main" tabIndex={-1}>
+        {page === "overview" ? (
+          <>
+            <Hero />
+            <ProductIntroduction />
+            <UseCases />
+            <Workflow />
+            <RealUseCases />
+            <div className="wrap features-entry">
+              <a href={`${import.meta.env.BASE_URL}features.html`}>
+                Explore all features →
+              </a>
+            </div>
+          </>
+        ) : page === "features" ? (
+          <Features />
+        ) : (
+          <Architecture />
+        )}
       </main>
       <Closing />
     </div>

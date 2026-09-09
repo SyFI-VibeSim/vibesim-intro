@@ -10,15 +10,9 @@ dist/
 /vibesim_intro (1).md
 /Roofline-Guided Agent for Optimzing LLM Inference.txt
 
-# Refactor verification harness: baseline screenshots and a pristine worktree.
-# The verification harness is kept; its captures and scratch worktrees are not.
-.refactor/baseline/
-.refactor/current/
-.refactor/pristine/
-.refactor/prev/
-.refactor/links-before/
-.refactor/links-after/
-.refactor/report-now.txt
+# Local verification scripts, captures and agent task briefs.
+.refactor/
+design-briefs/
 agent-trace/
 
 # Markdown is not committed. goal.md, progress.md and notes.md are the working

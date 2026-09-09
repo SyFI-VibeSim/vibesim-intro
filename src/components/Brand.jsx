@@ -7,7 +7,11 @@ import s from "./Brand.module.css";
    from outside. */
 export function Brand({ className = "" }) {
   return (
-    <a className={`${s.brand} ${className}`} href="#top" aria-label="VibeSim home">
+    <a
+      className={`${s.brand} ${className}`}
+      href={import.meta.env.BASE_URL}
+      aria-label="VibeSim home"
+    >
       <img src={logo} alt="" />
       <span>VibeSim</span>
     </a>

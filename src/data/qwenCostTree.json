@@ -1,0 +1,439 @@
+{
+  "predictionId": "p_2ea09af6f0d44a2f88c071c5beeac48d",
+  "caseIndex": 2,
+  "totalMs": 571.3585815429688,
+  "reconstructedMs": 571.3585482502822,
+  "rows": [
+    {
+      "id": 0,
+      "kind": "Sum",
+      "depth": 0,
+      "ms": 571.3585482502822,
+      "sourceNode": {
+        "Sum": {
+          "children": {
+            "start": 1,
+            "end": 5
+          }
+        }
+      },
+      "name": "Qwen3-235B \u00b7 one iteration"
+    },
+    {
+      "id": 1,
+      "kind": "Leaf",
+      "depth": 1,
+      "ms": 0.033212799578905106,
+      "sourceNode": {
+        "Leaf": 0
+      },
+      "name": "Embedding",
+      "slot": 0,
+      "kernel": "unified.embedding",
+      "rank": null,
+      "backends": ["triton"]
+    },
+    {
+      "id": 2,
+      "kind": "Scale",
+      "depth": 1,
+      "ms": 571.1070308536291,
+      "sourceNode": {
+        "Scale": {
+          "n": 94,
+          "children": {
+            "start": 7,
+            "end": 8
+          }
+        }
+      },
+      "name": "94 decoder layers",
+      "repeat": 94
+    },
+    {
+      "id": 7,
+      "kind": "Sum",
+      "depth": 2,
+      "ms": 6.07560671120882,
+      "sourceNode": {
+        "Sum": {
+          "children": {
+            "start": 8,
+            "end": 13
+          }
+        }
+      },
+      "name": "Decoder layer"
+    },
+    {
+      "id": 8,
+      "kind": "Max",
+      "depth": 3,
+      "ms": 2.689947970211506,
+      "sourceNode": {
+        "Max": {
+          "overlap": 1.0,
+          "children": {
+            "start": 13,
+            "end": 14
+          }
+        }
+      },
+      "name": "Attention parallel groups"
+    },
+    {
+      "id": 13,
+      "kind": "Sum",
+      "depth": 4,
+      "ms": 2.689947970211506,
+      "sourceNode": {
+        "Sum": {
+          "children": {
+            "start": 28,
+            "end": 35
+          }
+        }
+      },
+      "name": "Attention block"
+    },
+    {
+      "id": 28,
+      "kind": "Leaf",
+      "depth": 5,
+      "ms": 0.06646394729614258,
+      "sourceNode": {
+        "Leaf": 1
+      },
+      "name": "Input RMSNorm",
+      "slot": 1,
+      "kernel": "unified.attn_block.input_norm",
+      "rank": null,
+      "backends": ["flashinfer"]
+    },
+    {
+      "id": 29,
+      "kind": "Leaf",
+      "depth": 5,
+      "ms": 0.4096072167158127,
+      "sourceNode": {
+        "Sum": {
+          "children": {
+            "start": 49,
+            "end": 51
+          }
+        }
+      },
+      "name": "QKV projection",
+      "sourceKind": "Sum",
+      "aggregated": true,
+      "rank": null,
+      "backends": ["vllm_cuda", "deepgemm"]
+    },
+    {
+      "id": 30,
+      "kind": "Leaf",
+      "depth": 5,
+      "ms": 1.2558167725801468,
+      "sourceNode": {
+        "Sum": {
+          "children": {
+            "start": 51,
+            "end": 54
+          }
+        }
+      },
+      "name": "Attention",
+      "sourceKind": "Sum",
+      "aggregated": true,
+      "rank": null,
+      "backends": ["vllm_cuda", "fa3"]
+    },
+    {
+      "id": 31,
+      "kind": "Leaf",
+      "depth": 5,
+      "ms": 0.3293650820851326,
+      "sourceNode": {
+        "Sum": {
+          "children": {
+            "start": 54,
+            "end": 56
+          }
+        }
+      },
+      "name": "Output projection",
+      "sourceKind": "Sum",
+      "aggregated": true,
+      "rank": null,
+      "backends": ["vllm_cuda", "deepgemm"]
+    },
+    {
+      "id": 32,
+      "kind": "Leaf",
+      "depth": 5,
+      "ms": 0.5622310042381287,
+      "sourceNode": {
+        "Leaf": 9
+      },
+      "name": "Attention all-reduce",
+      "slot": 9,
+      "kernel": "unified.attn_block.tp_allreduce",
+      "rank": null,
+      "backends": ["nvshmem"]
+    },
+    {
+      "id": 34,
+      "kind": "Leaf",
+      "depth": 5,
+      "ms": 0.06646394729614258,
+      "sourceNode": {
+        "Leaf": 11
+      },
+      "name": "RMSNorm",
+      "slot": 11,
+      "kernel": "unified.attn_block.tp_allreduce_fallback_norm",
+      "rank": null,
+      "backends": ["flashinfer"]
+    },
+    {
+      "id": 9,
+      "kind": "Max",
+      "depth": 3,
+      "ms": 0.1840432658791542,
+      "sourceNode": {
+        "Max": {
+          "overlap": 1.0,
+          "children": {
+            "start": 14,
+            "end": 15
+          }
+        }
+      },
+      "name": "Router parallel groups"
+    },
+    {
+      "id": 14,
+      "kind": "Leaf",
+      "depth": 4,
+      "ms": 0.1840432658791542,
+      "sourceNode": {
+        "Sum": {
+          "children": {
+            "start": 35,
+            "end": 37
+          }
+        }
+      },
+      "name": "MoE router",
+      "sourceKind": "Sum",
+      "aggregated": true,
+      "rank": null,
+      "backends": ["vllm_cuda", "deepgemm"]
+    },
+    {
+      "id": 10,
+      "kind": "Leaf",
+      "depth": 3,
+      "ms": 0.23503756523132324,
+      "sourceNode": {
+        "Sum": {
+          "children": {
+            "start": 15,
+            "end": 17
+          }
+        }
+      },
+      "name": "Expert dispatch",
+      "sourceKind": "Sum",
+      "aggregated": true,
+      "rank": null,
+      "backends": ["nvshmem"]
+    },
+    {
+      "id": 11,
+      "kind": "Max",
+      "depth": 3,
+      "ms": 2.1707248017191887,
+      "sourceNode": {
+        "Max": {
+          "overlap": 1.0,
+          "children": {
+            "start": 17,
+            "end": 21
+          }
+        }
+      },
+      "name": "Expert parallel ranks",
+      "parallelCount": 4,
+      "shownChild": 19,
+      "allChildMs": [
+        2.168933726847172, 2.168933726847172, 2.1707248017191887, 2.1707248017191887
+      ]
+    },
+    {
+      "id": 19,
+      "kind": "Sum",
+      "depth": 4,
+      "ms": 2.1707248017191887,
+      "sourceNode": {
+        "Sum": {
+          "children": {
+            "start": 43,
+            "end": 46
+          }
+        }
+      },
+      "name": "Expert rank 2"
+    },
+    {
+      "id": 43,
+      "kind": "Leaf",
+      "depth": 5,
+      "ms": 1.39169579744339,
+      "sourceNode": {
+        "Sum": {
+          "children": {
+            "start": 64,
+            "end": 66
+          }
+        }
+      },
+      "name": "Gate/up projection",
+      "sourceKind": "Sum",
+      "aggregated": true,
+      "rank": 2,
+      "backends": ["flashinfer_trtllm"]
+    },
+    {
+      "id": 44,
+      "kind": "Leaf",
+      "depth": 5,
+      "ms": 0.07172539085149765,
+      "sourceNode": {
+        "Leaf": 28
+      },
+      "name": "SiLU activation",
+      "slot": 28,
+      "kernel": "unified.moe_expert_compute.activation",
+      "rank": 2,
+      "backends": ["triton"]
+    },
+    {
+      "id": 45,
+      "kind": "Leaf",
+      "depth": 5,
+      "ms": 0.7073036134243011,
+      "sourceNode": {
+        "Sum": {
+          "children": {
+            "start": 66,
+            "end": 68
+          }
+        }
+      },
+      "name": "Down projection",
+      "sourceKind": "Sum",
+      "aggregated": true,
+      "rank": 2,
+      "backends": ["flashinfer_trtllm"]
+    },
+    {
+      "id": 12,
+      "kind": "Sum",
+      "depth": 3,
+      "ms": 0.7958531081676483,
+      "sourceNode": {
+        "Sum": {
+          "children": {
+            "start": 21,
+            "end": 24
+          }
+        }
+      },
+      "name": "Expert combine"
+    },
+    {
+      "id": 21,
+      "kind": "Max",
+      "depth": 4,
+      "ms": 0.17587068676948547,
+      "sourceNode": {
+        "Max": {
+          "overlap": 1.0,
+          "children": {
+            "start": 24,
+            "end": 28
+          }
+        }
+      },
+      "name": "Finalize parallel ranks",
+      "parallelCount": 4,
+      "shownChild": 24,
+      "allChildMs": [
+        0.17587068676948547, 0.17587068676948547, 0.17529864609241486,
+        0.17529864609241486
+      ]
+    },
+    {
+      "id": 24,
+      "kind": "Leaf",
+      "depth": 5,
+      "ms": 0.17587068676948547,
+      "sourceNode": {
+        "Leaf": 36
+      },
+      "name": "Expert finalize",
+      "slot": 36,
+      "kernel": "unified.moe_finalize",
+      "rank": 0,
+      "backends": ["flashinfer_trtllm"]
+    },
+    {
+      "id": 22,
+      "kind": "Leaf",
+      "depth": 4,
+      "ms": 0.6199824213981628,
+      "sourceNode": {
+        "Leaf": 40
+      },
+      "name": "Combine all-reduce",
+      "slot": 40,
+      "kernel": "unified.moe_combine_allreduce",
+      "rank": null,
+      "backends": ["nccl"]
+    },
+    {
+      "id": 3,
+      "kind": "Leaf",
+      "depth": 1,
+      "ms": 0.06646394729614258,
+      "sourceNode": {
+        "Leaf": 42
+      },
+      "name": "Final RMSNorm",
+      "slot": 42,
+      "kernel": "unified.final_norm",
+      "rank": null,
+      "backends": ["flashinfer"]
+    },
+    {
+      "id": 4,
+      "kind": "Leaf",
+      "depth": 1,
+      "ms": 0.15184064977802336,
+      "sourceNode": {
+        "Sum": {
+          "children": {
+            "start": 5,
+            "end": 7
+          }
+        }
+      },
+      "name": "LM head",
+      "sourceKind": "Sum",
+      "aggregated": true,
+      "rank": null,
+      "backends": ["vllm_cuda", "deepgemm"]
+    }
+  ]
+}

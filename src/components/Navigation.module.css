@@ -1,123 +1,132 @@
-/* Layer 10 is reserved for the single sticky navigation. */
 .navigation {
-  position: absolute;
-  inset: 0 0 auto;
+  position: sticky;
+  top: 0;
   z-index: var(--nav-layer);
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
 }
 
 .navigationInner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 28px;
+  gap: 24px;
   width: var(--page-width);
-  height: 76px;
+  min-height: 84px;
   margin: auto;
-  border-bottom: 1px solid var(--c-alpha-1000);
 }
 
-/* The bar is a flex row at a fixed width, and every child shrinks by default.
-   When the content stopped fitting the browser squeezed all three silently:
-   at 768px the wordmark lost 9px, the links wrapped onto two lines and the
-   pill grew to 70px inside a 76px bar. None of that raises a console error or
-   any page overflow, so nothing caught it.
-
-   The wordmark is the one element that must never resize, so it is pinned.
-   Nothing else may wrap, so a label that no longer fits pushes the header past
-   its width instead, which shoot.cjs already reports. */
 .navigationInner > a {
   flex-shrink: 0;
 }
 
 .navigation nav {
   display: flex;
-  align-items: center;
-  gap: 32px;
+  align-self: stretch;
+  gap: 28px;
 }
 
 .navigation nav a {
-  color: var(--c-ink-1600);
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 48px;
+  color: var(--muted);
+  font-size: var(--fs-sm);
+  font-weight: 500;
   white-space: nowrap;
 }
 
-.navigation nav a:hover {
+.navigation nav a:hover,
+.navigation nav a[aria-current="page"] {
   color: var(--ink);
+}
+
+.navigation nav a[aria-current="page"]::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--accent);
 }
 
 .navigationActions {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 20px;
+  font-size: var(--fs-fine);
 }
 
+.github,
 .navCta {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  border: 1px solid var(--c-alpha-1100);
-  border-radius: var(--r-pill);
-  padding: 10px 17px;
+  gap: 8px;
   white-space: nowrap;
 }
 
-.navCta:hover {
-  background: var(--c-alpha-900);
+.github {
+  color: var(--muted);
 }
 
-.menuToggle {
-  display: none;
+.github:hover {
+  color: var(--ink);
+}
+
+.navCta {
+  padding: 10px 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  color: var(--ink);
+  background: var(--surface);
+}
+
+.navCta:hover {
+  border-color: var(--accent);
+}
+
+@media (max-width: 1279px) {
+  .navigation nav {
+    gap: 20px;
+  }
+
+  .github {
+    display: none;
+  }
 }
 
 @media (max-width: 1023px) {
   .navigationInner {
-    gap: 20px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0 16px;
+    padding-top: 12px;
   }
 
   .navigation nav {
-    gap: 22px;
+    grid-column: 1 / -1;
+    grid-row: 2;
+    justify-content: space-between;
+  }
+
+  .navigationActions {
+    grid-column: 2;
+    grid-row: 1;
   }
 }
 
 @media (max-width: 767px) {
   .navigationInner {
-    height: 68px;
-    width: calc(100% - 40px);
+    width: calc(100% - 32px);
   }
 
   .navigation nav {
-    display: none;
-  }
-
-  .navigation nav[data-open="true"] {
-    display: grid;
-    position: absolute;
-    top: 68px;
-    left: 20px;
-    right: 20px;
-    padding: 22px;
-    gap: 24px;
-    background: var(--c-surface-200);
-    border: 1px solid var(--line);
-    border-radius: var(--r-md);
+    gap: 14px;
   }
 
   .navCta {
-    display: none;
+    padding: 8px 10px;
   }
-
-  .menuToggle {
-    display: grid;
-    place-items: center;
-    padding: 8px;
-  }
-}
-
-/* Split out of the rule above, which listed both selectors. It is not
-   redundant: .examples-section .section-intro p sets max-width to none at the
-   same specificity, so which of the two wins is decided by source order, and
-   this one has to stay after it. */
-
-.navigation nav a,
-.navCta {
-  font-size: var(--fs-fine);
 }

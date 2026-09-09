@@ -1,3 +1,4 @@
+import { prepareHero, warmHeroImages } from "./heroImages";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App";
@@ -10,8 +11,17 @@ import "./styles/reset.css";
 import "./styles/tokens.css";
 import "./styles/base.css";
 
-createRoot(document.getElementById("root")).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
+const initialPage = location.pathname.endsWith("features.html")
+  ? "features"
+  : location.pathname.endsWith("architecture.html")
+    ? "architecture"
+    : "overview";
+const heroReady = prepareHero(initialPage, location.search);
+warmHeroImages();
+heroReady.then(() =>
+  createRoot(document.getElementById("root")).render(
+    <StrictMode>
+      <App />
+    </StrictMode>,
+  ),
 );

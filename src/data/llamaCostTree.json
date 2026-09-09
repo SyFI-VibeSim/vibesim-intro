@@ -1,0 +1,250 @@
+{
+  "model": "Llama3-8B",
+  "totalMs": 22.9415225982666,
+  "reconstructedMs": 22.941524071153253,
+  "workload": "1,024-token prefill",
+  "hardware": "BF16 \u00b7 1 \u00d7 H200",
+  "source": "Recorded simulation \u00b7 iteration 1. One prefill request, no cached prefix, 32 decoder layers.",
+  "rows": [
+    {
+      "id": 0,
+      "kind": "Sum",
+      "sourceNode": {
+        "Sum": {
+          "children": {
+            "start": 1,
+            "end": 5
+          }
+        }
+      },
+      "depth": 0,
+      "ms": 22.941524071153253,
+      "rank": null,
+      "name": "Llama3-8B \u00b7 one iteration"
+    },
+    {
+      "id": 1,
+      "kind": "Leaf",
+      "sourceNode": {
+        "Leaf": 0
+      },
+      "depth": 1,
+      "ms": 0.0052975500002503395,
+      "rank": null,
+      "name": "Embedding",
+      "slot": 0,
+      "kernel": "unified.embedding",
+      "backends": ["triton"]
+    },
+    {
+      "id": 2,
+      "kind": "Scale",
+      "sourceNode": {
+        "Scale": {
+          "n": 32,
+          "children": {
+            "start": 5,
+            "end": 6
+          }
+        }
+      },
+      "depth": 1,
+      "ms": 22.69253581762314,
+      "rank": null,
+      "name": "32 decoder layers"
+    },
+    {
+      "id": 5,
+      "kind": "Sum",
+      "sourceNode": {
+        "Sum": {
+          "children": {
+            "start": 6,
+            "end": 9
+          }
+        }
+      },
+      "depth": 2,
+      "ms": 0.7091417443007231,
+      "rank": null,
+      "name": "Decoder layer"
+    },
+    {
+      "id": 6,
+      "kind": "Sum",
+      "sourceNode": {
+        "Sum": {
+          "children": {
+            "start": 9,
+            "end": 11
+          }
+        }
+      },
+      "depth": 3,
+      "ms": 0.08002245100215077,
+      "rank": null,
+      "name": "Pre-attention"
+    },
+    {
+      "id": 9,
+      "kind": "Leaf",
+      "sourceNode": {
+        "Leaf": 1
+      },
+      "depth": 4,
+      "ms": 0.006095950026065111,
+      "rank": null,
+      "name": "Input RMSNorm",
+      "slot": 1,
+      "kernel": "unified.pre_attn.input_norm",
+      "backends": ["flashinfer"]
+    },
+    {
+      "id": 10,
+      "kind": "Leaf",
+      "sourceNode": {
+        "Leaf": 2
+      },
+      "depth": 4,
+      "ms": 0.07392650097608566,
+      "rank": null,
+      "name": "QKV projection",
+      "slot": 2,
+      "kernel": "unified.pre_attn.qkv_proj",
+      "backends": ["torch"]
+    },
+    {
+      "id": 7,
+      "kind": "Leaf",
+      "sourceNode": {
+        "Sum": {
+          "children": {
+            "start": 11,
+            "end": 14
+          }
+        }
+      },
+      "depth": 3,
+      "ms": 0.04033995699137449,
+      "rank": null,
+      "name": "Attention",
+      "sourceKind": "Sum",
+      "aggregated": true,
+      "backends": ["vllm_cuda", "fa3"]
+    },
+    {
+      "id": 8,
+      "kind": "Sum",
+      "sourceNode": {
+        "Sum": {
+          "children": {
+            "start": 14,
+            "end": 19
+          }
+        }
+      },
+      "depth": 3,
+      "ms": 0.5887793363071978,
+      "rank": null,
+      "name": "Post-attention"
+    },
+    {
+      "id": 14,
+      "kind": "Leaf",
+      "sourceNode": {
+        "Leaf": 6
+      },
+      "depth": 4,
+      "ms": 0.04561235383152962,
+      "rank": null,
+      "name": "Output projection",
+      "slot": 6,
+      "kernel": "unified.post_attn.o_proj",
+      "backends": ["torch"]
+    },
+    {
+      "id": 15,
+      "kind": "Leaf",
+      "sourceNode": {
+        "Leaf": 7
+      },
+      "depth": 4,
+      "ms": 0.006095950026065111,
+      "rank": null,
+      "name": "RMSNorm",
+      "slot": 7,
+      "kernel": "unified.post_attn.post_norm",
+      "backends": ["flashinfer"]
+    },
+    {
+      "id": 16,
+      "kind": "Leaf",
+      "sourceNode": {
+        "Leaf": 8
+      },
+      "depth": 4,
+      "ms": 0.3466688394546509,
+      "rank": null,
+      "name": "Gate/up projection",
+      "slot": 8,
+      "kernel": "unified.post_attn.up_gate_proj",
+      "backends": ["torch"]
+    },
+    {
+      "id": 17,
+      "kind": "Leaf",
+      "sourceNode": {
+        "Leaf": 9
+      },
+      "depth": 4,
+      "ms": 0.023417500779032707,
+      "rank": null,
+      "name": "SiLU activation",
+      "slot": 9,
+      "kernel": "unified.post_attn.activation",
+      "backends": ["triton"]
+    },
+    {
+      "id": 18,
+      "kind": "Leaf",
+      "sourceNode": {
+        "Leaf": 10
+      },
+      "depth": 4,
+      "ms": 0.1669846922159195,
+      "rank": null,
+      "name": "Down projection",
+      "slot": 10,
+      "kernel": "unified.post_attn.down_proj",
+      "backends": ["torch"]
+    },
+    {
+      "id": 3,
+      "kind": "Leaf",
+      "sourceNode": {
+        "Leaf": 11
+      },
+      "depth": 1,
+      "ms": 0.006095950026065111,
+      "rank": null,
+      "name": "Final RMSNorm",
+      "slot": 11,
+      "kernel": "unified.final_norm",
+      "backends": ["flashinfer"]
+    },
+    {
+      "id": 4,
+      "kind": "Leaf",
+      "sourceNode": {
+        "Leaf": 12
+      },
+      "depth": 1,
+      "ms": 0.23759475350379944,
+      "rank": null,
+      "name": "LM head",
+      "slot": 12,
+      "kernel": "unified.lm_head",
+      "backends": ["torch"]
+    }
+  ]
+}

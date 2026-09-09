@@ -1,0 +1,86 @@
+.workerScene {
+  min-width: 0;
+}
+
+.scope {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.node {
+  position: relative;
+  min-width: 0;
+  padding: 16px 22px;
+  border-radius: var(--r-md);
+  background: var(--diagram-node);
+}
+
+.node > strong {
+  display: block;
+  font-size: var(--fs-lg);
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.node > p {
+  margin-top: 8px;
+  font-size: var(--fs-sm);
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+.spanNode > strong,
+.costRow strong {
+  color: var(--ink);
+}
+
+.admissionLink {
+  position: relative;
+  height: 28px;
+  font-size: var(--fs-lg);
+}
+
+.admissionLink::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 24px;
+  width: 16px;
+  height: calc(28px + 16px + 0.65em);
+  border-left: 1.5px solid var(--c-line-accent-100);
+  border-bottom: 1.5px solid var(--c-line-accent-100);
+}
+
+.peers {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  padding-inline: 40px 48px;
+}
+
+.costRow {
+  margin-top: 24px;
+}
+
+@media (max-width: 1023px) {
+  .peers {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 767px) {
+  .node {
+    padding: 16px 18px;
+  }
+
+  .peers {
+    padding-left: 24px;
+  }
+
+  .admissionLink::before {
+    left: 8px;
+    height: calc(28px + 16px + 0.65em);
+  }
+}

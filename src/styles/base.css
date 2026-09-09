@@ -18,6 +18,7 @@
    wipe it was always paired with. */
 
 html {
+  scroll-padding-top: 100px;
   scroll-behavior: smooth;
 }
 
@@ -175,15 +176,11 @@ dd {
 
   .will-reveal {
     opacity: 0;
-    transform: translateY(15px);
-    transition:
-      opacity 0.55s,
-      transform 0.55s;
+    transition: opacity 0.4s;
   }
 
   .will-reveal.in-view {
     opacity: 1;
-    transform: none;
   }
 
   @keyframes content-enter {
@@ -315,4 +312,65 @@ h2 {
 
 @media (max-width: 767px) {
   /* The label may wrap; the reading and its unit may not be split. */
+}
+
+/* Persistent navigation also offsets direct links into a page. */
+.section-intro h1 {
+  font-size: var(--fs-h2);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.045em;
+}
+
+.features-entry {
+  padding-bottom: 100px;
+  font-size: var(--fs-lg);
+  color: var(--accent);
+}
+
+@media (max-width: 1023px) {
+  html {
+    scroll-padding-top: 128px;
+  }
+}
+
+#main {
+  view-transition-name: page-content;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+}
+
+::view-transition-old(page-content) {
+  animation: page-leave 120ms ease-out both;
+}
+
+::view-transition-new(page-content) {
+  animation: page-enter 180ms ease-out both;
+}
+
+@keyframes page-leave {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes page-enter {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none;
+  }
 }

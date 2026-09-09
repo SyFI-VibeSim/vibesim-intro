@@ -33,7 +33,7 @@ export function Hero() {
       <div className={s.heroShade} />
       <div className={`${s.heroCopy} wrap`}>
         <h1 id="page-title">
-          Know how fast it can go.
+          Know how fast LLM serving can go.
           <br />
           Then make it go that fast.
         </h1>

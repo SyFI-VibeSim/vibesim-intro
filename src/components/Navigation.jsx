@@ -1,4 +1,3 @@
-import { ArrowUpRight } from "lucide-react";
 import { Brand } from "./Brand";
 import s from "./Navigation.module.css";
 
@@ -19,16 +18,6 @@ export function Navigation({ page = "overview" }) {
             </a>
           ))}
         </nav>
-        <div className={s.navigationActions}>
-          <a
-            className={s.github}
-            href="https://github.com/SyFI-VibeSim/VibeSim"
-            target="_blank"
-            rel="noreferrer"
-          >
-            GitHub <ArrowUpRight size={16} aria-hidden="true" />
-          </a>
-        </div>
       </div>
     </header>
   );

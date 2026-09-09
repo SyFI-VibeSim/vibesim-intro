@@ -52,32 +52,9 @@
   background: var(--accent);
 }
 
-.navigationActions {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  font-size: var(--fs-fine);
-}
-
-.github {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  white-space: nowrap;
-  color: var(--muted);
-}
-
-.github:hover {
-  color: var(--ink);
-}
-
 @media (max-width: 1279px) {
   .navigation nav {
     gap: 20px;
-  }
-
-  .github {
-    display: none;
   }
 }
 
@@ -93,11 +70,6 @@
     grid-column: 1 / -1;
     grid-row: 2;
     justify-content: space-between;
-  }
-
-  .navigationActions {
-    grid-column: 2;
-    grid-row: 1;
   }
 }
 

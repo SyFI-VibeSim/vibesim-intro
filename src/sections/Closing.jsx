@@ -10,11 +10,11 @@ export function Closing() {
           <h2 id="closing-title">
             Start exploring your serving setup with VibeSim.
           </h2>
-          {/* Its own wording, not the hero's. The two buttons share a
-              destination and used to share a label word for word. */}
           <a
             className={`button button-primary`}
-            href={`${import.meta.env.BASE_URL}#use-cases`}
+            href="https://github.com/SyFI-VibeSim/VibeSim"
+            target="_blank"
+            rel="noreferrer"
           >
             Start with a study <ArrowRight size={16} />
           </a>

@@ -339,6 +339,26 @@ const agentStories = [
   },
 ];
 
+// Hidden suffixes retain the final line wrapping throughout the replay.
+function ReplayText({ text, chars = text.length }) {
+  return (
+    <>
+      <span>{text.slice(0, chars)}</span>
+      <span style={{ visibility: "hidden" }} aria-hidden="true">
+        {text.slice(chars)}
+      </span>
+    </>
+  );
+}
+
+function reveal(visible) {
+  return {
+    style: { visibility: visible ? undefined : "hidden" },
+    "aria-hidden": !visible,
+    inert: !visible,
+  };
+}
+
 const caseIcons = [Gauge, ScanLine, Search];
 
 export function UseCases() {
@@ -420,26 +440,29 @@ export function UseCases() {
                 <UserRound size={23} strokeWidth={1.7} />
               </div>
             </div>
-            {replay.stage === 0 && (
-              <article className={s.agentTurn}>
-                <div className={s.agentAvatar}>
-                  <img src={logo} alt="" />
-                </div>
-                <div className={s.agentTurnContent}>
-                  <h3>VibeSim Agent</h3>
-                  <div className={`${s.agentMessage} ${s.thinking}`} role="status">
-                    <span>Thinking</span>
-                    <span className={s.thinkingDots} aria-hidden="true">
-                      <i />
-                      <i />
-                      <i />
-                    </span>
+            <div className={s.replyStack}>
+              {replay.stage === 0 && (
+                <article className={s.agentTurn}>
+                  <div className={s.agentAvatar}>
+                    <img src={logo} alt="" />
                   </div>
-                </div>
-              </article>
-            )}
-            {replay.stage >= 1 && (
-              <article className={s.agentTurn}>
+                  <div className={s.agentTurnContent}>
+                    <h3>VibeSim Agent</h3>
+                    <div
+                      className={`${s.agentMessage} ${s.thinking}`}
+                      role="status"
+                    >
+                      <span>Thinking</span>
+                      <span className={s.thinkingDots} aria-hidden="true">
+                        <i />
+                        <i />
+                        <i />
+                      </span>
+                    </div>
+                  </div>
+                </article>
+              )}
+              <article className={s.agentTurn} {...reveal(replay.stage >= 1)}>
                 <div className={s.agentAvatar}>
                   <img src={logo} alt="" />
                 </div>
@@ -447,149 +470,161 @@ export function UseCases() {
                   <h3>VibeSim Agent</h3>
                   <div className={s.agentMessage}>
                     <p className={s.agentIntro}>
-                      {replay.stage === 1
-                        ? story.intro.slice(0, replay.chars)
-                        : story.intro}
+                      <ReplayText
+                        text={story.intro}
+                        chars={replay.stage === 1 ? replay.chars : undefined}
+                      />
                     </p>
-                    {replay.stage >= 2 && (
-                      <details className={s.agentProgress} open>
-                        <summary>
-                          <Check size={19} />
-                          <span>Experiment plan</span>
-                          <ChevronDown size={18} />
-                        </summary>
-                        <ol>
-                          {story.steps.slice(0, replay.plans).map((step) => (
-                            <li key={step}>
-                              <Check size={17} />
-                              <span>{step}</span>
-                            </li>
-                          ))}
-                        </ol>
-                      </details>
-                    )}
-                    {replay.stage >= 3 && (
-                      <div className={s.agentExecution}>
-                        <SquareTerminal
-                          size={22}
-                          strokeWidth={1.6}
-                          aria-hidden="true"
+                    <details
+                      className={s.agentProgress}
+                      open
+                      {...reveal(replay.stage >= 2)}
+                    >
+                      <summary>
+                        <Check size={19} />
+                        <span>Experiment plan</span>
+                        <ChevronDown size={18} />
+                      </summary>
+                      <ol>
+                        {story.steps.map((step, index) => (
+                          <li
+                            key={step}
+                            {...reveal(replay.stage >= 2 && index < replay.plans)}
+                          >
+                            <Check size={17} />
+                            <span>{step}</span>
+                          </li>
+                        ))}
+                      </ol>
+                    </details>
+                    <div
+                      className={s.agentExecution}
+                      {...reveal(replay.stage >= 3)}
+                    >
+                      <SquareTerminal
+                        size={22}
+                        strokeWidth={1.6}
+                        aria-hidden="true"
+                      />
+                      <div>
+                        <p className={s.agentExecutionTitle}>
+                          <span {...reveal(replay.stage < 4)}>
+                            {story.execution}
+                          </span>
+                          <span {...reveal(replay.stage >= 4)}>
+                            {selected === 0
+                              ? "Simulation complete"
+                              : "Time prediction complete"}
+                          </span>
+                        </p>
+                        <p className={s.agentExecutionDetail}>
+                          {story.executionDetail}
+                        </p>
+                      </div>
+                    </div>
+                    <div className={s.agentAnswer} {...reveal(replay.stage >= 4)}>
+                      <p>
+                        <ReplayText
+                          text={example.answer}
+                          chars={replay.stage === 4 ? replay.chars : undefined}
                         />
-                        <div>
-                          <p className={s.agentExecutionTitle}>
-                            {replay.stage >= 4
-                              ? selected === 0
-                                ? "Simulation complete"
-                                : "Time prediction complete"
-                              : story.execution}
-                          </p>
-                          <p className={s.agentExecutionDetail}>
-                            {story.executionDetail}
-                          </p>
+                      </p>
+                      <div className={s.chartReveal} {...reveal(replay.stage >= 5)}>
+                        <div className={s.chartClip}>
+                          <figure className={s.exampleResult}>
+                            <div className={s.exampleContext}>
+                              <span>{example.model}</span>
+                              <span>{example.setup}</span>
+                            </div>
+                            <div className={s.resultHeading}>
+                              <h3>
+                                {selected === 0
+                                  ? "Throughput and the cost of extra load"
+                                  : selected === 1
+                                    ? "The five most expensive operations"
+                                    : "Throughput versus draft length"}
+                              </h3>
+                              {selected === 1 && (
+                                <div className={s.iterationTotal}>
+                                  <strong>19.49</strong>
+                                  <span>ms / iteration</span>
+                                </div>
+                              )}
+                            </div>
+                            {selected === 0 ? (
+                              <ThroughputChart />
+                            ) : selected === 1 ? (
+                              <>
+                                <OperationChart />
+                                <figcaption>
+                                  32 concurrent decode requests · 8,192 KV tokens
+                                  per request
+                                </figcaption>
+                              </>
+                            ) : (
+                              <SpeculationSearch />
+                            )}
+                          </figure>
                         </div>
                       </div>
-                    )}
-                    {replay.stage >= 4 && (
-                      <div className={s.agentAnswer}>
-                        <p>
-                          {replay.stage === 4
-                            ? example.answer.slice(0, replay.chars)
-                            : example.answer}
-                        </p>
-                        {replay.stage >= 5 && (
-                          <div className={s.chartReveal}>
-                            <div className={s.chartClip}>
-                              <figure className={s.exampleResult}>
-                                <div className={s.exampleContext}>
-                                  <span>{example.model}</span>
-                                  <span>{example.setup}</span>
-                                </div>
-                                <div className={s.resultHeading}>
-                                  <h3>
-                                    {selected === 0
-                                      ? "Throughput and the cost of extra load"
-                                      : selected === 1
-                                        ? "The five most expensive operations"
-                                        : "Throughput versus draft length"}
-                                  </h3>
-                                  {selected === 1 && (
-                                    <div className={s.iterationTotal}>
-                                      <strong>19.49</strong>
-                                      <span>ms / iteration</span>
-                                    </div>
-                                  )}
-                                </div>
-                                {selected === 0 ? (
-                                  <ThroughputChart />
-                                ) : selected === 1 ? (
-                                  <>
-                                    <OperationChart />
-                                    <figcaption>
-                                      32 concurrent decode requests · 8,192 KV
-                                      tokens per request
-                                    </figcaption>
-                                  </>
-                                ) : (
-                                  <SpeculationSearch />
-                                )}
-                              </figure>
-                            </div>
-                          </div>
-                        )}
-                        {replay.stage >= 6 && (
-                          <p className={s.agentConclusion}>
-                            {replay.stage === 6
-                              ? story.conclusion.slice(0, replay.chars)
-                              : story.conclusion}
-                          </p>
-                        )}
-                        {selected === 1 && replay.stage >= 7 && (
-                          <details className={s.inlineEvidence}>
-                            <summary>
-                              View the recorded operation times{" "}
-                              <ChevronDown size={17} />
-                            </summary>
-                            <div className={s.operationTableWrap} tabIndex={0}>
-                              <table>
-                                <thead>
-                                  <tr>
-                                    <th>Operation</th>
-                                    <th>Time</th>
-                                    <th>Share</th>
+                      <p
+                        className={s.agentConclusion}
+                        {...reveal(replay.stage >= 6)}
+                      >
+                        <ReplayText
+                          text={story.conclusion}
+                          chars={replay.stage === 6 ? replay.chars : undefined}
+                        />
+                      </p>
+                      {selected === 1 && (
+                        <details
+                          className={s.inlineEvidence}
+                          {...reveal(replay.stage >= 7)}
+                        >
+                          <summary>
+                            View the recorded operation times{" "}
+                            <ChevronDown size={17} />
+                          </summary>
+                          <div className={s.operationTableWrap} tabIndex={0}>
+                            <table>
+                              <thead>
+                                <tr>
+                                  <th>Operation</th>
+                                  <th>Time</th>
+                                  <th>Share</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {operations.map((op) => (
+                                  <tr key={op.name}>
+                                    <td>{op.name}</td>
+                                    <td>{op.time.toFixed(3)} ms</td>
+                                    <td>{op.share.toFixed(2)}%</td>
                                   </tr>
-                                </thead>
-                                <tbody>
-                                  {operations.map((op) => (
-                                    <tr key={op.name}>
-                                      <td>{op.name}</td>
-                                      <td>{op.time.toFixed(3)} ms</td>
-                                      <td>{op.share.toFixed(2)}%</td>
-                                    </tr>
-                                  ))}
-                                </tbody>
-                              </table>
-                            </div>
-                            <p className={s.specMethod}>
-                              The five groups account for{" "}
-                              {glmDecode.topFiveShare.toFixed(2)}% of the iteration.
-                              Costs follow the critical rank and include repeated
-                              layers.
-                            </p>
-                            <a
-                              className="text-link"
-                              download="glm52-decode-evidence.json"
-                              href={`data:application/json;charset=utf-8,${encodeURIComponent(JSON.stringify(glmDecode, null, 2))}`}
-                            >
-                              Download experiment data <ArrowRight size={17} />
-                            </a>
-                          </details>
-                        )}
-                      </div>
-                    )}
+                                ))}
+                              </tbody>
+                            </table>
+                          </div>
+                          <p className={s.specMethod}>
+                            The five groups account for{" "}
+                            {glmDecode.topFiveShare.toFixed(2)}% of the iteration.
+                            Costs follow the critical rank and include repeated
+                            layers.
+                          </p>
+                          <a
+                            className="text-link"
+                            download="glm52-decode-evidence.json"
+                            href={`data:application/json;charset=utf-8,${encodeURIComponent(JSON.stringify(glmDecode, null, 2))}`}
+                          >
+                            Download experiment data <ArrowRight size={17} />
+                          </a>
+                        </details>
+                      )}
+                    </div>
                   </div>
                 </div>
               </article>
-            )}
+            </div>
           </div>
         </div>
       </div>

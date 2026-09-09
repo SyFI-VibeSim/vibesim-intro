@@ -1017,12 +1017,10 @@
 @media (prefers-reduced-motion: no-preference) {
   @keyframes chartExpand {
     from {
-      grid-template-rows: 0fr;
       opacity: 0;
     }
 
     to {
-      grid-template-rows: 1fr;
       opacity: 1;
     }
   }
@@ -1091,4 +1089,28 @@
   .thinkingDots i:nth-child(3) {
     animation-delay: 300ms;
   }
+}
+
+/* Both states share one grid cell; the complete reply reserves its natural height. */
+.replyStack {
+  display: grid;
+}
+
+.replyStack > .agentTurn {
+  grid-area: 1 / 1;
+  align-self: start;
+}
+
+.conversationDemo[data-replay-paused="true"] *,
+.conversationDemo [inert],
+.conversationDemo [inert] * {
+  animation-play-state: paused !important;
+}
+
+.agentExecutionTitle {
+  display: grid;
+}
+
+.agentExecutionTitle > span {
+  grid-area: 1 / 1;
 }

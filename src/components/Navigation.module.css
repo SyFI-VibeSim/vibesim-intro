@@ -59,32 +59,16 @@
   font-size: var(--fs-fine);
 }
 
-.github,
-.navCta {
+.github {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   white-space: nowrap;
-}
-
-.github {
   color: var(--muted);
 }
 
 .github:hover {
   color: var(--ink);
-}
-
-.navCta {
-  padding: 10px 16px;
-  border: 1px solid var(--line);
-  border-radius: var(--r-sm);
-  color: var(--ink);
-  background: var(--surface);
-}
-
-.navCta:hover {
-  border-color: var(--accent);
 }
 
 @media (max-width: 1279px) {
@@ -124,9 +108,5 @@
 
   .navigation nav {
     gap: 14px;
-  }
-
-  .navCta {
-    padding: 8px 10px;
   }
 }

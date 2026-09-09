@@ -28,9 +28,6 @@ export function Navigation({ page = "overview" }) {
           >
             GitHub <ArrowUpRight size={16} aria-hidden="true" />
           </a>
-          <a className={s.navCta} href={`${base}#use-cases`}>
-            Get started <ArrowUpRight size={16} aria-hidden="true" />
-          </a>
         </div>
       </div>
     </header>

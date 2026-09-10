@@ -1,6 +1,6 @@
 {
   "source": "VibeSim PR #28, feat(glm52): add SGLang NVFP4 TP4 alignment (merged 2026-09-03)",
-  "setup": "GLM 5.2 NVFP4, 4 \u00d7 B200, SGLang TP4",
+  "setup": "GLM-5.2 NVFP4, 4 \u00d7 B200, SGLang TP4",
   "cases": 15,
   "judgements": 195,
   "failures": 0,

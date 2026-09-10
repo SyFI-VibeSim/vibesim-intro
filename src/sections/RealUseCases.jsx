@@ -11,7 +11,7 @@ const cases = [
     summary:
       "While aligning VibeSim with SGLang, we found that prefill MoE kernels were slower than expected. Autotuning was enabled, but it had missed the CUDA graph execution path. Tuning that path improved input throughput by 5.6%.",
     metric: "+5.6%",
-    metricLabel: "measured input throughput",
+    metricLabel: "input throughput vs. unpatched SGLang",
     setup: "NVFP4 · 4 × B200 · TP4",
     comparison: {
       label: "Median workload duration",
@@ -38,8 +38,8 @@ const cases = [
     summary:
       "With 2,048-token prefill chunks and five MTP draft tokens, vLLM appeared CPU-bound during alignment. Its V1 runner filtered piecewise graph sizes to multiples of six, leaving the common 2,048-token batch to run eagerly. A 2,052-token budget restored graph replay.",
     metric: "+10.8%",
-    metricLabel: "observed output throughput gain",
-    setup: "NVFP4 · 4 × B200 · TP4 + EP",
+    metricLabel: "output throughput compared with the 2,048-token graph budget",
+    setup: "NVFP4 · 4 × B200 · TP4 + EP4",
     plot: {
       file: "spec5-sawtooth.png",
       width: 1971,
@@ -59,7 +59,7 @@ const cases = [
     paragraphs: [
       "While aligning GLM-5.2 with five MTP draft tokens, we noticed that **vLLM appeared CPU-bound with the usual 2,048-token prefill chunks**. VibeSim’s timings rose and fell as the attention context grew, but the measured GPU timeline was much flatter. Looking at the trace showed that these common prefill batches were running eagerly, with **individual kernel launches instead of CUDA graph replay**.",
       "The cause was in the V1 runner’s graph-size handling. Five draft tokens require six tokens per verification step, and **the runner also filtered piecewise graph sizes to multiples of six**. With a configured limit of 2,048, the largest retained graph was only 2,034 tokens. A full 2,048-token batch could not use it. We **raised both the scheduler budget and the graph limit to 2,052**, which is divisible by six, and confirmed that piecewise replay was active again.",
-      "In the inspected profile window, the change replaced zero graph launches with 79 per rank and forward, while ordinary kernel launches fell from 835 to 261. **Average iteration time fell from 141.048 to 114.903 ms**. A separate run without profiling completed all 100 requests in both configurations and recorded **10.77% higher output throughput** with the new budget.",
+      "In the inspected profile window, CUDA graph launches went from zero to 79 per rank per forward pass, while ordinary kernel launches fell from 835 to 261. **Average iteration time fell from 141.048 to 114.903 ms**. A separate run without profiling completed all 100 requests in both configurations and recorded **10.77% higher output throughput** with the new budget.",
     ],
     link: {
       label: "Explore the Spec5 implementation",
@@ -74,10 +74,10 @@ const cases = [
     summary:
       "Mini-SGLang had no MoE support. We built its Qwen3-235B serving path with guidance from VibeSim, then used kernel analysis to simplify execution and fuse operations. The resulting implementation delivered 25.6% higher output throughput than vLLM on our prefill-heavy benchmark.",
     metric: "+25.6%",
-    metricLabel: "observed output throughput vs. vLLM",
-    setup: "FP8 · 4 × H200 · TP4 / EP4",
+    metricLabel: "output throughput vs. vLLM",
+    setup: "FP8 · 4 × H200 · TP4 + EP4",
     comparison: {
-      label: "Measured output throughput, C32 / 256 requests",
+      label: "Measured output throughput · 256 requests at concurrency 32",
       unit: "tok/s",
       before: "80.741",
       after: "101.406",

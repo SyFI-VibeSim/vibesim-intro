@@ -1,6 +1,6 @@
 {
   "source": "VibeSim analyzer payloads, logs/20260903_0_glm52_tp4_multiplier_rerun/measured_ms/10_full_saturation_rate/simulation",
-  "setup": "GLM 5.2 NVFP4, 4 \u00d7 B200, SGLang TP4",
+  "setup": "GLM-5.2 NVFP4, 4 \u00d7 B200, SGLang TP4",
   "workload": "512 requests, saturated arrival at 256 concurrent, chunked prefill capped at 2,048 batch tokens",
   "spanMs": 186269.296875,
   "run": {

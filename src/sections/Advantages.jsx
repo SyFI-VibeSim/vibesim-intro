@@ -16,7 +16,7 @@ import optimality from "../data/optimality.json";
 /* What the simulator implements today. Deliberately a list of built
    configurations, not a set of axes a visitor can multiply together. */
 const coverage = [
-  ["Models", ["Llama 3", "Qwen3", "Qwen3.6", "GLM 5.2", "DeepSeek V4"]],
+  ["Models", ["Llama 3", "Qwen3", "Qwen3.6", "GLM-5.2", "DeepSeek V4"]],
   ["Precision", ["BF16", "FP8", "NVFP4"]],
   ["Parallelism", ["TP", "EP", "DP", "PP"]],
   [
@@ -65,6 +65,8 @@ const speedShapes = simSpeed.shapes.map((shape) => {
 const slowest = Math.min(...speedShapes.map((s) => s.minSpeed));
 const fastest = Math.max(...speedShapes.map((s) => s.maxSpeed));
 const maxGpus = Math.max(...simSpeed.runs.map((run) => run.gpus));
+const minWallS = Math.min(...simSpeed.runs.map((run) => run.wall_s));
+const maxWallS = Math.max(...simSpeed.runs.map((run) => run.wall_s));
 
 /* A log axis, because the set spans two and a half decades. */
 const speedTicks = [10, 100, 1000];
@@ -87,8 +89,9 @@ function SpeedChart() {
           <span>&times;</span>
         </strong>
         <span>
-          faster than the system being simulated, across all {simSpeed.runs.length}{" "}
-          runs of {simulatedMinutes} serving minutes each
+          faster than real time. Each of the {simSpeed.runs.length} runs simulates{" "}
+          {simulatedMinutes} minutes of serving traffic; the simulator finishes it
+          in {minWallS.toFixed(1)} to {Math.round(maxWallS)} seconds of wall time.
         </span>
       </figcaption>
       <div className={s.speed}>
@@ -665,21 +668,21 @@ const rows = [
     name: "Flexible configuration.",
     claim: "From dense models to modern MoEs.",
     body: `One simulator covers a dense model on a single H200 and a routed expert model spread over ${maxGpus} GPUs. Precision, parallelism and the serving strategy move with it, down to NVFP4 and a split between attention and FFN.`,
-    note: "Each of these has been built and run. The groups are not axes to multiply together.",
+    note: "Everything listed here has been built and run, but not every combination across the groups is tested.",
     figure: <CoverageDirectory />,
   },
   {
     name: "Fast simulation.",
     claim: "Explore days of workload in minutes.",
     body: "The simulator is Rust, and speed was a goal, not a byproduct. A slow simulator stays stuck in the warmup phase and misses the steady state entirely.",
-    note: "Llama 3 8B and Qwen3 235B. Simulator wall time on one host; it varies with the machine.",
+    note: "Llama 3 8B and Qwen3-235B. Simulator wall time on one host; it varies with the machine.",
     figure: <SpeedChart />,
   },
   {
     name: "Accurate predictions.",
     claim: "Calibrated against real serving frameworks.",
     body: "Kernel timings are profiled on real GPUs and every layer above only composes them. Alignment then measures a spread of cases on the real framework and calibrates the simulator against every one of them.",
-    note: `${alignment.setup}. Source: merged pull request #28.`,
+    note: `${alignment.setup}.`,
     figure: <AlignmentPlot />,
   },
   {

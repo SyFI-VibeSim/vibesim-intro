@@ -5,14 +5,14 @@
   "shapes": [
     { "tier": "1_local_dense", "name": "Single GPU, dense", "model": "Llama 3 8B" },
     { "tier": "3_tp", "name": "Tensor parallel", "model": "Llama 3 8B" },
-    { "tier": "2_moe_local", "name": "MoE expert parallel", "model": "Qwen3 235B" },
+    { "tier": "2_moe_local", "name": "MoE expert parallel", "model": "Qwen3-235B" },
     {
       "tier": "4_dp_tp",
       "name": "Data and tensor parallel",
       "model": "Llama 3 8B"
     },
     { "tier": "5_pd", "name": "Prefill and decode split", "model": "Llama 3 8B" },
-    { "tier": "6_afd", "name": "Attention and FFN split", "model": "Qwen3 235B" }
+    { "tier": "6_afd", "name": "Attention and FFN split", "model": "Qwen3-235B" }
   ],
   "runs": [
     { "tier": "1_local_dense", "run": "local", "gpus": 1, "wall_s": 0.722 },

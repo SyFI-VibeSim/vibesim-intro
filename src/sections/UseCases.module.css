@@ -171,8 +171,8 @@
   justify-content: center;
   gap: 12px;
   min-width: 0;
-  min-height: 76px;
-  padding: 18px 20px;
+  min-height: 52px;
+  padding: 8px 16px;
   border: 0;
   border-radius: var(--r-sm);
   background: transparent;
@@ -653,8 +653,8 @@
 
   .caseSelector:global(.tabs) button {
     justify-content: flex-start;
-    min-height: 66px;
-    padding: 16px;
+    min-height: 44px;
+    padding: 8px 16px;
     gap: 12px;
   }
 
@@ -998,8 +998,8 @@
 
   .caseSelector:global(.tabs) button {
     justify-content: flex-start;
-    min-height: 66px;
-    padding: 16px;
+    min-height: 44px;
+    padding: 8px 16px;
     font-size: var(--fs-sm);
     gap: 12px;
   }

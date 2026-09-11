@@ -4,19 +4,13 @@
 
 .layout {
   display: grid;
-  grid-template-columns: 1fr;
   gap: 48px;
-  align-items: start;
-}
-
-.intro {
-  position: static;
 }
 
 .intro h2 {
   font-size: var(--fs-h2);
   line-height: 1.1;
-  letter-spacing: -0.045em;
+  letter-spacing: 0;
 }
 
 .intro > p {
@@ -27,90 +21,65 @@
 }
 
 .stages {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 40px 72px;
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
 .stage {
-  display: grid;
-  grid-template-columns: 60px minmax(0, 1fr);
-  gap: 24px;
-  position: relative;
-  padding-bottom: 44px;
+  --step-color: var(--accent);
+
+  min-width: 0;
+  border-top: 1px solid var(--line);
+  padding-top: 24px;
+}
+
+.stage:nth-child(3) {
+  --step-color: #d7bc84;
 }
 
 .stage:last-child {
-  padding-bottom: 0;
+  --step-color: #8ed0b0;
 }
 
-.stage:not(:last-child)::before {
-  content: "";
-  position: absolute;
-  left: 29px;
-  top: 68px;
-  bottom: 8px;
-  width: 1px;
-  background: var(--c-line-accent-100);
+.marker {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  height: 40px;
+  color: var(--step-color);
 }
 
 .number {
-  display: grid;
-  place-items: center;
-  height: 60px;
-  border-radius: var(--r-sm);
-  border: 1px solid var(--c-line-accent-100);
-  background: var(--c-surface-300);
-  color: var(--accent);
-  font-size: var(--fs-xl);
+  font-size: var(--fs-sm);
+  font-variant-numeric: tabular-nums;
 }
 
 .content h3 {
-  padding-top: 9px;
+  margin-top: 16px;
   font-size: var(--fs-2xl);
   font-weight: 500;
   line-height: 1.3;
-  letter-spacing: -0.025em;
+  letter-spacing: 0;
 }
 
 .content p {
   margin-top: 14px;
   color: var(--muted);
-  font-size: var(--fs-xl);
-  line-height: 1.65;
-}
-
-@media (max-width: 1023px) {
-  .layout {
-    gap: 36px;
-  }
+  font-size: var(--fs-lg);
+  line-height: 1.6;
 }
 
 @media (max-width: 767px) {
   .layout {
-    grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 36px;
   }
 
-  .intro {
-    position: static;
-  }
-
-  .stage {
-    grid-template-columns: 48px minmax(0, 1fr);
-    gap: 16px;
-  }
-
-  .number {
-    height: 48px;
-  }
-
-  .content h3 {
-    padding-top: 6px;
-  }
-
-  .stage:not(:last-child)::before {
-    left: 23px;
-    top: 56px;
+  .stages {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
   }
 }

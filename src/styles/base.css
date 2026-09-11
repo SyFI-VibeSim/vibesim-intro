@@ -332,12 +332,6 @@ h2 {
   letter-spacing: -0.045em;
 }
 
-.features-entry {
-  padding-bottom: 100px;
-  font-size: var(--fs-lg);
-  color: var(--accent);
-}
-
 @media (max-width: 1023px) {
   html {
     scroll-padding-top: 128px;

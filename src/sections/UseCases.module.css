@@ -1150,3 +1150,124 @@
 .agentExecutionTitle > span {
   grid-area: 1 / 1;
 }
+
+.bandwidthFollowUp {
+  margin-top: 24px;
+}
+
+.bandwidthTableWrap {
+  margin-block: 16px;
+  overflow-x: auto;
+}
+
+.bandwidthTable {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  font-size: var(--fs-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+.bandwidthTable caption {
+  text-align: left;
+  font-weight: 500;
+  padding-bottom: 12px;
+}
+
+.bandwidthTable th,
+.bandwidthTable td {
+  padding: 12px 8px;
+  text-align: right;
+  border-bottom: 1px solid var(--line);
+}
+
+.bandwidthTable th:first-child {
+  text-align: left;
+}
+
+.bandwidthTable th {
+  font-weight: 500;
+}
+
+.bandwidthTable td {
+  white-space: nowrap;
+}
+
+.bandwidthKernelColumn {
+  width: 40%;
+}
+
+.bandwidthMetricColumn {
+  width: 20%;
+}
+
+.bandwidthTable small {
+  display: block;
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.bandwidthTrack {
+  height: 4px;
+  width: 90%;
+  margin-left: 10%;
+  margin-top: 6px;
+  background: var(--line);
+}
+
+.bandwidthTrack i {
+  display: block;
+  height: 4px;
+  background: var(--accent);
+}
+
+@media (max-width: 767px) {
+  .bandwidthTable,
+  .bandwidthTable caption,
+  .bandwidthTable tbody {
+    display: block;
+  }
+
+  .bandwidthTable thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+
+  .bandwidthTable colgroup {
+    display: none;
+  }
+
+  .bandwidthTable tbody tr {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px 16px;
+    padding-block: 12px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .bandwidthTable tbody th {
+    grid-column: 1 / -1;
+  }
+
+  .bandwidthTable tbody th,
+  .bandwidthTable td {
+    padding: 0;
+    border: 0;
+    text-align: left;
+  }
+
+  .bandwidthTable td {
+    font-size: var(--fs-fine);
+  }
+
+  .bandwidthTable td::before {
+    content: attr(data-label);
+    display: block;
+    min-height: 40px;
+    white-space: normal;
+    color: var(--muted);
+  }
+}

@@ -9,6 +9,7 @@ import { Features } from "./pages/Features";
 import { Closing } from "./sections/Closing";
 import { Architecture } from "./pages/Architecture";
 import { RealUseCases } from "./sections/RealUseCases";
+import { FeatureOverview } from "./sections/FeatureOverview";
 
 export default function App() {
   const mainRef = useRef(null);
@@ -53,11 +54,7 @@ export default function App() {
             <UseCases />
             <Workflow />
             <RealUseCases />
-            <div className="wrap features-entry">
-              <a href={`${import.meta.env.BASE_URL}features.html`}>
-                Explore all features →
-              </a>
-            </div>
+            <FeatureOverview />
           </>
         ) : page === "features" ? (
           <Features />

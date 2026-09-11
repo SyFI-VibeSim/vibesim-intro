@@ -672,6 +672,7 @@ const rows = [
     figure: <CoverageDirectory />,
   },
   {
+    id: "speed",
     name: "Fast simulation.",
     claim: "Explore days of workload in minutes.",
     body: "The simulator is Rust, and speed was a goal, not a byproduct. A slow simulator stays stuck in the warmup phase and misses the steady state entirely.",
@@ -679,6 +680,7 @@ const rows = [
     figure: <SpeedChart />,
   },
   {
+    id: "accuracy",
     name: "Accurate predictions.",
     claim: "Calibrated against real serving frameworks.",
     body: "Kernel timings are profiled on real GPUs and every layer above only composes them. Alignment then measures a spread of cases on the real framework and calibrates the simulator against every one of them.",
@@ -686,6 +688,7 @@ const rows = [
     figure: <AlignmentPlot />,
   },
   {
+    id: "observability",
     name: "Full observability.",
     claim: "Inspect every detail in the run.",
     body: "The run, each request, each scheduler step and each kernel are all logged for analysis, not sampled and not traded off against speed. Instrumenting a real deployment to that depth would cost you the performance you were trying to measure.",
@@ -694,6 +697,7 @@ const rows = [
     figure: <DrilldownFigure />,
   },
   {
+    id: "optimization",
     name: "Optimization insights.",
     claim: "Break down the gap to optimal.",
     body: "Every simulated GPU second is attributed to a named cause and compared with the work the model configuration actually requires. A busy GPU is not the same as a useful one, and the breakdown tells you where to optimize.",
@@ -701,6 +705,7 @@ const rows = [
     figure: <OptimalityFigure />,
   },
   {
+    id: "agent",
     name: "Zero-code exploration.",
     claim: "Describe the goal, get a solution.",
     body: "Tell the Agent what you want to find out. It sets up the experiment, reads the analysis and comes back with the tradeoff and the evidence.",

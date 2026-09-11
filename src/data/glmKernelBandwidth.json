@@ -1,0 +1,96 @@
+{
+  "predictionId": "p_59f165c2c22c46c6a4f8f9bd75e6a2b0",
+  "caseId": "0",
+  "operationId": "0",
+  "source": "Archived Analyzer cost-tree export for the same decode prediction",
+  "sourceSha256": "36056cdb604c7ab70eef125075f97fcba00eccb86e68ae477961702ff20ceb25",
+  "gpu": "B200-SXM-180GB",
+  "hbmGbps": 8000,
+  "nvlinkOneWayGbps": 900,
+  "hardwareSource": "VibeSim gpu/spec.json; NVLink catalog value 1800 GB/s is bidirectional",
+  "method": "Effective bandwidth = logical bytes / leaf time_ms / 1e6. These are profile-conditioned prediction values, not hardware-counter HBM measurements. Repeated layers do not multiply a per-call rate. MoE uses the critical folded rank; the other listed leaves have identical rates across their repeated locations.",
+  "moeBytesSource": "VibeSim a916c09 profiling/runners/moe/nvfp4_fused_moe.py::_logical_bytes, do_finalize=True",
+  "moeProvenance": "Historical profile rows matched uniquely by float32 time, complete scalar kernel config and FLOP count. Their recorded profiler revision is unknown; bytes were recomputed without changing the historical timing or shared profile database.",
+  "moeRanks": [
+    {
+      "rankPosition": 0,
+      "dbRowId": 1098,
+      "timeMs": 0.1377554088830948,
+      "logicalBytes": 850009440,
+      "activeExperts": 40,
+      "localRows": 73
+    },
+    {
+      "rankPosition": 1,
+      "dbRowId": 1097,
+      "timeMs": 0.12975993752479553,
+      "logicalBytes": 786291132,
+      "activeExperts": 37,
+      "localRows": 68
+    },
+    {
+      "rankPosition": 2,
+      "dbRowId": 1096,
+      "timeMs": 0.12002978473901749,
+      "logicalBytes": 722562456,
+      "activeExperts": 34,
+      "localRows": 60
+    },
+    {
+      "rankPosition": 3,
+      "dbRowId": 1095,
+      "timeMs": 0.11075907945632935,
+      "logicalBytes": 658844148,
+      "activeExperts": 31,
+      "localRows": 55
+    }
+  ],
+  "rows": [
+    {
+      "name": "NVFP4 fused MoE",
+      "kind": "nvfp4_fused_moe",
+      "backend": "flashinfer_trtllm_sm100",
+      "timeMs": 0.1377554088830948,
+      "logicalBytes": 850009440,
+      "limit": "HBM",
+      "sourceLeaf": "unified.body.sparse_initial_index_share.moe.routed_experts.fused_moe"
+    },
+    {
+      "name": "Sparse MLA decode attention",
+      "kind": "dsa_sparse_mla_attention",
+      "backend": "flashinfer_trtllm_fp8",
+      "timeMs": 0.014225653372704983,
+      "logicalBytes": 38834176,
+      "limit": "HBM",
+      "sourceLeaf": "unified.body.dense_full_index.attention.sparse_mla.decode"
+    },
+    {
+      "name": "Attention output projection",
+      "kind": "single_gemm",
+      "backend": "torch_linear",
+      "timeMs": 0.013266650959849358,
+      "logicalBytes": 50987008,
+      "limit": "HBM",
+      "sourceLeaf": "unified.body.dense_full_index.attention.o_proj"
+    },
+    {
+      "name": "Fused TP all-reduce",
+      "kind": "all_reduce_fusion",
+      "backend": "flashinfer_trtllm",
+      "timeMs": 0.011390870437026024,
+      "logicalBytes": 589824,
+      "limit": "NVLink",
+      "sourceLeaf": "unified.main.embedding.tp_allreduce",
+      "method": "Bus bandwidth: message bytes * 2 * (ranks - 1) / ranks / time. 393216 message bytes and 4 ranks; compared with the one-way NVLink limit."
+    },
+    {
+      "name": "Fused QKV-A projection",
+      "kind": "single_gemm",
+      "backend": "torch_linear",
+      "timeMs": 0.010121242143213749,
+      "logicalBytes": 32804864,
+      "limit": "HBM",
+      "sourceLeaf": "unified.body.dense_full_index.attention.fused_qkv_a_proj"
+    }
+  ]
+}

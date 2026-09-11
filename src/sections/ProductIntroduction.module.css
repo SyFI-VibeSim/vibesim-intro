@@ -31,7 +31,7 @@
 
 .productPartRole {
   margin-top: 10px;
-  font-size: var(--fs-md);
+  font-size: var(--fs-lg);
   line-height: 1.5;
   color: var(--accent);
 }
@@ -49,20 +49,20 @@
 
 .productPart dl > div {
   display: grid;
-  grid-template-columns: 112px minmax(0, 1fr);
+  grid-template-columns: 140px minmax(0, 1fr);
   gap: 20px;
   align-items: baseline;
 }
 
 .productPart dt {
-  font-size: var(--fs-sm);
+  font-size: var(--fs-lg);
   font-weight: 500;
   color: var(--ink);
 }
 
 .productPart dd {
   margin: 0;
-  font-size: var(--fs-sm);
+  font-size: var(--fs-lg);
   line-height: 1.55;
   color: var(--muted);
 }
@@ -71,7 +71,7 @@
   margin-top: 34px;
   padding-top: 22px;
   border-top: 1px solid var(--c-line-100);
-  font-size: var(--fs-fine);
+  font-size: var(--fs-sm);
   line-height: 1.6;
   color: var(--subtle);
 }
@@ -89,13 +89,19 @@
     letter-spacing: 0;
   }
 
+  .productPartRole,
+  .productPart dt,
+  .productPart dd {
+    font-size: var(--fs-xl);
+  }
+
   .productPart dl {
     margin-top: 24px;
     gap: 16px;
   }
 
   .productPart dl > div {
-    grid-template-columns: 92px minmax(0, 1fr);
+    grid-template-columns: 112px minmax(0, 1fr);
     gap: 16px;
   }
 

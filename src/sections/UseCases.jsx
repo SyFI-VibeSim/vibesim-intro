@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import logo from "../vibesim-logo.png";
 import { Tabs } from "../components/Tabs";
+import { KernelBandwidthFollowUp } from "./KernelBandwidthFollowUp";
 import s from "./UseCases.module.css";
 import specDepth from "../data/specDepth.json";
 import glmDecode from "../data/glmDecode.json";
@@ -532,10 +533,12 @@ export function UseCases() {
                       <div className={s.chartReveal} {...reveal(replay.stage >= 5)}>
                         <div className={s.chartClip}>
                           <figure className={s.exampleResult}>
-                            <div className={s.exampleContext}>
-                              <span>{example.model}</span>
-                              <span>{example.setup}</span>
-                            </div>
+                            {selected !== 1 && (
+                              <div className={s.exampleContext}>
+                                <span>{example.model}</span>
+                                <span>{example.setup}</span>
+                              </div>
+                            )}
                             <div className={s.resultHeading}>
                               <h3>
                                 {selected === 0
@@ -554,13 +557,7 @@ export function UseCases() {
                             {selected === 0 ? (
                               <ThroughputChart />
                             ) : selected === 1 ? (
-                              <>
-                                <OperationChart />
-                                <figcaption>
-                                  32 concurrent decode requests · 8,192 KV tokens
-                                  per request
-                                </figcaption>
-                              </>
+                              <OperationChart />
                             ) : (
                               <SpeculationSearch />
                             )}
@@ -625,6 +622,11 @@ export function UseCases() {
                 </div>
               </article>
             </div>
+            {selected === 1 && (
+              <div {...reveal(replay.stage >= 7)}>
+                <KernelBandwidthFollowUp />
+              </div>
+            )}
           </div>
         </div>
       </div>

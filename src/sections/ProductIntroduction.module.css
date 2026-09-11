@@ -4,7 +4,7 @@
    other and neither is decorated more than the other. */
 
 .productSection {
-  padding-block: 96px 104px;
+  padding-block: 64px 72px;
 }
 
 .productParts {
@@ -16,7 +16,7 @@
 .productPart {
   display: flex;
   flex-direction: column;
-  padding: 42px 40px 36px;
+  padding: 28px;
   border: 1px solid var(--c-line-200);
   border-radius: var(--r-xl);
   background: var(--c-surface-200);
@@ -25,7 +25,7 @@
 .productPart h3 {
   font-size: var(--fs-2xl);
   font-weight: 500;
-  letter-spacing: -0.035em;
+  letter-spacing: 0;
   line-height: 1.1;
 }
 
@@ -37,10 +37,10 @@
 }
 
 .productPart dl {
-  margin: 34px 0 0;
+  margin: 24px 0 0;
   display: flex;
   flex-direction: column;
-  gap: 22px;
+  gap: 16px;
 
   /* The lists in the two boxes are the same length, so the notes below them
      stay on the same baseline without being pushed there. */
@@ -49,8 +49,8 @@
 
 .productPart dl > div {
   display: grid;
-  grid-template-columns: 112px minmax(0, 1fr);
-  gap: 20px;
+  grid-template-columns: 92px minmax(0, 1fr);
+  gap: 16px;
   align-items: baseline;
 }
 
@@ -68,8 +68,8 @@
 }
 
 .productPartNote {
-  margin-top: 34px;
-  padding-top: 22px;
+  margin-top: 24px;
+  padding-top: 16px;
   border-top: 1px solid var(--c-line-100);
   font-size: var(--fs-fine);
   line-height: 1.6;
@@ -81,7 +81,7 @@
    line instead, which keeps the two-box argument intact down to the stack. */
 @media (max-width: 1180px) {
   .productPart {
-    padding: 38px 34px 32px;
+    padding: 24px;
   }
 
   .productPart dl > div {
@@ -94,7 +94,7 @@
    so the boxes stack and each row becomes a label above its line. */
 @media (max-width: 900px) {
   .productSection {
-    padding-block: 64px 72px;
+    padding-block: 48px 56px;
   }
 
   .productParts {
@@ -103,12 +103,12 @@
   }
 
   .productPart {
-    padding: 32px 28px 28px;
+    padding: 24px;
   }
 
   .productPart dl {
-    margin-top: 28px;
-    gap: 20px;
+    margin-top: 22px;
+    gap: 16px;
   }
 
   .productPart dl > div {
@@ -124,7 +124,7 @@
 
 @media (max-width: 420px) {
   .productPart {
-    padding: 26px 22px 24px;
+    padding: 22px 20px;
     border-radius: var(--r-lg);
   }
 }

@@ -283,9 +283,19 @@ h2 {
 
 /* Product walkthrough, with readable controls and all four product roles. */
 
+@media (max-width: 1599px) {
+  .section {
+    padding-block: 64px;
+  }
+
+  .section-intro {
+    margin-bottom: 36px;
+  }
+}
+
 @media (max-width: 767px) {
   .section {
-    padding-block: 75px;
+    padding-block: 48px;
   }
 
   h2 {

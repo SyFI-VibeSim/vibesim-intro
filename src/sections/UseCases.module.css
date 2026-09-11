@@ -600,6 +600,44 @@
   }
 }
 
+@media (max-width: 1599px) {
+  .chatTranscript {
+    padding: 24px;
+  }
+
+  .chatUserTurn {
+    margin-bottom: 28px;
+  }
+
+  .userTurnContent > h3,
+  .agentTurnContent > h3 {
+    margin-bottom: 12px;
+  }
+
+  .userMessage,
+  .agentMessage {
+    padding: 16px 20px;
+  }
+
+  .agentTurn {
+    padding-right: 24px;
+  }
+
+  .agentProgress {
+    margin: 20px 0 24px;
+  }
+
+  .agentExecution {
+    margin-bottom: 24px;
+    padding: 16px;
+  }
+
+  .exampleResult {
+    margin: 20px 0;
+    padding: 20px;
+  }
+}
+
 @media (max-width: 767px) {
   .caseSelector.exampleTabs {
     grid-template-columns: 1fr;
@@ -646,13 +684,13 @@
   }
 
   .chatTranscript {
-    padding: 26px 18px 30px;
+    padding: 20px 16px;
   }
 
   .chatUserTurn {
     grid-template-columns: minmax(0, 1fr) 32px;
     gap: 12px;
-    margin-bottom: 32px;
+    margin-bottom: 24px;
   }
 
   .userAvatar {
@@ -687,7 +725,7 @@
 
   .userMessage {
     max-width: 94%;
-    padding: 18px 20px;
+    padding: 14px 16px;
   }
 
   .agentTurn {
@@ -724,11 +762,11 @@
 
   .agentProgress {
     padding-left: 14px;
-    margin-block: 25px;
+    margin-block: 20px;
   }
 
   .exampleResult {
-    padding: 20px 12px;
+    padding: 16px 12px;
     margin-inline: 0;
   }
 
@@ -989,7 +1027,7 @@
 
 @media (max-width: 767px) {
   .agentMessage {
-    padding: 18px 16px;
+    padding: 14px 16px;
   }
 
   .operationLabel {

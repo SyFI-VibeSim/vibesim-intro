@@ -4,7 +4,7 @@
    other and neither is decorated more than the other. */
 
 .productSection {
-  padding-block: 64px 72px;
+  padding-block: 96px 104px;
 }
 
 .productParts {
@@ -16,7 +16,7 @@
 .productPart {
   display: flex;
   flex-direction: column;
-  padding: 28px;
+  padding: 42px 40px 36px;
   border: 1px solid var(--c-line-200);
   border-radius: var(--r-xl);
   background: var(--c-surface-200);
@@ -25,7 +25,7 @@
 .productPart h3 {
   font-size: var(--fs-2xl);
   font-weight: 500;
-  letter-spacing: 0;
+  letter-spacing: -0.035em;
   line-height: 1.1;
 }
 
@@ -37,10 +37,10 @@
 }
 
 .productPart dl {
-  margin: 24px 0 0;
+  margin: 34px 0 0;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 22px;
 
   /* The lists in the two boxes are the same length, so the notes below them
      stay on the same baseline without being pushed there. */
@@ -49,8 +49,8 @@
 
 .productPart dl > div {
   display: grid;
-  grid-template-columns: 92px minmax(0, 1fr);
-  gap: 16px;
+  grid-template-columns: 112px minmax(0, 1fr);
+  gap: 20px;
   align-items: baseline;
 }
 
@@ -68,12 +68,41 @@
 }
 
 .productPartNote {
-  margin-top: 24px;
-  padding-top: 16px;
+  margin-top: 34px;
+  padding-top: 22px;
   border-top: 1px solid var(--c-line-100);
   font-size: var(--fs-fine);
   line-height: 1.6;
   color: var(--subtle);
+}
+
+@media (max-width: 1599px) {
+  .productSection {
+    padding-block: 64px 72px;
+  }
+
+  .productPart {
+    padding: 28px;
+  }
+
+  .productPart h3 {
+    letter-spacing: 0;
+  }
+
+  .productPart dl {
+    margin-top: 24px;
+    gap: 16px;
+  }
+
+  .productPart dl > div {
+    grid-template-columns: 92px minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  .productPartNote {
+    margin-top: 24px;
+    padding-top: 16px;
+  }
 }
 
 /* Two boxes still fit side by side here, but a term column inside them does

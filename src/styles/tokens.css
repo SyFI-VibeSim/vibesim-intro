@@ -142,21 +142,21 @@
      component declares its own size for a narrower screen. The exceptions are
      the ones where a size is set by how much room a control has, not by the
      ladder; each of those says so where it is written. */
-  --fs-fine: 14px;
-  --fs-sm: 16px;
-  --fs-md: 18px;
-  --fs-lg: 20px;
-  --fs-xl: 24px;
-  --fs-2xl: 28px;
-  --fs-3xl: 36px;
-  --fs-h2: 48px;
-  --fs-h2-closing: 48px;
-  --fs-h1: 64px;
+  --fs-fine: 16px;
+  --fs-sm: 18px;
+  --fs-md: 20px;
+  --fs-lg: 22px;
+  --fs-xl: 26px;
+  --fs-2xl: 32px;
+  --fs-3xl: clamp(31px, 2.9vw, 44px);
+  --fs-h2: clamp(40px, 4.4vw, 72px);
+  --fs-h2-closing: clamp(46px, 5vw, 80px);
+  --fs-h1: clamp(42px, 5.5vw, 94px);
 
   /* Figures read as numbers, not as text, so they keep their own three steps. */
-  --fs-num: 28px;
-  --fs-num-lg: 36px;
-  --fs-num-xl: 42px;
+  --fs-num: 30px;
+  --fs-num-lg: 42px;
+  --fs-num-xl: clamp(38px, 3.4vw, 50px);
 
   background: var(--bg);
   color: var(--ink);

@@ -1,0 +1,12 @@
+{
+  "source": "20260814_30_qwen3_repetitive_16k_native_ep_alignment/analysis_kernel/reports/alignment_iteration_report.json",
+  "scope": "One real transformer layer, 16K prefill, four H200 GPUs, mean of three captured iterations. Selected operation contributions after FA3 and native EP changes.",
+  "rows": [
+    { "label": "Prefill attention", "operation": "attention.prefill", "measured_ms": 1.310520333333333, "simulated_ms": 1.227035641670227 },
+    { "label": "MoE combine", "operation": "moe.combine", "measured_ms": 0.6117223333333333, "simulated_ms": 0.6199824213981628 },
+    { "label": "Gate/up input quantization", "operation": "moe.gate_up.input_quant", "measured_ms": 0.7761493333333332, "simulated_ms": 0.7349066734313965 },
+    { "label": "Gate/up GEMM", "operation": "moe.gate_up.gemm", "measured_ms": 0.9242133333333333, "simulated_ms": 0.8389014005661011 },
+    { "label": "Down input quantization", "operation": "moe.down.input_quant", "measured_ms": 0.29543499999999995, "simulated_ms": 0.2772452235221863 },
+    { "label": "Down GEMM", "operation": "moe.down.gemm", "measured_ms": 0.5341013333333334, "simulated_ms": 0.5176400542259216 }
+  ]
+}

@@ -147,19 +147,27 @@ function ThroughputChart() {
   );
 }
 
+const bestSpecDepth = specDepth.rows.reduce((best, item) =>
+  item.throughput > best.throughput ? item : best,
+);
+const deepestSpecDepth = specDepth.rows.at(-1);
+const specBaseline = specDepth.rows.find((item) => item.depth === 0);
+
 function SpeculationSearch() {
-  const [depth, setDepth] = useState(5);
-  const row = specDepth.rows[depth];
+  const [depth, setDepth] = useState(bestSpecDepth.depth);
+  const row =
+    specDepth.rows.find((item) => item.depth === depth) ?? specDepth.rows[0];
   const maximum = Math.max(...specDepth.rows.map((item) => item.throughput));
   return (
     <div className={`${s.speculationSearch} ${s.specSweep}`}>
       <div className={s.chartMeta}>
-        <span>Derived decode ceiling · output tok/s</span>
+        <span>Decode throughput · output tok/s</span>
         <span>Higher is better</span>
       </div>
       <div
         className={s.specSweepChart}
-        aria-label="Derived single-request throughput ceiling by speculative depth"
+        style={{ "--depth-count": specDepth.rows.length }}
+        aria-label="Single-request decode throughput by speculative depth"
       >
         {specDepth.rows.map((item) => (
           <button
@@ -184,28 +192,29 @@ function SpeculationSearch() {
       <div className={s.chartAxis}>Draft tokens per iteration</div>
       <dl className={s.specSweepMetrics}>
         <div>
-          <dt>Predicted iteration</dt>
+          <dt>Decode throughput</dt>
           <dd>
-            {row.iterationMs.toFixed(2)} <span>ms</span>
+            {row.throughput.toFixed(1)} <span>tok/s</span>
           </dd>
         </div>
         <div>
-          <dt>Expected output</dt>
+          <dt>Time per output token</dt>
           <dd>
-            {row.expectedTokens.toFixed(2)} <span>tokens / iteration</span>
+            {row.tpotMs.toFixed(2)} <span>ms</span>
           </dd>
         </div>
         <div>
-          <dt>Versus no speculation</dt>
+          <dt>Accepted draft tokens</dt>
           <dd>
-            {(row.throughput / specDepth.rows[0].throughput).toFixed(2)}
-            <span>×</span>
+            {row.acceptance
+              ? (row.acceptance.mean_acceptance_length - 1).toFixed(2)
+              : "0"}
+            <span> / round</span>
           </dd>
         </div>
       </dl>
       <p className="caption">
-        One decode request · 14,830 prefix KV tokens · no prefill. Uses per-position
-        draft acceptance rates measured from a real five-draft-token run (Spec5).
+        4 × B200 · TP4 + EP4 · one request at a time · median of seven requests.
       </p>
       <details className={s.inlineEvidence}>
         <summary>
@@ -216,17 +225,21 @@ function SpeculationSearch() {
             <thead>
               <tr>
                 <th>Draft tokens</th>
-                <th>Iteration (ms)</th>
-                <th>Output tokens / iter</th>
-                <th>Ceiling (tok/s)</th>
+                <th>Time per token (ms)</th>
+                <th>Accepted drafts / round</th>
+                <th>Throughput (tok/s)</th>
               </tr>
             </thead>
             <tbody>
               {specDepth.rows.map((item) => (
                 <tr key={item.depth}>
                   <td>{item.depth === 0 ? "Off" : item.depth}</td>
-                  <td>{item.iterationMs.toFixed(3)}</td>
-                  <td>{item.expectedTokens.toFixed(3)}</td>
+                  <td>{item.tpotMs.toFixed(3)}</td>
+                  <td>
+                    {item.acceptance
+                      ? (item.acceptance.mean_acceptance_length - 1).toFixed(3)
+                      : "0"}
+                  </td>
                   <td>{item.throughput.toFixed(3)}</td>
                 </tr>
               ))}
@@ -234,14 +247,15 @@ function SpeculationSearch() {
           </table>
         </div>
         <p className={s.specMethod}>
-          Expected output = 1 + the sum of per-position acceptance rates up to the
-          chosen depth. Divide by the predicted iteration time to get the decode
-          ceiling.
+          Each request has 16,384 input and 2,048 output tokens. Throughput is
+          calculated from the engine decode duration, excluding the first token. The
+          first request is warmup; the following seven determine the median.
         </p>
         <p className={s.specMethod}>
-          Depths 1–4 reuse the corresponding prefix of the measured Spec5 acceptance
-          profile. These are kernel critical-path ceilings, excluding scheduler and
-          CPU overhead. Acceptance may change in an actual deployment.
+          At depth 8, the acceptance rates for positions 1–8 are 91.8%, 64.9%,
+          30.6%, 15.5%, 11.7%, 7.1%, 6.3% and 5.5%. Each rate is the accepted count
+          at that position divided by all draft rounds. Acceptance counters cover
+          all eight requests and are collected separately for each depth.
         </p>
         <a
           className="text-link"
@@ -285,12 +299,11 @@ const examples = [
   {
     label: "Search configurations",
     model: "GLM-5.2 NVFP4",
-    setup: "8 × B200 · TP8 + EP8",
+    setup: "4 × B200 · TP4 + EP4",
     question:
-      "For GLM-5.2 on 8 B200s, how does speculative depth affect single-request decode throughput at 14,830 KV tokens?",
+      "For GLM-5.2 on four B200s, which speculative depth gives the best single-request decode throughput? At depth 8, acceptance by position is 91.8%, 64.9%, 30.6%, 15.5%, 11.7%, 7.1%, 6.3% and 5.5%.",
     action: "Sweep draft lengths and account for acceptance.",
-    answer:
-      "Five draft tokens give the highest ceiling among the tested depths. Most of the gain is already reached at three; the curve flattens after that.",
+    answer: `Depth ${bestSpecDepth.depth} has the highest throughput in this sweep, at ${bestSpecDepth.throughput.toFixed(1)} tok/s. Increasing draft depth further does not improve the result.`,
     title: "Compare the options that matter.",
     detail:
       "Turn a tuning question into a focused search. Understand the tradeoff before choosing a configuration.",
@@ -326,17 +339,15 @@ const agentStories = [
   },
   {
     intro:
-      "I’ll compare no speculation with one to five MTP draft tokens, keeping the model, eight B200 GPUs and context fixed. I’ll use the measured acceptance profile to account for rejected drafts.",
-    execution: "Running simulation…",
-    executionDetail:
-      "Comparing draft lengths using iteration predictions and measured acceptance.",
+      "I’ll vary the number of MTP draft tokens while keeping the model, four B200 GPUs and requests fixed, then compare decode throughput and how many drafts are accepted.",
+    execution: "Comparing draft depths…",
+    executionDetail: "Keeping the workload fixed and comparing decode throughput.",
     steps: [
-      "Fix one decode request at 14,830 prefix KV tokens, with no prefill",
-      "Read the six Analyzer predictions for no-spec and depths 1–5",
-      "Combine iteration cost with measured per-position acceptance",
+      "Send the same eight requests through req-frontend, one at a time",
+      "Exclude the first request from the throughput summary",
+      "Compare draft depths and inspect acceptance at each position",
     ],
-    conclusion:
-      "The derived ceiling rises from 98.4 tok/s without speculation to 254.0 tok/s at depth 5. Depth 3 already reaches 245.9 tok/s; adding the fifth draft token improves on depth 4 by only 0.71%. These are fixed-context kernel ceilings, not measured end-to-end serving throughput.",
+    conclusion: `Depth ${bestSpecDepth.depth} reaches ${bestSpecDepth.throughput.toFixed(1)} tok/s, ${(bestSpecDepth.throughput / specBaseline.throughput).toFixed(2)} times the throughput without speculation. At depth ${deepestSpecDepth.depth}, throughput falls to ${deepestSpecDepth.throughput.toFixed(1)} tok/s. Later draft positions are accepted less often, so the additional work brings diminishing returns. These results apply to this request set; the best depth can change with the workload.`,
   },
 ];
 
@@ -515,7 +526,9 @@ export function UseCases() {
                           <span {...reveal(replay.stage >= 4)}>
                             {selected === 0
                               ? "Simulation complete"
-                              : "Time prediction complete"}
+                              : selected === 2
+                                ? "Sweep complete"
+                                : "Time prediction complete"}
                           </span>
                         </p>
                         <p className={s.agentExecutionDetail}>

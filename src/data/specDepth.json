@@ -1,289 +1,572 @@
 {
-  "experiment": "20260902_2_glm52_single_decode_spec_sweep",
-  "source": "Analyzer HTTP descriptor and cases endpoints; measured replay acceptance artifact",
+  "experiment": "20260910_0_glm52_tp4_depth",
+  "complete": true,
+  "measurement": "Real vLLM serving, without Nsight Systems capture",
   "model": "GLM-5.2 NVFP4",
-  "gpu": "8 × B200",
-  "parallelism": "TP8 + EP8",
-  "prefixKv": 14830,
-  "decodeRequests": 1,
-  "acceptanceSource": "logs/20260902_0_glm52_diverse100_spec5_tp8_alignment/profile_workload/spec_decode_metrics.json",
-  "acceptance": {
-    "schema_version": 1,
-    "counter_scope": "replay_prometheus_delta",
-    "num_drafts": 41262,
-    "draft_tokens": 206306,
-    "accepted_tokens": 94004,
-    "accepted_tokens_per_position": {
-      "0": 37023,
-      "1": 26780,
-      "2": 14868,
-      "3": 8811,
-      "4": 6522
-    },
-    "acceptance_rate": 0.4556532529349607,
-    "acceptance_rate_percent": 45.565325293496066,
-    "mean_acceptance_length": 3.2782220929668946,
-    "per_position_acceptance_rates": {
-      "0": 0.8972662498182347,
-      "1": 0.6490233144297417,
-      "2": 0.3603315399156609,
-      "3": 0.2135378798894867,
-      "4": 0.15806310891377054
-    },
-    "before": {
-      "num_drafts": 0,
-      "num_draft_tokens": 0,
-      "num_accepted_tokens": 0,
-      "accepted_per_position": {
-        "0": 0,
-        "1": 0,
-        "2": 0,
-        "3": 0,
-        "4": 0
-      }
-    },
-    "after": {
-      "num_drafts": 41262,
-      "num_draft_tokens": 206306,
-      "num_accepted_tokens": 94004,
-      "accepted_per_position": {
-        "0": 37023,
-        "1": 26780,
-        "2": 14868,
-        "3": 8811,
-        "4": 6522
-      }
-    }
+  "gpu": "4 x B200",
+  "parallelism": "TP4 + EP4",
+  "inputTokens": 16384,
+  "outputTokens": 2048,
+  "concurrency": 1,
+  "frontend": "req-frontend",
+  "measuredRequests": 7,
+  "warmupRequests": 1,
+  "acceptanceScope": "All eight replay requests, including warmup; unconditional accepted count at each position divided by draft rounds",
+  "acceptanceReferenceDepth": 8,
+  "acceptanceReference": {
+    "0": 0.9183964183964184,
+    "1": 0.6493691493691494,
+    "2": 0.30606430606430607,
+    "3": 0.15506715506715507,
+    "4": 0.1168091168091168,
+    "5": 0.07122507122507123,
+    "6": 0.06288156288156288,
+    "7": 0.05514855514855515
   },
-  "formula": "1000 * (1 + sum(per-position acceptance rates through depth)) / predicted critical-path iteration milliseconds",
+  "method": "Median over seven requests of (output tokens - 1) / engine-core decode duration. Prefill and time to first token are excluded. Acceptance is measured separately for each depth; no acceptance-prefix extrapolation is used for throughput.",
   "rows": [
     {
       "depth": 0,
-      "predictionId": "p_e86a6caecb7d4df49c238b3c6c0d36af",
-      "iterationMs": 10.16230583190918,
-      "expectedTokens": 1,
-      "throughput": 98.40286412755314,
-      "descriptor": {
-        "arch": {
-          "type": "glm52_vllm_nvfp4_dsa_moe"
-        },
-        "case_count": 1,
-        "display_name": "20260902_2_glm52_single_decode_spec_sweep/non_spec",
-        "gpu": {
-          "count": 8,
-          "name": "NVIDIA B200"
-        },
-        "kind": "timing_predict",
-        "lifecycle": {
-          "analysis": "complete",
-          "prediction": "complete"
-        },
-        "prediction_id": "p_e86a6caecb7d4df49c238b3c6c0d36af",
-        "resources": {
-          "cases_href": "predictions/p_e86a6caecb7d4df49c238b3c6c0d36af/cases",
-          "kernel_input_distribution_href": "predictions/p_e86a6caecb7d4df49c238b3c6c0d36af/subjects/kernel-input-distribution/payload"
-        },
-        "schema_version": 1,
-        "selector": "iter"
-      },
-      "input": {
-        "groups": [
-          {
-            "decode_kv_lens": [14830],
-            "prefill_chunk_pairs": []
-          }
-        ]
-      }
+      "throughput": 102.17459321302952,
+      "tpotMs": 9.787168889579467,
+      "requestThroughputs": [
+        102.17459321302952, 102.20791767200097, 100.44287126537807,
+        102.18334898196089, 102.1423315044421, 102.18489033361769, 102.1184959908011
+      ],
+      "requestIds": [
+        "independent_1",
+        "independent_2",
+        "independent_3",
+        "independent_4",
+        "independent_5",
+        "independent_6",
+        "independent_7"
+      ],
+      "acceptance": null,
+      "source": "depth0/profile_result.json"
     },
     {
       "depth": 1,
-      "predictionId": "p_74c0c00405c5406ebc531934033a60a2",
-      "iterationMs": 10.712262153625488,
-      "expectedTokens": 1.8972662498182347,
-      "throughput": 177.11163362223343,
-      "descriptor": {
-        "arch": {
-          "type": "glm52_vllm_nvfp4_dsa_moe"
-        },
-        "case_count": 1,
-        "display_name": "20260902_2_glm52_single_decode_spec_sweep/spec1",
-        "gpu": {
-          "count": 8,
-          "name": "NVIDIA B200"
-        },
-        "kind": "timing_predict",
-        "lifecycle": {
-          "analysis": "complete",
-          "prediction": "complete"
-        },
-        "prediction_id": "p_74c0c00405c5406ebc531934033a60a2",
-        "resources": {
-          "cases_href": "predictions/p_74c0c00405c5406ebc531934033a60a2/cases",
-          "kernel_input_distribution_href": "predictions/p_74c0c00405c5406ebc531934033a60a2/subjects/kernel-input-distribution/payload"
-        },
+      "throughput": 177.51509876841655,
+      "tpotMs": 5.633323626767008,
+      "requestThroughputs": [
+        179.0103728062058, 177.51509876841655, 184.70944355411922,
+        175.60877755928834, 169.4581086299561, 179.3905436619948, 175.47131511812114
+      ],
+      "requestIds": [
+        "independent_1",
+        "independent_2",
+        "independent_3",
+        "independent_4",
+        "independent_5",
+        "independent_6",
+        "independent_7"
+      ],
+      "acceptance": {
         "schema_version": 1,
-        "selector": "speculative_iter"
-      },
-      "input": {
-        "groups": [
-          {
-            "decode_requests": [[14831, 2]],
-            "prefill_chunk_pairs": []
+        "counter_scope": "replay_prometheus_delta",
+        "num_drafts": 8511,
+        "draft_tokens": 8511,
+        "accepted_tokens": 7870,
+        "accepted_tokens_per_position": {
+          "0": 7870
+        },
+        "acceptance_rate": 0.9246857008577135,
+        "acceptance_rate_percent": 92.46857008577136,
+        "mean_acceptance_length": 1.9246857008577134,
+        "per_position_acceptance_rates": {
+          "0": 0.9246857008577135
+        },
+        "before": {
+          "num_drafts": 0,
+          "num_draft_tokens": 0,
+          "num_accepted_tokens": 0,
+          "accepted_per_position": {
+            "0": 0
           }
-        ]
-      }
+        },
+        "after": {
+          "num_drafts": 8511,
+          "num_draft_tokens": 8511,
+          "num_accepted_tokens": 7870,
+          "accepted_per_position": {
+            "0": 7870
+          }
+        }
+      },
+      "source": "depth1/profile_result.json"
     },
     {
       "depth": 2,
-      "predictionId": "p_d98f56c7d3be4e0ca60b388c6012c46d",
-      "iterationMs": 11.253494262695312,
-      "expectedTokens": 2.546289564247976,
-      "throughput": 226.2665715029313,
-      "descriptor": {
-        "arch": {
-          "type": "glm52_vllm_nvfp4_dsa_moe"
-        },
-        "case_count": 1,
-        "display_name": "20260902_2_glm52_single_decode_spec_sweep/spec2",
-        "gpu": {
-          "count": 8,
-          "name": "NVIDIA B200"
-        },
-        "kind": "timing_predict",
-        "lifecycle": {
-          "analysis": "complete",
-          "prediction": "complete"
-        },
-        "prediction_id": "p_d98f56c7d3be4e0ca60b388c6012c46d",
-        "resources": {
-          "cases_href": "predictions/p_d98f56c7d3be4e0ca60b388c6012c46d/cases",
-          "kernel_input_distribution_href": "predictions/p_d98f56c7d3be4e0ca60b388c6012c46d/subjects/kernel-input-distribution/payload"
-        },
+      "throughput": 210.23543673418564,
+      "tpotMs": 4.756572039110443,
+      "requestThroughputs": [
+        208.26798369864028, 206.71201794938767, 214.1343627174598,
+        218.6602462417823, 181.44086954627983, 233.0186437651445, 210.23543673418564
+      ],
+      "requestIds": [
+        "independent_1",
+        "independent_2",
+        "independent_3",
+        "independent_4",
+        "independent_5",
+        "independent_6",
+        "independent_7"
+      ],
+      "acceptance": {
         "schema_version": 1,
-        "selector": "speculative_iter"
-      },
-      "input": {
-        "groups": [
-          {
-            "decode_requests": [[14832, 3]],
-            "prefill_chunk_pairs": []
+        "counter_scope": "replay_prometheus_delta",
+        "num_drafts": 6657,
+        "draft_tokens": 13314,
+        "accepted_tokens": 9722,
+        "accepted_tokens_per_position": {
+          "0": 5898,
+          "1": 3824
+        },
+        "acceptance_rate": 0.7302088027640078,
+        "acceptance_rate_percent": 73.02088027640077,
+        "mean_acceptance_length": 2.460417605528016,
+        "per_position_acceptance_rates": {
+          "0": 0.885984677782785,
+          "1": 0.5744329277452306
+        },
+        "before": {
+          "num_drafts": 0,
+          "num_draft_tokens": 0,
+          "num_accepted_tokens": 0,
+          "accepted_per_position": {
+            "0": 0,
+            "1": 0
           }
-        ]
-      }
+        },
+        "after": {
+          "num_drafts": 6657,
+          "num_draft_tokens": 13314,
+          "num_accepted_tokens": 9722,
+          "accepted_per_position": {
+            "0": 5898,
+            "1": 3824
+          }
+        }
+      },
+      "source": "depth2/profile_result.json"
     },
     {
       "depth": 3,
-      "predictionId": "p_277f67a77bd0469c8cac65e3f22d3a18",
-      "iterationMs": 11.81820297241211,
-      "expectedTokens": 2.906621104163637,
-      "throughput": 245.94442242604268,
-      "descriptor": {
-        "arch": {
-          "type": "glm52_vllm_nvfp4_dsa_moe"
-        },
-        "case_count": 1,
-        "display_name": "20260902_2_glm52_single_decode_spec_sweep/spec3",
-        "gpu": {
-          "count": 8,
-          "name": "NVIDIA B200"
-        },
-        "kind": "timing_predict",
-        "lifecycle": {
-          "analysis": "complete",
-          "prediction": "complete"
-        },
-        "prediction_id": "p_277f67a77bd0469c8cac65e3f22d3a18",
-        "resources": {
-          "cases_href": "predictions/p_277f67a77bd0469c8cac65e3f22d3a18/cases",
-          "kernel_input_distribution_href": "predictions/p_277f67a77bd0469c8cac65e3f22d3a18/subjects/kernel-input-distribution/payload"
-        },
+      "throughput": 218.4734100249471,
+      "tpotMs": 4.577216055197801,
+      "requestThroughputs": [
+        239.71183037795183, 195.65768075471638, 328.8480730411528,
+        218.4734100249471, 188.20965924317244, 226.53070200189862,
+        197.12828967710968
+      ],
+      "requestIds": [
+        "independent_1",
+        "independent_2",
+        "independent_3",
+        "independent_4",
+        "independent_5",
+        "independent_6",
+        "independent_7"
+      ],
+      "acceptance": {
         "schema_version": 1,
-        "selector": "speculative_iter"
-      },
-      "input": {
-        "groups": [
-          {
-            "decode_requests": [[14833, 4]],
-            "prefill_chunk_pairs": []
+        "counter_scope": "replay_prometheus_delta",
+        "num_drafts": 5781,
+        "draft_tokens": 17343,
+        "accepted_tokens": 10603,
+        "accepted_tokens_per_position": {
+          "0": 5239,
+          "1": 3609,
+          "2": 1755
+        },
+        "acceptance_rate": 0.6113705817909243,
+        "acceptance_rate_percent": 61.13705817909243,
+        "mean_acceptance_length": 2.834111745372773,
+        "per_position_acceptance_rates": {
+          "0": 0.9062445943608373,
+          "1": 0.6242864556305138,
+          "2": 0.3035806953814219
+        },
+        "before": {
+          "num_drafts": 0,
+          "num_draft_tokens": 0,
+          "num_accepted_tokens": 0,
+          "accepted_per_position": {
+            "0": 0,
+            "1": 0,
+            "2": 0
           }
-        ]
-      }
+        },
+        "after": {
+          "num_drafts": 5781,
+          "num_draft_tokens": 17343,
+          "num_accepted_tokens": 10603,
+          "accepted_per_position": {
+            "0": 5239,
+            "1": 3609,
+            "2": 1755
+          }
+        }
+      },
+      "source": "depth3/profile_result.json"
     },
     {
       "depth": 4,
-      "predictionId": "p_0fa278030da942e0bee3891eec6e176e",
-      "iterationMs": 12.369024276733398,
-      "expectedTokens": 3.120158984053124,
-      "throughput": 252.25587032942127,
-      "descriptor": {
-        "arch": {
-          "type": "glm52_vllm_nvfp4_dsa_moe"
-        },
-        "case_count": 1,
-        "display_name": "20260902_2_glm52_single_decode_spec_sweep/spec4",
-        "gpu": {
-          "count": 8,
-          "name": "NVIDIA B200"
-        },
-        "kind": "timing_predict",
-        "lifecycle": {
-          "analysis": "complete",
-          "prediction": "complete"
-        },
-        "prediction_id": "p_0fa278030da942e0bee3891eec6e176e",
-        "resources": {
-          "cases_href": "predictions/p_0fa278030da942e0bee3891eec6e176e/cases",
-          "kernel_input_distribution_href": "predictions/p_0fa278030da942e0bee3891eec6e176e/subjects/kernel-input-distribution/payload"
-        },
+      "throughput": 204.46758216947765,
+      "tpotMs": 4.890750843677151,
+      "requestThroughputs": [
+        235.58628458275638, 196.1221381285928, 387.91047977425313,
+        204.46758216947765, 180.56550792935158, 194.53655341739653,
+        265.42487117329256
+      ],
+      "requestIds": [
+        "independent_1",
+        "independent_2",
+        "independent_3",
+        "independent_4",
+        "independent_5",
+        "independent_6",
+        "independent_7"
+      ],
+      "acceptance": {
         "schema_version": 1,
-        "selector": "speculative_iter"
-      },
-      "input": {
-        "groups": [
-          {
-            "decode_requests": [[14834, 5]],
-            "prefill_chunk_pairs": []
+        "counter_scope": "replay_prometheus_delta",
+        "num_drafts": 5430,
+        "draft_tokens": 21720,
+        "accepted_tokens": 10955,
+        "accepted_tokens_per_position": {
+          "0": 4919,
+          "1": 3478,
+          "2": 1643,
+          "3": 915
+        },
+        "acceptance_rate": 0.5043738489871087,
+        "acceptance_rate_percent": 50.43738489871087,
+        "mean_acceptance_length": 3.0174953959484347,
+        "per_position_acceptance_rates": {
+          "0": 0.9058931860036833,
+          "1": 0.6405156537753223,
+          "2": 0.30257826887661143,
+          "3": 0.1685082872928177
+        },
+        "before": {
+          "num_drafts": 0,
+          "num_draft_tokens": 0,
+          "num_accepted_tokens": 0,
+          "accepted_per_position": {
+            "0": 0,
+            "1": 0,
+            "2": 0,
+            "3": 0
           }
-        ]
-      }
+        },
+        "after": {
+          "num_drafts": 5430,
+          "num_draft_tokens": 21720,
+          "num_accepted_tokens": 10955,
+          "accepted_per_position": {
+            "0": 4919,
+            "1": 3478,
+            "2": 1643,
+            "3": 915
+          }
+        }
+      },
+      "source": "depth4/profile_result.json"
     },
     {
       "depth": 5,
-      "predictionId": "p_d621970ffd5b446da5324f800e2b8ef4",
-      "iterationMs": 12.904313087463379,
-      "expectedTokens": 3.2782220929668946,
-      "throughput": 254.04080563975992,
-      "descriptor": {
-        "arch": {
-          "type": "glm52_vllm_nvfp4_dsa_moe"
-        },
-        "case_count": 1,
-        "display_name": "20260902_2_glm52_single_decode_spec_sweep/spec5",
-        "gpu": {
-          "count": 8,
-          "name": "NVIDIA B200"
-        },
-        "kind": "timing_predict",
-        "lifecycle": {
-          "analysis": "complete",
-          "prediction": "complete"
-        },
-        "prediction_id": "p_d621970ffd5b446da5324f800e2b8ef4",
-        "resources": {
-          "cases_href": "predictions/p_d621970ffd5b446da5324f800e2b8ef4/cases",
-          "kernel_input_distribution_href": "predictions/p_d621970ffd5b446da5324f800e2b8ef4/subjects/kernel-input-distribution/payload"
-        },
+      "throughput": 196.151379066872,
+      "tpotMs": 5.09810333609268,
+      "requestThroughputs": [
+        187.42059285591816, 196.151379066872, 443.76152564620185,
+        199.82067656983907, 163.42117192936118, 229.198420912481, 169.89564188801353
+      ],
+      "requestIds": [
+        "independent_1",
+        "independent_2",
+        "independent_3",
+        "independent_4",
+        "independent_5",
+        "independent_6",
+        "independent_7"
+      ],
+      "acceptance": {
         "schema_version": 1,
-        "selector": "speculative_iter"
-      },
-      "input": {
-        "groups": [
-          {
-            "decode_requests": [[14835, 6]],
-            "prefill_chunk_pairs": []
+        "counter_scope": "replay_prometheus_delta",
+        "num_drafts": 5638,
+        "draft_tokens": 28190,
+        "accepted_tokens": 10754,
+        "accepted_tokens_per_position": {
+          "0": 4881,
+          "1": 3106,
+          "2": 1438,
+          "3": 823,
+          "4": 506
+        },
+        "acceptance_rate": 0.38148279531748847,
+        "acceptance_rate_percent": 38.14827953174885,
+        "mean_acceptance_length": 2.907413976587442,
+        "per_position_acceptance_rates": {
+          "0": 0.8657325292656971,
+          "1": 0.5509045760908123,
+          "2": 0.25505498403689253,
+          "3": 0.14597374955658035,
+          "4": 0.08974813763746009
+        },
+        "before": {
+          "num_drafts": 0,
+          "num_draft_tokens": 0,
+          "num_accepted_tokens": 0,
+          "accepted_per_position": {
+            "0": 0,
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0
           }
-        ]
-      }
+        },
+        "after": {
+          "num_drafts": 5638,
+          "num_draft_tokens": 28190,
+          "num_accepted_tokens": 10754,
+          "accepted_per_position": {
+            "0": 4881,
+            "1": 3106,
+            "2": 1438,
+            "3": 823,
+            "4": 506
+          }
+        }
+      },
+      "source": "depth5/profile_result.json"
+    },
+    {
+      "depth": 6,
+      "throughput": 180.07992564746843,
+      "tpotMs": 5.553089809452939,
+      "requestThroughputs": [
+        176.00879699168868, 256.929406457347, 493.33275767836636,
+        180.07992564746843, 163.3187730247442, 177.47086695390888, 204.6947690866206
+      ],
+      "requestIds": [
+        "independent_1",
+        "independent_2",
+        "independent_3",
+        "independent_4",
+        "independent_5",
+        "independent_6",
+        "independent_7"
+      ],
+      "acceptance": {
+        "schema_version": 1,
+        "counter_scope": "replay_prometheus_delta",
+        "num_drafts": 5215,
+        "draft_tokens": 31290,
+        "accepted_tokens": 11174,
+        "accepted_tokens_per_position": {
+          "0": 4716,
+          "1": 3279,
+          "2": 1435,
+          "3": 773,
+          "4": 555,
+          "5": 416
+        },
+        "acceptance_rate": 0.35711089805049534,
+        "acceptance_rate_percent": 35.71108980504954,
+        "mean_acceptance_length": 3.142665388302972,
+        "per_position_acceptance_rates": {
+          "0": 0.9043144774688399,
+          "1": 0.6287631831255992,
+          "2": 0.2751677852348993,
+          "3": 0.1482262703739214,
+          "4": 0.10642377756471716,
+          "5": 0.07976989453499521
+        },
+        "before": {
+          "num_drafts": 0,
+          "num_draft_tokens": 0,
+          "num_accepted_tokens": 0,
+          "accepted_per_position": {
+            "0": 0,
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0
+          }
+        },
+        "after": {
+          "num_drafts": 5215,
+          "num_draft_tokens": 31290,
+          "num_accepted_tokens": 11174,
+          "accepted_per_position": {
+            "0": 4716,
+            "1": 3279,
+            "2": 1435,
+            "3": 773,
+            "4": 555,
+            "5": 416
+          }
+        }
+      },
+      "source": "depth6/profile_result.json"
+    },
+    {
+      "depth": 7,
+      "throughput": 176.35343698470513,
+      "tpotMs": 5.670431022485422,
+      "requestThroughputs": [
+        177.11324269299715, 173.201222161667, 541.5175218257931, 192.08177866227956,
+        169.47390687521323, 176.35343698470513, 153.0731489741189
+      ],
+      "requestIds": [
+        "independent_1",
+        "independent_2",
+        "independent_3",
+        "independent_4",
+        "independent_5",
+        "independent_6",
+        "independent_7"
+      ],
+      "acceptance": {
+        "schema_version": 1,
+        "counter_scope": "replay_prometheus_delta",
+        "num_drafts": 5351,
+        "draft_tokens": 37457,
+        "accepted_tokens": 11038,
+        "accepted_tokens_per_position": {
+          "0": 4718,
+          "1": 3052,
+          "2": 1440,
+          "3": 729,
+          "4": 474,
+          "5": 331,
+          "6": 294
+        },
+        "acceptance_rate": 0.2946845716421497,
+        "acceptance_rate_percent": 29.468457164214968,
+        "mean_acceptance_length": 3.0627920014950476,
+        "per_position_acceptance_rates": {
+          "0": 0.8817043543262941,
+          "1": 0.5703606802466828,
+          "2": 0.2691085778359185,
+          "3": 0.13623621752943374,
+          "4": 0.08858157353765651,
+          "5": 0.06185759671089516,
+          "6": 0.0549430013081667
+        },
+        "before": {
+          "num_drafts": 0,
+          "num_draft_tokens": 0,
+          "num_accepted_tokens": 0,
+          "accepted_per_position": {
+            "0": 0,
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0
+          }
+        },
+        "after": {
+          "num_drafts": 5351,
+          "num_draft_tokens": 37457,
+          "num_accepted_tokens": 11038,
+          "accepted_per_position": {
+            "0": 4718,
+            "1": 3052,
+            "2": 1440,
+            "3": 729,
+            "4": 474,
+            "5": 331,
+            "6": 294
+          }
+        }
+      },
+      "source": "depth7/profile_result.json"
+    },
+    {
+      "depth": 8,
+      "throughput": 176.78757928193713,
+      "tpotMs": 5.656505983405208,
+      "requestThroughputs": [
+        176.78757928193713, 213.63850034758235, 582.473438537474,
+        160.18305332960256, 153.95319572027222, 188.19530178796265,
+        169.36879157824524
+      ],
+      "requestIds": [
+        "independent_1",
+        "independent_2",
+        "independent_3",
+        "independent_4",
+        "independent_5",
+        "independent_6",
+        "independent_7"
+      ],
+      "acceptance": {
+        "schema_version": 1,
+        "counter_scope": "replay_prometheus_delta",
+        "num_drafts": 4914,
+        "draft_tokens": 39312,
+        "accepted_tokens": 11474,
+        "accepted_tokens_per_position": {
+          "0": 4513,
+          "1": 3191,
+          "2": 1504,
+          "3": 762,
+          "4": 574,
+          "5": 350,
+          "6": 309,
+          "7": 271
+        },
+        "acceptance_rate": 0.29187016687016687,
+        "acceptance_rate_percent": 29.187016687016687,
+        "mean_acceptance_length": 3.334961334961335,
+        "per_position_acceptance_rates": {
+          "0": 0.9183964183964184,
+          "1": 0.6493691493691494,
+          "2": 0.30606430606430607,
+          "3": 0.15506715506715507,
+          "4": 0.1168091168091168,
+          "5": 0.07122507122507123,
+          "6": 0.06288156288156288,
+          "7": 0.05514855514855515
+        },
+        "before": {
+          "num_drafts": 0,
+          "num_draft_tokens": 0,
+          "num_accepted_tokens": 0,
+          "accepted_per_position": {
+            "0": 0,
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          }
+        },
+        "after": {
+          "num_drafts": 4914,
+          "num_draft_tokens": 39312,
+          "num_accepted_tokens": 11474,
+          "accepted_per_position": {
+            "0": 4513,
+            "1": 3191,
+            "2": 1504,
+            "3": 762,
+            "4": 574,
+            "5": 350,
+            "6": 309,
+            "7": 271
+          }
+        }
+      },
+      "source": "depth8/profile_result.json"
     }
   ]
 }

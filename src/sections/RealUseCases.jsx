@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { ArrowRight, ArrowUpRight, X } from "lucide-react";
 import s from "./RealUseCases.module.css";
 import qwenStory from "./qwenStory.json";
+import { CaseInvestigation } from "./CaseInvestigation";
+import qwenAfter from "../../public/case-studies/qwen-after-alignment.json";
 
 const cases = [
   {
@@ -85,7 +87,6 @@ const cases = [
       afterLabel: "Mini-SGLang",
     },
     paragraphs: [],
-    chapters: qwenStory,
   },
 ];
 
@@ -127,17 +128,22 @@ function Comparison({ comparison }) {
   );
 }
 
-function KernelBreakdown({ rows }) {
+function KernelBreakdown({ rows, after = false }) {
   const maximum = Math.max(
     ...rows.flatMap((row) => [row.measured_ms, row.simulated_ms]),
   );
   return (
     <figure className={s.kernelChart}>
       <figcaption>
-        Where the first implementation differed from the simulation
+        {after
+          ? "Kernel timings after FA3 and native EP"
+          : "Where the first implementation differed from the simulation"}
       </figcaption>
       <p className={s.chartKey}>
-        Time per operation · ms · mean of two steady prefill iterations
+        Time per operation · ms ·{" "}
+        {after
+          ? "mean of three captured prefill iterations"
+          : "mean of two steady prefill iterations"}
       </p>
       {rows.map((row) => (
         <div className={s.kernelRow} key={row.operation}>
@@ -160,19 +166,61 @@ function KernelBreakdown({ rows }) {
         </div>
       ))}
       <p className={s.chartKey}>
-        Selected operation contributions from the original alignment export. One
-        real transformer layer, 16K prefill, four H200 GPUs. The initial attention
-        backends and MoE execution paths differed; these differences motivated the
-        implementation changes.
+        {after ? (
+          "Selected operation contributions after the changes. One real transformer layer, 16K prefill, four H200 GPUs. The old dispatch path is no longer executed. Other differences remained: this prediction still included a dispatch cost that was removed in the real implementation, so the chart is not evidence of complete alignment."
+        ) : (
+          <>
+            Selected operation contributions from the original alignment export. One
+            real transformer layer, 16K prefill, four H200 GPUs. The initial
+            attention backends and MoE execution paths differed; these differences
+            motivated the implementation changes.
+          </>
+        )}
       </p>
       <a
         className={s.sourceLink}
-        href={`${import.meta.env.BASE_URL}case-studies/qwen-kernel-breakdown.json`}
+        href={`${import.meta.env.BASE_URL}case-studies/${after ? "qwen-after-alignment.json" : "qwen-kernel-breakdown.json"}`}
         download
       >
-        Download all 21 operation timings{" "}
+        {after
+          ? "Download these operation timings"
+          : "Download all 21 operation timings"}{" "}
         <ArrowUpRight size={18} aria-hidden="true" />
       </a>
+    </figure>
+  );
+}
+
+function QuantizationTable({ table }) {
+  return (
+    <figure className={s.evidenceTable}>
+      <figcaption>{table.caption}</figcaption>
+      <table>
+        <thead>
+          <tr>
+            {table.headers.map((header) => (
+              <th key={header} scope="col">
+                {header === "Measured time" ? "Time" : header}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {table.rows.map((row) => (
+            <tr key={row[0]}>
+              {row.map((cell, index) =>
+                index === 0 ? (
+                  <th scope="row" key={cell}>
+                    {cell}
+                  </th>
+                ) : (
+                  <td key={cell}>{cell}</td>
+                ),
+              )}
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </figure>
   );
 }
@@ -268,8 +316,26 @@ export function RealUseCases() {
           <article className={s.story}>
             <h2 id="case-story-title">{active.title}</h2>
             <p className={s.setup}>{active.setup}</p>
-            <Comparison comparison={active.comparison} />
-            {active.plot && (
+            {
+              <CaseInvestigation
+                caseId={active.id}
+                outcome={<Comparison comparison={active.comparison} />}
+                charts={{
+                  kernels: (
+                    <KernelBreakdown
+                      rows={qwenStory.find((chapter) => chapter.chart).chart}
+                    />
+                  ),
+                  after: <KernelBreakdown rows={qwenAfter.rows} after />,
+                  quantization: (
+                    <QuantizationTable
+                      table={qwenStory.find((chapter) => chapter.table).table}
+                    />
+                  ),
+                }}
+              />
+            }
+            {active.plot && active.id !== "spec5-graphs" && (
               <figure className={s.plot}>
                 <a
                   href={`${import.meta.env.BASE_URL}case-studies/${active.plot.file}`}
@@ -295,7 +361,10 @@ export function RealUseCases() {
                 </a>
               </figure>
             )}
-            {active.paragraphs.map((body) => (
+            {(active.id === "sglang-autotune" || active.id === "spec5-graphs"
+              ? []
+              : active.paragraphs
+            ).map((body) => (
               <div className={s.passage} key={body}>
                 <p>
                   <EmphasizedText text={body} />

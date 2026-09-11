@@ -1,0 +1,158 @@
+.investigation {
+  margin-top: 36px;
+}
+
+.heading h3 {
+  font-size: var(--fs-xl);
+  font-weight: 500;
+}
+
+.heading p {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: var(--fs-fine);
+  line-height: 1.5;
+}
+
+.rounds,
+.steps {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.round {
+  margin-top: 32px;
+}
+
+.human {
+  width: fit-content;
+  max-width: 88%;
+  margin-left: auto;
+  padding: 20px 24px;
+  background: var(--raised);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.role {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--ink);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+}
+
+.role img {
+  object-fit: contain;
+}
+
+.human > p {
+  margin-top: 12px;
+  font-size: var(--fs-lg);
+  line-height: 1.6;
+}
+
+.agent {
+  margin-top: 28px;
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+}
+
+.steps {
+  margin: 24px 0 0 10px;
+  border-left: 1px solid var(--line);
+}
+
+.step {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr);
+  gap: 16px;
+  margin-left: -10px;
+  padding-bottom: 24px;
+}
+
+.step > svg {
+  margin-top: 3px;
+  background: var(--surface);
+  color: var(--accent);
+}
+
+.step h4 {
+  font-size: var(--fs-lg);
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 0;
+}
+
+.step p,
+.finding {
+  font-size: var(--fs-lg);
+  line-height: 1.65;
+}
+
+.step p {
+  margin-top: 8px;
+  color: var(--muted);
+}
+
+.finding {
+  margin-left: 10px;
+  padding: 16px 20px;
+  border-left: 3px solid var(--accent);
+  background: var(--raised);
+  color: var(--ink);
+}
+
+.finding strong {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--accent);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+}
+
+.figure {
+  margin: 24px 0 0;
+}
+
+.figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+.figure figcaption {
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: var(--fs-fine);
+  line-height: 1.6;
+}
+
+.figureLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  color: var(--accent);
+  font-size: var(--fs-sm);
+}
+
+@media (max-width: 767px) {
+  .agent {
+    padding: 16px;
+  }
+
+  .human {
+    max-width: 94%;
+    padding: 16px;
+  }
+
+  .step {
+    gap: 12px;
+  }
+}

@@ -23,7 +23,7 @@ const productParts = [
         "Kernel timings measured on real GPUs, calibrated against vLLM and SGLang",
       ],
     ],
-    note: "Each of these has been built and run. The groups are not axes to multiply together.",
+    note: "Everything listed here has been built and run, but not every combination across the rows is tested.",
   },
   {
     name: "Agent",

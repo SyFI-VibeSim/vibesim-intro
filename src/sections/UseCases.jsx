@@ -203,8 +203,8 @@ function SpeculationSearch() {
         </div>
       </dl>
       <p className="caption">
-        One decode request · 14,830 prefix KV tokens · no prefill. Uses the measured
-        Spec5 acceptance profile.
+        One decode request · 14,830 prefix KV tokens · no prefill. Uses per-position
+        draft acceptance rates measured from a real five-draft-token run (Spec5).
       </p>
       <details className={s.inlineEvidence}>
         <summary>
@@ -270,10 +270,10 @@ const examples = [
   },
   {
     label: "Understand a bottleneck",
-    model: "GLM 5.2 NVFP4",
+    model: "GLM-5.2 NVFP4",
     setup: "4 × B200 · TP4 + EP4",
     question:
-      "With 32 decode requests at 8K context, which GLM 5.2 operations take the most time?",
+      "With 32 decode requests at 8K context, which GLM-5.2 operations take the most time?",
     action: "Group operation costs across all repeated layers.",
     answer:
       "Fused MoE takes 53% of this decode iteration. Inspect its cost before deciding what to optimize.",
@@ -283,10 +283,10 @@ const examples = [
   },
   {
     label: "Search configurations",
-    model: "GLM 5.2 NVFP4",
+    model: "GLM-5.2 NVFP4",
     setup: "8 × B200 · TP8 + EP8",
     question:
-      "For GLM 5.2 on 8 B200s, how does speculative depth affect single-request decode throughput at 14,830 KV tokens?",
+      "For GLM-5.2 on 8 B200s, how does speculative depth affect single-request decode throughput at 14,830 KV tokens?",
     action: "Sweep draft lengths and account for acceptance.",
     answer:
       "Five draft tokens give the highest ceiling among the tested depths. Most of the gain is already reached at three; the curve flattens after that.",
@@ -308,7 +308,7 @@ const agentStories = [
       "Compare Analyzer output throughput, TTFT and TPOT",
     ],
     conclusion:
-      "At 64 requests/s, output throughput is still about 6,363 tok/s, but mean first-token latency grows from 76 ms to 3.20 seconds. For this workload, extra load creates waiting rather than useful throughput. Check the latency target before choosing an operating point near 32 requests/s.",
+      "At 64 requests/s, output throughput is still about 6,363 tok/s, but mean first-token latency grows from 76 ms at 32 requests/s to 3.20 seconds at 64. For this workload, extra load creates waiting rather than useful throughput. Check the latency target before choosing an operating point near 32 requests/s.",
   },
   {
     intro:

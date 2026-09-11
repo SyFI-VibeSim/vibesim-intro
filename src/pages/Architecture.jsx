@@ -20,7 +20,7 @@ const stages = [
   },
   {
     icon: Database,
-    title: "One row in db",
+    title: "One row in the database",
     body: "Stores kernel measurements for reuse across experiments.",
   },
   {
@@ -142,8 +142,8 @@ export function Architecture() {
             Explicit responsibilities.
           </h2>
           <p>
-            Timing flows upward. State starts at L5. Select a layer to inspect its
-            contract.
+            Timing flows upward. State starts at layer 5, the worker. Select a layer
+            to inspect its contract.
           </p>
         </div>
         <SevenLayers />

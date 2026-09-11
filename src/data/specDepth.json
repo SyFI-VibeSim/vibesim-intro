@@ -1,7 +1,7 @@
 {
   "experiment": "20260902_2_glm52_single_decode_spec_sweep",
   "source": "Analyzer HTTP descriptor and cases endpoints; measured replay acceptance artifact",
-  "model": "GLM 5.2 NVFP4",
+  "model": "GLM-5.2 NVFP4",
   "gpu": "8 × B200",
   "parallelism": "TP8 + EP8",
   "prefixKv": 14830,

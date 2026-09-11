@@ -61,7 +61,7 @@
 
 .feature p {
   margin-top: 12px;
-  font-size: var(--fs-xl);
+  font-size: var(--fs-lg);
   line-height: 1.55;
   color: var(--muted);
 }

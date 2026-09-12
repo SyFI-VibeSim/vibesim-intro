@@ -89,8 +89,8 @@ export function useSiteNavigation(mainRef) {
   useEffect(() => {
     document.title =
       page === "overview"
-        ? "VibeSim | Explore LLM serving performance"
-        : `${page === "features" ? "Features" : "Architecture"} | VibeSim`;
+        ? "ServingStudio | Explore LLM serving performance"
+        : `${page === "features" ? "Features" : "Architecture"} | ServingStudio`;
   }, [page]);
   return page;
 }

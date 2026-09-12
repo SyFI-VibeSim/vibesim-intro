@@ -6,18 +6,18 @@ import {
   BadgeCheck,
   ArrowUpRight,
 } from "lucide-react";
-import logo from "../vibesim-logo.png";
+import logo from "../servingstudio-symbol.svg";
 import s from "./CaseInvestigation.module.css";
 import { qwenRounds } from "./qwenInvestigation";
 
 const sglangRounds = [
   {
-    request: "Align VibeSim with SGLang for GLM-5.2 on four B200 GPUs.",
+    request: "Align ServingStudio Sim with SGLang for GLM-5.2 on four B200 GPUs.",
     steps: [
       {
         icon: Activity,
         title: "Compare the kernel timings",
-        body: "I profiled SGLang and compared its kernel timings with VibeSim's predictions for the same inputs. Decode timings were close, but the MoE kernels took longer during prefill. I focused on those kernels to understand the difference.",
+        body: "I profiled SGLang and compared its kernel timings with ServingStudio Sim's predictions for the same inputs. Decode timings were close, but the MoE kernels took longer during prefill. I focused on those kernels to understand the difference.",
       },
       {
         icon: ScanSearch,
@@ -57,17 +57,17 @@ const sglangRounds = [
 const specRounds = [
   {
     request:
-      "Align VibeSim with vLLM for GLM-5.2 with five speculative tokens on four B200 GPUs.",
+      "Align ServingStudio Sim with vLLM for GLM-5.2 with five speculative tokens on four B200 GPUs.",
     steps: [
       {
         icon: Activity,
         title: "Align the kernel timings first",
-        body: "I started by checking whether VibeSim could predict how long vLLM's kernels take for the same inputs. The first comparison revealed differences in how we modeled speculative decoding: the draft model processed a different batch than we assumed, and its MoE kernels used BF16 rather than NVFP4. I corrected both in the simulator and repeated the comparison. The predicted timings now follow the measurements closely across most of the run, with some differences remaining during decode.",
+        body: "I started by checking whether ServingStudio Sim could predict how long vLLM's kernels take for the same inputs. The first comparison revealed differences in how we modeled speculative decoding: the draft model processed a different batch than we assumed, and its MoE kernels used BF16 rather than NVFP4. I corrected both in the simulator and repeated the comparison. The predicted timings now follow the measurements closely across most of the run, with some differences remaining during decode.",
         figure: {
           file: "spec5-kernel-alignment.png",
           width: 1600,
           height: 720,
-          alt: "Measured kernel-path timings and VibeSim predictions across all 943 captured iterations, showing recurring workload changes and remaining timing differences.",
+          alt: "Measured kernel-path timings and ServingStudio Sim predictions across all 943 captured iterations, showing recurring workload changes and remaining timing differences.",
           caption:
             "Kernel-path comparison after the draft-model corrections, expanded to all 943 captured iterations (0–942). The wider view also exposes remaining decode-stage differences. Collective arrival waiting is excluded; this is not the full physical GPU busy time.",
         },
@@ -80,7 +80,7 @@ const specRounds = [
           file: "spec5-sawtooth.png",
           width: 1971,
           height: 1280,
-          alt: "The VibeSim prediction repeatedly rises and falls while the measured vLLM GPU timeline remains flatter.",
+          alt: "The ServingStudio Sim prediction repeatedly rises and falls while the measured vLLM GPU timeline remains flatter.",
           caption:
             "The wider comparison that prompted a closer look at the trace. The lower panel expands the interval from 12 to 95 seconds.",
         },

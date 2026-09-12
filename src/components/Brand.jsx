@@ -1,4 +1,4 @@
-import logo from "../vibesim-logo.png";
+import logo from "../servingstudio-symbol.svg";
 import s from "./Brand.module.css";
 
 /* Used twice: in the header and again in the footer, which sizes it down. A
@@ -10,10 +10,10 @@ export function Brand({ className = "" }) {
     <a
       className={`${s.brand} ${className}`}
       href={import.meta.env.BASE_URL}
-      aria-label="VibeSim home"
+      aria-label="ServingStudio home"
     >
       <img src={logo} alt="" />
-      <span>VibeSim</span>
+      <span>ServingStudio</span>
     </a>
   );
 }

@@ -1,6 +1,6 @@
 name: Deploy to GitHub Pages
 
-# Publishes dist/ to https://syfi-vibesim.github.io/vibesim-intro/ on every push
+# Publishes dist/ to https://syfi-servingstudio.github.io/ServingStudioIntro/ on every push
 # to main. The subpath is why vite.config.js sets `base`; a build without it
 # would ask for its assets at the domain root and load nothing.
 

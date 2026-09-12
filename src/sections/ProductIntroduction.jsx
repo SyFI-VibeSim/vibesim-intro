@@ -1,11 +1,7 @@
 import s from "./ProductIntroduction.module.css";
 
-/* The product definition. Two halves, because the name only covers one of them:
-   the simulator is what VibeSim can model, the Agent is what it does with it.
-   Every line on the simulator side restates the coverage directory and the
-   evidence rows further down the page; every line on the Agent side restates a
-   step of the workflow section. Nothing here is a capability the page does not
-   already back up. */
+/* The simulation foundation and Agent workflow share the capabilities and
+   evidence presented in the sections below. */
 const productParts = [
   {
     name: "Simulator",
@@ -51,11 +47,11 @@ export function ProductIntroduction() {
     >
       <div className="wrap">
         <div className="section-intro" data-reveal>
-          <h2 id="product-title">VibeSim. More than a simulator.</h2>
+          <h2 id="product-title">A simulator to predict. An Agent to act.</h2>
           <p>
-            A simulator that predicts how a serving setup performs, and an Agent
-            that uses it to build and validate the improvement in your real
-            framework.
+            ServingStudio combines simulation grounded in real GPU measurements
+            with an Agent that explores configurations, explains performance,
+            and builds and validates improvements in real serving frameworks.
           </p>
         </div>
         <div className={s.productParts}>

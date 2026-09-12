@@ -2,7 +2,7 @@
   {
     "title": "Build the MoE serving path from scratch.",
     "paragraphs": [
-      "Mini-SGLang had no MoE support when we began. Supporting **Qwen3-235B Thinking-2507 required building much of the MoE serving path from scratch**: expert routing, expert-parallel execution, and integration with FP8 expert kernels. We connected these components to the model loader, attention and KV cache, and the serving runtime. VibeSim provided a performance reference as we developed and measured the real implementation.",
+      "Mini-SGLang had no MoE support when we began. Supporting **Qwen3-235B Thinking-2507 required building much of the MoE serving path from scratch**: expert routing, expert-parallel execution, and integration with FP8 expert kernels. We connected these components to the model loader, attention and KV cache, and the serving runtime. ServingStudio Sim provided a performance reference as we developed and measured the real implementation.",
       "To make experiments practical, we built a reduced-depth model that retained one real transformer layer, the embedding, final normalization, and language-model head. It used the production checkpoint and execution path. This let us test implementation changes quickly while preserving the tensor shapes that determine kernel behavior. **Full-model latency and serving throughput were measured separately on all 94 layers.**"
     ]
   },
@@ -68,7 +68,7 @@
     "title": "Use kernel analysis to choose the fusion targets.",
     "paragraphs": [
       "Once the main execution differences were understood, we returned to the prefill-heavy workload. We used the model’s actual expert assignments to compare predicted and measured kernel times, then examined how much prefill time was spent on quantization versus matrix multiplication.",
-      "**Quantization took a substantial fraction of the time spent on matrix multiplication.** For MoE gate/up, quantization accounted for **12.65% of prefill time, compared with 15.08% for the GEMM**—about 84% as much time. Across all four inputs, quantization consumed 137.372 ms, or 19.8% of the measured prefill. This made it a significant optimization target. VibeSim’s analysis of necessary work and fusion opportunities helped us identify where producers could generate quantized inputs directly, avoiding a separate pass over an intermediate tensor."
+      "**Quantization took a substantial fraction of the time spent on matrix multiplication.** For MoE gate/up, quantization accounted for **12.65% of prefill time, compared with 15.08% for the GEMM**—about 84% as much time. Across all four inputs, quantization consumed 137.372 ms, or 19.8% of the measured prefill. This made it a significant optimization target. ServingStudio Analyzer’s analysis of necessary work and fusion opportunities helped us identify where producers could generate quantized inputs directly, avoiding a separate pass over an intermediate tensor."
     ],
     "table": {
       "caption": "Quantization and GEMM time · full 94-layer prefill",

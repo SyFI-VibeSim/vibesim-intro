@@ -11,7 +11,7 @@ const cases = [
     stack: "SGLang · GLM-5.2",
     title: "Tune the MoE kernels used in prefill graphs.",
     summary:
-      "While aligning VibeSim with SGLang, we found that prefill MoE kernels were slower than expected. Autotuning was enabled, but it had missed the CUDA graph execution path. Tuning that path improved input throughput by 5.6%.",
+      "While aligning ServingStudio Sim with SGLang, we found that prefill MoE kernels were slower than expected. Autotuning was enabled, but it had missed the CUDA graph execution path. Tuning that path improved input throughput by 5.6%.",
     metric: "+5.6%",
     metricLabel: "input throughput vs. unpatched SGLang",
     setup: "NVFP4 · 4 × B200 · TP4",
@@ -24,7 +24,7 @@ const cases = [
       afterLabel: "Patched",
     },
     paragraphs: [
-      "We first noticed the problem while comparing VibeSim’s predictions with SGLang measurements. Decode timings were close, but the **fused MoE kernels took longer than expected on large prefill batches**. **Turning off autotuning in our kernel benchmark reproduced the slower timings**. We then checked why SGLang was using those kernels despite having autotuning enabled.",
+      "We first noticed the problem while comparing ServingStudio Sim’s predictions with SGLang measurements. Decode timings were close, but the **fused MoE kernels took longer than expected on large prefill batches**. **Turning off autotuning in our kernel benchmark reproduced the slower timings**. We then checked why SGLang was using those kernels despite having autotuning enabled.",
       "Startup autotuning was enabled, but it ran a different path from the one used by breakable prefill CUDA graphs. In graph mode, the MoE operation defers its final output step and passes a differently shaped output tensor. **FlashInfer treats that shape as a separate tuning key**, so the startup results did not apply. We added **a tuning pass inside the graph capture context**, before recording the graphs.",
       "On GLM-5.2 NVFP4 with four B200 GPUs, the patch **improved input throughput by 5.58%**. We ran 240 requests with 4,096 input tokens and 8 output tokens each, at concurrency 24. Across three warmed repeats, **median completion time fell from 44.873 to 42.503 seconds**. Both versions also answered 60 of 64 questions correctly in a small GSM8K check. The patch and reproduction instructions are in the SGLang PR below.",
     ],
@@ -46,7 +46,7 @@ const cases = [
       file: "spec5-sawtooth.png",
       width: 1971,
       height: 1280,
-      alt: "Spec5 diagnostic: the dashed VibeSim curve repeatedly rises and drops while the profiled vLLM GPU cadence stays flatter. A second panel expands the 12 to 95 second interval.",
+      alt: "Spec5 diagnostic: the dashed ServingStudio Sim curve repeatedly rises and drops while the profiled vLLM GPU cadence stays flatter. A second panel expands the 12 to 95 second interval.",
       caption:
         "The timing curves that led us to investigate. The plot compares three runs, with time measured from the first iteration of each run. The lower panel zooms in on the repeated rises and drops.",
     },
@@ -59,13 +59,13 @@ const cases = [
       afterLabel: "2,052 tokens",
     },
     paragraphs: [
-      "While aligning GLM-5.2 with five MTP draft tokens, we noticed that **vLLM appeared CPU-bound with the usual 2,048-token prefill chunks**. VibeSim’s timings rose and fell as the attention context grew, but the measured GPU timeline was much flatter. Looking at the trace showed that these common prefill batches were running eagerly, with **individual kernel launches instead of CUDA graph replay**.",
+      "While aligning GLM-5.2 with five MTP draft tokens, we noticed that **vLLM appeared CPU-bound with the usual 2,048-token prefill chunks**. ServingStudio Sim’s timings rose and fell as the attention context grew, but the measured GPU timeline was much flatter. Looking at the trace showed that these common prefill batches were running eagerly, with **individual kernel launches instead of CUDA graph replay**.",
       "The cause was in the V1 runner’s graph-size handling. Five draft tokens require six tokens per verification step, and **the runner also filtered piecewise graph sizes to multiples of six**. With a configured limit of 2,048, the largest retained graph was only 2,034 tokens. A full 2,048-token batch could not use it. We **raised both the scheduler budget and the graph limit to 2,052**, which is divisible by six, and confirmed that piecewise replay was active again.",
       "In the inspected profile window, CUDA graph launches went from zero to 79 per rank per forward pass, while ordinary kernel launches fell from 835 to 261. **Average iteration time fell from 141.048 to 114.903 ms**. A separate run without profiling completed all 100 requests in both configurations and recorded **10.77% higher output throughput** with the new budget.",
     ],
     link: {
       label: "Explore the Spec5 implementation",
-      href: "https://github.com/SyFI-VibeSim/VibeSim/pull/32",
+      href: "https://github.com/SyFI-ServingStudio/ServingStudioSim/pull/32",
     },
   },
   {
@@ -74,7 +74,7 @@ const cases = [
     title:
       "Build a Qwen3-235B implementation in Mini-SGLang that outperforms vLLM.",
     summary:
-      "Mini-SGLang had no MoE support. We built its Qwen3-235B serving path with guidance from VibeSim, then used kernel analysis to simplify execution and fuse operations. The resulting implementation delivered 25.6% higher output throughput than vLLM on our prefill-heavy benchmark.",
+      "Mini-SGLang had no MoE support. We built its Qwen3-235B serving path with guidance from ServingStudio Sim, then used kernel analysis to simplify execution and fuse operations. The resulting implementation delivered 25.6% higher output throughput than vLLM on our prefill-heavy benchmark.",
     metric: "+25.6%",
     metricLabel: "output throughput vs. vLLM",
     setup: "FP8 · 4 × H200 · TP4 + EP4",
@@ -253,7 +253,7 @@ export function RealUseCases() {
         <h2 id="real-use-cases-title">Performance gains in practice.</h2>
         <p>
           From a surprising timing gap to a change in a real serving engine. Three
-          investigations guided by VibeSim.
+          investigations carried out with ServingStudio.
         </p>
       </div>
       <div className={s.grid}>

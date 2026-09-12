@@ -10,7 +10,7 @@ import {
   UserRound,
   SquareTerminal,
 } from "lucide-react";
-import logo from "../vibesim-logo.png";
+import logo from "../servingstudio-symbol.svg";
 import { Tabs } from "../components/Tabs";
 import { KernelBandwidthFollowUp } from "./KernelBandwidthFollowUp";
 import s from "./UseCases.module.css";
@@ -130,7 +130,7 @@ function ThroughputChart() {
           </table>
         </div>
         <p className={s.specMethod}>
-          A VibeSim unified-worker simulation with one H200, BF16, an 80 GB KV
+          A ServingStudio Sim unified-worker simulation with one H200, BF16, an 80 GB KV
           budget and fixed-length synthetic requests. These results compare the
           tested loads; they do not establish a universal maximum or a measured
           serving-framework benchmark.
@@ -459,7 +459,7 @@ export function UseCases() {
                     <img src={logo} alt="" />
                   </div>
                   <div className={s.agentTurnContent}>
-                    <h3>VibeSim Agent</h3>
+                    <h3>ServingStudio Agent</h3>
                     <div
                       className={`${s.agentMessage} ${s.thinking}`}
                       role="status"
@@ -479,7 +479,7 @@ export function UseCases() {
                   <img src={logo} alt="" />
                 </div>
                 <div className={s.agentTurnContent}>
-                  <h3>VibeSim Agent</h3>
+                  <h3>ServingStudio Agent</h3>
                   <div className={s.agentMessage}>
                     <p className={s.agentIntro}>
                       <ReplayText

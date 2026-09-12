@@ -14,7 +14,7 @@ const resources = [
   {
     label: "GitHub",
     icon: Github,
-    href: "https://github.com/SyFI-VibeSim/VibeSim",
+    href: "https://github.com/SyFI-ServingStudio/ServingStudio",
   },
   { label: "Paper", icon: FileText },
   { label: "Blog", icon: BookOpen },
@@ -25,7 +25,7 @@ export function Hero() {
   const [notice, setNotice] = useState(null);
   /* These live in public/, so they are not import-resolved and Vite cannot
      rewrite them: the base prefix has to be applied here. It is "/" in dev and
-     "/vibesim-intro/" in the published build. */
+     "/ServingStudioIntro/" in the published build. */
   const asset = (name) => `${import.meta.env.BASE_URL}images/${name}`;
   const previewImages = {
     original: asset("shoreline-v3.webp"),
@@ -65,10 +65,10 @@ export function Hero() {
           Then make it go that fast.
         </h1>
         <p>
-          Grounded in real measurements, VibeSim simulates LLM serving with high
-          speed and fidelity. With the VibeSim Agent, you can search serving
-          configurations, analyze performance bottlenecks, and guide optimizations
-          in real serving frameworks.
+          ServingStudio brings simulation, performance analysis, and Agent-driven
+          experimentation into one workspace. Predict serving performance from
+          real GPU measurements, explore configurations, and work with
+          ServingStudio Agent to build and validate improvements in real frameworks.
         </p>
         <div className={s.heroActions}>
           <a className={`button button-primary`} href="#use-cases">
@@ -78,7 +78,7 @@ export function Hero() {
             className={s.heroSecondary}
             href={`${import.meta.env.BASE_URL}features.html`}
           >
-            Explore VibeSim features <ArrowUpRight size={16} />
+            Explore ServingStudio features <ArrowUpRight size={16} />
           </a>
         </div>
         <ul className={s.resources} aria-label="Project resources">

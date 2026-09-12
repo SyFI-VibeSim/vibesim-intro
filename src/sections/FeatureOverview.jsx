@@ -65,7 +65,7 @@ export function FeatureOverview() {
     >
       <div className="wrap">
         <header className={s.header} data-reveal>
-          <h2 id="features-overview-title">VibeSim key features.</h2>
+          <h2 id="features-overview-title">ServingStudio key features.</h2>
           <p>From a serving question to the evidence behind the answer.</p>
           <a className={`button button-primary ${s.cta}`} href={featuresUrl}>
             Explore all features <ArrowRight size={18} aria-hidden="true" />

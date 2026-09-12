@@ -1,6 +1,6 @@
 import { ArrowRight, ChevronDown, UserRound } from "lucide-react";
 import evidence from "../data/glmKernelBandwidth.json";
-import logo from "../vibesim-logo.png";
+import logo from "../servingstudio-symbol.svg";
 import s from "./UseCases.module.css";
 
 const gbps = (value) => value.toLocaleString("en-US", { maximumFractionDigits: 1 });
@@ -24,7 +24,7 @@ export function KernelBandwidthFollowUp() {
           <img src={logo} alt="" />
         </div>
         <div className={s.agentTurnContent}>
-          <h3>VibeSim Agent</h3>
+          <h3>ServingStudio Agent</h3>
           <div className={s.agentMessage}>
             <div className={s.agentAnswer}>
               <p>

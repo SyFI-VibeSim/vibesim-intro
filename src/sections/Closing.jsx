@@ -8,11 +8,11 @@ export function Closing() {
       <section className={s.closing} id="start" aria-labelledby="closing-title">
         <div className="wrap" data-reveal>
           <h2 id="closing-title">
-            Start exploring your serving setup with VibeSim.
+            Start exploring your serving setup with ServingStudio.
           </h2>
           <a
             className={`button button-primary`}
-            href="https://github.com/SyFI-VibeSim/VibeSim"
+            href="https://github.com/SyFI-ServingStudio/ServingStudio"
             target="_blank"
             rel="noreferrer"
           >
@@ -24,7 +24,7 @@ export function Closing() {
         <Brand className={s.footerBrand} />
         <span>Simulate, understand and optimize LLM serving.</span>
         <a
-          href="https://github.com/SyFI-VibeSim/vibesim-intro"
+          href="https://github.com/SyFI-ServingStudio/ServingStudioIntro"
           target="_blank"
           rel="noreferrer"
         >

@@ -722,15 +722,15 @@ export function Advantages({ standalone = false }) {
       <div className="wrap">
         {standalone && (
           <div className="section-intro" data-reveal>
-            <h2>VibeSim Key Features</h2>
+            <h2>ServingStudio key features.</h2>
           </div>
         )}
         {!standalone && (
           <div className="section-intro" data-reveal>
-            <h2>Explore VibeSim’s key features.</h2>
+            <h2>Explore ServingStudio’s key features.</h2>
             <p>
               See the supported systems and the evidence behind simulation speed,
-              prediction accuracy and analysis.
+              prediction accuracy, analysis, and Agent workflows.
             </p>
           </div>
         )}

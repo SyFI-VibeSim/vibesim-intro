@@ -3,12 +3,12 @@ import { Activity, ScanSearch, Code2, BadgeCheck } from "lucide-react";
 export const qwenRounds = [
   {
     request:
-      "Build Qwen3-235B support in Mini-SGLang, and use VibeSim to guide the implementation.",
+      "Build Qwen3-235B support in Mini-SGLang, and use ServingStudio Sim to guide the implementation.",
     steps: [
       {
         icon: Code2,
         title: "Start with a working MoE implementation",
-        body: "Mini-SGLang did not support MoE models, so I first added expert routing, expert-parallel execution and FP8 expert kernels. I connected them to the model loader, attention, KV cache and serving runtime. This gave us a working implementation that we could measure and compare with VibeSim.",
+        body: "Mini-SGLang did not support MoE models, so I first added expert routing, expert-parallel execution and FP8 expert kernels. I connected them to the model loader, attention, KV cache and serving runtime. This gave us a working implementation that we could measure and compare with ServingStudio Sim.",
       },
       {
         icon: Activity,
@@ -21,7 +21,7 @@ export const qwenRounds = [
   },
   {
     request:
-      "Compare the implementation with VibeSim. What explains the largest timing differences?",
+      "Compare the implementation with ServingStudio Sim. What explains the largest timing differences?",
     steps: [
       {
         icon: ScanSearch,

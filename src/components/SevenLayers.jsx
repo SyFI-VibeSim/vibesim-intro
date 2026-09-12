@@ -137,8 +137,9 @@ const layers = [
     ],
   },
 ];
+const orderedLayers = [...layers].reverse();
 export function SevenLayers() {
-  const [selected, setSelected] = useState(4);
+  const [selected, setSelected] = useState(1);
   const detailStack = useRef(null);
   useLayoutEffect(() => {
     const stack = detailStack.current;
@@ -157,9 +158,9 @@ export function SevenLayers() {
   return (
     <div className={s.stackExplorer}>
       <div className={s.stackButtons} aria-label="Simulator layers">
-        {layers.map((item, index) => (
+        {orderedLayers.map((item, index) => (
           <div key={item.n}>
-            {(index === 0 || layers[index - 1].group !== item.group) && (
+            {(index === 0 || orderedLayers[index - 1].group !== item.group) && (
               <p className={s.groupLabel}>{item.group}</p>
             )}
             <button
@@ -175,7 +176,7 @@ export function SevenLayers() {
         ))}
       </div>
       <div className={s.detailStack} ref={detailStack}>
-        {layers.map((layer) => {
+        {orderedLayers.map((layer) => {
           const Icon = layer.icon;
           return (
             <article

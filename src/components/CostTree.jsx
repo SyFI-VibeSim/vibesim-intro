@@ -21,7 +21,7 @@ const models = [
 ];
 
 export function CostTree() {
-  const [selected, setSelected] = useState(1);
+  const [selected, setSelected] = useState(0);
   return (
     <div className={s.models}>
       <Tabs

@@ -142,8 +142,8 @@ export function Architecture() {
             Explicit responsibilities.
           </h2>
           <p>
-            Timing flows upward. State starts at layer 5, the worker. Select a layer
-            to inspect its contract.
+            Timing flows from layer 1, the kernel, to layer 7, the run. State starts
+            at layer 5, the worker. Select a layer to inspect its contract.
           </p>
         </div>
         <SevenLayers />
